@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackCard" load_steps=3 format=3 uid="uid://vurc3d8ph0on"]
+
+[ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_jpqb5"]
+[ext_resource type="Script" path="res://src/cards/attack/attack_card_data.gd" id="1_qdsja"]
+
+[resource]
+script = ExtResource("1_qdsja")
+name = "Swordsman"
+description = "A basic swordsman."
+icon = ExtResource("1_jpqb5")
+rank = 1
+attack_power = 10
+attack_recoil = 5
+health = 10

@@ -1,0 +1,10 @@
+extends Resource
+class_name AttackCardData
+
+@export var name: String # The name of the card.
+@export_multiline var description: String # A detailed description
+@export var icon: Texture2D
+@export var rank: int # The power rank of this card.
+@export var attack_power: int # The amount of damage this card does each turn.
+@export var attack_recoil: int # The amount of damage this card takes after attacking.
+@export var health: int # The card's max health.
