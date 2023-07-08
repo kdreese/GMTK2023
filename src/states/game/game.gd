@@ -1,6 +1,9 @@
 extends Node2D
 
 
+@onready var pause_menu: ColorRect = %PauseMenu
+
+
 var enemy_moves: Array[Dictionary]
 var cards: Array[Resource]
 var num_rounds: int = 0
@@ -10,6 +13,17 @@ var enemy_health: int = 200
 
 func _ready() -> void:
 	pass
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		pause()
+		get_viewport().set_input_as_handled()
+
+
+func pause() -> void:
+	get_tree().paused = true
+	pause_menu.show()
 
 
 func _on_end_round_button_pressed() -> void:

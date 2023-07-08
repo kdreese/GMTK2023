@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cywupx4go4xko"]
 
-[ext_resource type="Script" path="res://src/states/castle_health_bar.gd" id="1_8owk2"]
+[ext_resource type="Script" path="res://src/states/game/castle_health_bar.gd" id="1_8owk2"]
 [ext_resource type="StyleBox" uid="uid://mvv732gy1ops" path="res://src/ui/castle_health_bar_fill.tres" id="2_o7prt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vfkx5"]
