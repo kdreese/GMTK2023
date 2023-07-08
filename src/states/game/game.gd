@@ -78,11 +78,11 @@ func upgrade_defenses() -> void:
 
 
 func instant_defensive_damage() -> void:
-	var units = $Units/Ranged.get_children()
+	var units := $Units/Ranged.get_children()
 	units.sort_custom(ranged_attack_order)
 	for unit in units:
 		# Search for the closest non-empty square within the range.
-		var target = null
+		var target: Node = null
 		for x_pos in range(7, 7 - unit.attack_range, -1):
 			target = get_unit(Vector2i(x_pos, unit.row))
 			if target != null:
@@ -92,7 +92,7 @@ func instant_defensive_damage() -> void:
 			continue
 
 		# Move the archer forward, slightly.
-		var position_offset = Vector2(10.0, 0.0)
+		var position_offset := Vector2(10.0, 0.0)
 		if unit.row < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
@@ -117,7 +117,7 @@ func perpetual_defensive_damage() -> void:
 
 
 func offensive_action_sweep() -> void:
-	var units = $Units/Melee.get_children()
+	var units := $Units/Melee.get_children()
 	units.sort_custom(melee_attack_order)
 	for unit in units:
 		var steps_left = unit.speed

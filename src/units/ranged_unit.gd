@@ -5,8 +5,8 @@ extends Node2D
 @onready var rank_icon: Sprite2D = %RankIcon
 
 
-var attack_range = 1
-var attack_damage = 5
+var attack_range: int = 1
+var attack_damage: int = 5
 var row: int
 
 
