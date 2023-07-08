@@ -5,7 +5,8 @@ extends Control
 @onready var health_bar: ProgressBar = $VBoxContainer/HealthBar
 @onready var current_health_label: Label = $VBoxContainer/CurrentHealth
 @onready var max_health_label: Label = $VBoxContainer/MaxHealth
-var fill_stylebox: StyleBoxFlat = preload("res://src/ui/castle_health_bar_fill.tres").duplicate()
+@onready var fill_stylebox: StyleBoxFlat = preload("res://src/ui/castle_health_bar_fill.tres").duplicate()
+
 
 var max_health: int
 var current_health: int
