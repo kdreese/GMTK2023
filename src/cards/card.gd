@@ -1,5 +1,6 @@
 extends Control
 
+
 @onready var card_name: Label = %Name
 @onready var icon: TextureRect = %Icon
 @onready var description: Label = %Description
