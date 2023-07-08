@@ -22,11 +22,17 @@ func _ready() -> void:
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	var unit = preload("res://src/units/unit.tscn").instantiate()
-	$Units.add_child(unit)
+	$Units/Melee.add_child(unit)
 	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 0)
 	unit = preload("res://src/units/unit.tscn").instantiate()
-	$Units.add_child(unit)
+	$Units/Melee.add_child(unit)
 	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 3)
+	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
+	$Units/Ranged.add_child(unit)
+	unit.init(preload("res://src/cards/defense/archer_1.tres"), 3)
+	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
+	$Units/Ranged.add_child(unit)
+	unit.init(preload("res://src/cards/defense/archer_1.tres"), 0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -38,10 +44,17 @@ func _unhandled_input(event: InputEvent) -> void:
 func is_spot_open(grid_position: Vector2i):
 	if grid_position.x > 7:
 		return false
-	for unit in $Units.get_children():
+	for unit in $Units/Melee.get_children():
 		if unit.grid_position == grid_position:
 			return false
 	return true
+
+
+func get_unit(grid_position: Vector2i) -> Unit:
+	for unit in $Units/Melee.get_children():
+		if unit.grid_position == grid_position:
+			return unit
+	return null
 
 
 func pause() -> void:
@@ -52,7 +65,7 @@ func pause() -> void:
 func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
 	upgrade_defenses()
-	instant_defensive_damage()
+	await instant_defensive_damage()
 	perpetual_defensive_damage()
 	await offensive_action_sweep()
 	place_new_offenses()
@@ -65,7 +78,36 @@ func upgrade_defenses() -> void:
 
 
 func instant_defensive_damage() -> void:
-	pass
+	var units = $Units/Ranged.get_children()
+	units.sort_custom(ranged_attack_order)
+	for unit in units:
+		# Search for the closest non-empty square within the range.
+		var target = null
+		for x_pos in range(7, 7 - unit.attack_range, -1):
+			target = get_unit(Vector2i(x_pos, unit.row))
+			if target != null:
+				break
+
+		if target == null:
+			continue
+
+		# Move the archer forward, slightly.
+		var position_offset = Vector2(10.0, 0.0)
+		if unit.row < 3:
+			position_offset *= -1.0
+		unit.position += position_offset
+		await get_tree().create_timer(0.25).timeout
+		# Do the attack.
+		target.health -= unit.attack_damage
+		target.update_health_bar()
+		await get_tree().create_timer(0.25).timeout
+		# Kill the target, if necessary.
+		if target.health < 0:
+			target.queue_free()
+			await get_tree().create_timer(0.25).timeout
+		# Move the archer back.
+		unit.update_position()
+		await get_tree().create_timer(0.25).timeout
 
 
 func perpetual_defensive_damage() -> void:
@@ -75,8 +117,8 @@ func perpetual_defensive_damage() -> void:
 
 
 func offensive_action_sweep() -> void:
-	var units = $Units.get_children()
-	units.sort_custom(sort_by_attack_order)
+	var units = $Units/Melee.get_children()
+	units.sort_custom(melee_attack_order)
 	for unit in units:
 		var steps_left = unit.speed
 		for _idx in range(unit.speed):
@@ -112,7 +154,7 @@ func melee_attack(unit: Unit) -> void:
 		await get_tree().create_timer(0.25).timeout
 
 
-func sort_by_attack_order(a, b) -> bool:
+func melee_attack_order(a, b) -> bool:
 	if b.grid_position.y > a.grid_position.y:
 		return true
 	elif b.grid_position.y < a.grid_position.y:
@@ -122,6 +164,12 @@ func sort_by_attack_order(a, b) -> bool:
 			return true
 		else:
 			return false
+
+func ranged_attack_order(a, b) -> bool:
+	if b.row > a.row:
+		return false
+	else:
+		return true
 
 
 func place_new_offenses() -> void:
