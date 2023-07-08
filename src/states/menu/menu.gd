@@ -32,7 +32,7 @@ func set_buttons(disabled: bool) -> void:
 
 
 func play() -> void:
-	pass
+	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
 
 
 func options() -> void:
