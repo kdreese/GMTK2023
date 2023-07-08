@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://3sydw8e5riqa"]
+[gd_scene load_steps=5 format=3 uid="uid://3sydw8e5riqa"]
 
 [ext_resource type="Script" path="res://src/states/menu/menu.gd" id="1_nkfw1"]
+[ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="2_thjg8"]
+[ext_resource type="Texture2D" uid="uid://bvc383nxlmy7o" path="res://assets/title_screen.png" id="3_p44ns"]
+[ext_resource type="AudioStream" uid="uid://cmvlp6vmvubha" path="res://assets/music/siege_for_yourself.ogg" id="4_42t6l"]
 
 [node name="Menu" type="CenterContainer"]
 texture_filter = 2
@@ -11,43 +14,62 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nkfw1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="UI" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="UI"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Siege For Yourself!"
+theme_override_fonts/font = ExtResource("2_thjg8")
+theme_override_font_sizes/font_size = 96
+text = "Siege For
+Yourself!"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="Buttons" type="VBoxContainer" parent="UI"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="PlayButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="UI/Buttons"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Play"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="UI/Buttons"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Options"
 
-[node name="CreditsButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="UI/Buttons"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="UI/Buttons"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Quit"
 
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/PlayButton" to="." method="play"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/OptionsButton" to="." method="options"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/CreditsButton" to="." method="credits"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/QuitButton" to="." method="quit"]
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BackgroundTexture" type="TextureRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_p44ns")
+
+[node name="Fanfare" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_42t6l")
+
+[connection signal="pressed" from="UI/Buttons/PlayButton" to="." method="play"]
+[connection signal="pressed" from="UI/Buttons/OptionsButton" to="." method="options"]
+[connection signal="pressed" from="UI/Buttons/CreditsButton" to="." method="credits"]
+[connection signal="pressed" from="UI/Buttons/QuitButton" to="." method="quit"]
