@@ -2,10 +2,10 @@
 class_name HealthBar
 extends Node2D
 
+
 const WIDTH = 20.0
 const THICKNESS = 2.0
 const OUTLINE_SIZE = 1.0
-
 const OUTLINE = Rect2(
 	-(WIDTH/2 + OUTLINE_SIZE),
 	-(THICKNESS/2 + OUTLINE_SIZE),
