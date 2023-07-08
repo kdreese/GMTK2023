@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=6 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
+[ext_resource type="PackedScene" uid="uid://bjkgc22o52iq5" path="res://src/cards/card.tscn" id="5_sumv5"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -88,6 +89,48 @@ text = "Options"
 [node name="ToMenuButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit to Menu"
+
+[node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.392157)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/CardDrafting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer"]
+layout_mode = 2
+
+[node name="DraftText" type="Label" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Choose a card to add to your deck!"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Card" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("5_sumv5")]
+layout_mode = 2
+
+[node name="Card2" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("5_sumv5")]
+layout_mode = 2
+
+[node name="Card3" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("5_sumv5")]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Confirm
+"
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
