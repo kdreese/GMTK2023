@@ -16,6 +16,7 @@ var cards: Array[Resource]
 var num_rounds: int = 0
 var red_max_health: int = 150
 var blue_max_health: int = 200
+var anim_step_time = 0.25 # in seconds.
 
 
 func _ready() -> void:
@@ -96,18 +97,18 @@ func instant_defensive_damage() -> void:
 		if unit.row < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(anim_step_time).timeout
 		# Do the attack.
 		target.health -= unit.attack_damage
 		target.update_health_bar()
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(anim_step_time).timeout
 		# Kill the target, if necessary.
 		if target.health < 0:
 			target.queue_free()
-			await get_tree().create_timer(0.25).timeout
+			await get_tree().create_timer(anim_step_time).timeout
 		# Move the archer back.
 		unit.update_position()
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(anim_step_time).timeout
 
 
 func perpetual_defensive_damage() -> void:
@@ -126,7 +127,7 @@ func offensive_action_sweep() -> void:
 				unit.grid_position += Vector2i.RIGHT
 				unit.update_position()
 				steps_left -= 1
-				await get_tree().create_timer(0.5).timeout
+				await get_tree().create_timer(anim_step_time).timeout
 		if unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 	# for each offensive square, check if a unit is occupying that square
@@ -136,22 +137,22 @@ func offensive_action_sweep() -> void:
 func melee_attack(unit: Unit) -> void:
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(anim_step_time).timeout
 		red_castle_health_bar.current_health -= unit.attack_power
 		red_castle_health_bar.update()
 	else:
 		unit.position = BLUE_CASTLE_DOOR
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(anim_step_time).timeout
 		blue_castle_health_bar.current_health -= unit.attack_power
 		blue_castle_health_bar.update()
 	unit.health -= unit.recoil
 	unit.update_health_bar()
-	await get_tree().create_timer(0.25).timeout
+	await get_tree().create_timer(anim_step_time).timeout
 	if unit.health <= 0:
 		unit.queue_free()
 	else:
 		unit.update_position()
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(anim_step_time).timeout
 
 
 func melee_attack_order(a, b) -> bool:
