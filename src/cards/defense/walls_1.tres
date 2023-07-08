@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="DefenseCardData" load_steps=3 format=3 uid="uid://bnoasscu07snv"]
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://dn3pusa5ldgik"]
 
-[ext_resource type="Texture2D" uid="uid://dviouaw1aihwr" path="res://assets/icons/walls.png" id="1_1maf8"]
-[ext_resource type="Script" path="res://src/cards/defense/defense_card_data.gd" id="1_btoyr"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_2vwq2"]
+[ext_resource type="Texture2D" uid="uid://dviouaw1aihwr" path="res://assets/icons/walls.png" id="1_xyyh6"]
 
 [resource]
-script = ExtResource("1_btoyr")
+script = ExtResource("1_2vwq2")
 name = "Fix Walls"
 description = "Repairs the walls of your castle by 50HP"
-icon = ExtResource("1_1maf8")
+icon = ExtResource("1_xyyh6")
 rank = 1
-effect = null
+card_role = "Defense"
+effect_script = null
+script_args = Array[String](["50"])

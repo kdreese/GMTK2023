@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ba6j46b74ptrc" path="res://src/cards/dual_card.tscn" id="5_npjr2"]
 [ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="6_5ih0c"]
 [ext_resource type="PackedScene" uid="uid://dhr87ej3qtdyg" path="res://src/cards/defense/defense_card_info.tscn" id="7_vc2mk"]
+[ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -14,23 +15,23 @@ script = ExtResource("1_xpc6h")
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2_bwdb4")
 
-[node name="CastleHealthBar" parent="." instance=ExtResource("3_a3and")]
-offset_left = -1.0
+[node name="RedCastleHealthBar" parent="." instance=ExtResource("3_a3and")]
+offset_left = -5.0
 offset_top = 202.0
-offset_right = -1.0
+offset_right = -5.0
 offset_bottom = 202.0
 
-[node name="CastleHealthBar2" parent="." instance=ExtResource("3_a3and")]
-offset_left = 601.0
+[node name="BlueCastleHealthBar" parent="." instance=ExtResource("3_a3and")]
+offset_left = 595.0
 offset_top = 41.0
-offset_right = 601.0
+offset_right = 595.0
 offset_bottom = 41.0
 
-[node name="Monsters" type="Node" parent="."]
+[node name="Units" type="Node" parent="."]
 
-[node name="Friendly" type="Node" parent="Monsters"]
+[node name="Melee" type="Node" parent="Units"]
 
-[node name="Enemy" type="Node" parent="Monsters"]
+[node name="Ranged" type="Node" parent="Units"]
 
 [node name="Cards" type="Node" parent="."]
 
@@ -196,6 +197,10 @@ size_flags_horizontal = 4
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Take Card"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_r6md7")
+autoplay = true
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
