@@ -21,6 +21,7 @@ func initialize(init_health: int, color: Color) -> void:
 
 
 func update() -> void:
+	@warning_ignore("integer_division")
 	var value = max_health / current_health
 	health_bar.value = value
 	current_health_label.text = str(current_health)
