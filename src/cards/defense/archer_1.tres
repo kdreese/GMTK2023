@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RangedUnitData" load_steps=3 format=3 uid="uid://5na7jkly6i1t"]
+
+[ext_resource type="Texture2D" uid="uid://b1v1l3sgmb7bd" path="res://assets/icons/bow.png" id="1_3bokg"]
+[ext_resource type="Script" path="res://src/cards/defense/ranged_unit_data.gd" id="1_onhje"]
+
+[resource]
+script = ExtResource("1_onhje")
+attack_range = 3
+attack_damage = 5
+name = "Archer"
+description = "A novice archer."
+icon = ExtResource("1_3bokg")
+rank = 1
+card_role = "Defense"
+effect_script = null
+script_args = Array[String]([])

@@ -26,6 +26,10 @@ offset_bottom = 41.0
 
 [node name="Units" type="Node" parent="."]
 
+[node name="Melee" type="Node" parent="Units"]
+
+[node name="Ranged" type="Node" parent="Units"]
+
 [node name="Cards" type="Node" parent="."]
 
 [node name="Deck" type="Node" parent="Cards"]
