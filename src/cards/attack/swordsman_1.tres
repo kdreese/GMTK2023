@@ -1,15 +1,19 @@
-[gd_resource type="Resource" script_class="AttackCardData" load_steps=3 format=3 uid="uid://vurc3d8ph0on"]
+[gd_resource type="Resource" script_class="MeleeUnitData" load_steps=3 format=3 uid="uid://ctifdqd4u5q55"]
 
-[ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_erqt1"]
-[ext_resource type="Script" path="res://src/cards/attack/attack_card_data.gd" id="2_aln6v"]
+[ext_resource type="Script" path="res://src/cards/attack/melee_unit_data.gd" id="1_h7uhr"]
+[ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_vww7p"]
 
 [resource]
-script = ExtResource("2_aln6v")
+script = ExtResource("1_h7uhr")
+attack_power = 5
+attack_recoil = 3
+health = 15
+speed = 2
+unit = null
 name = "Swordsman"
-description = "A basic swordsman."
-icon = ExtResource("1_erqt1")
+description = "A basic swordsman. Does 5 damage when attacking."
+icon = ExtResource("1_vww7p")
 rank = 1
-attack_power = 10
-attack_recoil = 5
-health = 10
-unit = "<null>"
+card_role = "Attack"
+effect_script = null
+script_args = Array[String]([])
