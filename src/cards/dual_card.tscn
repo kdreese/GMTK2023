@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwie270483p4m"]
+[gd_scene load_steps=7 format=3 uid="uid://ba6j46b74ptrc"]
 
 [ext_resource type="Script" path="res://src/cards/dual_card.gd" id="1_1xj2b"]
 [ext_resource type="Texture2D" uid="uid://cptxnmpjn0yys" path="res://assets/dual_card.png" id="1_dra32"]
@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://dviouaw1aihwr" path="res://assets/icons/walls.png" id="5_t14rv"]
 
 [node name="DualCard" type="Control"]
+custom_minimum_size = Vector2(78, 120)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 78.0
+offset_bottom = 120.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_1xj2b")
