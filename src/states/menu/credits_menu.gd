@@ -3,6 +3,7 @@ extends Control
 
 var main_licenses := [
 	["Godot Engine", Engine.get_license_text().strip_edges()],
+	["CAT Engravers Font", FileAccess.get_file_as_string("res://assets/fonts/engravers/Open Font License.txt")],
 	# Here we can put other licenses if we use asset packs/libraries/etc
 ]
 
