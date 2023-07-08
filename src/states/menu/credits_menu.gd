@@ -37,7 +37,7 @@ func generate_license_bbcode_text() -> String:
 
 	var engine_licenses := Engine.get_license_info()
 	for license in engine_licenses:
-		text += "\n\n[center][font_size=20][b]" + license + "[/b][/font_size][/center]\n\n"
+		text += "\n\n[center][font_size=18][b]" + license + "[/b][/font_size][/center]\n\n"
 		text += engine_licenses[license]
 
 	return text
