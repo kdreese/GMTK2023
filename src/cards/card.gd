@@ -7,6 +7,9 @@ extends Control
 @onready var rank_icon: TextureRect = %RankIcon
 
 
+func _ready():
+	initialize(preload("res://src/cards/attack/swordsman_1.tres"))
+
 func initialize(data: AttackCardData) -> void:
 	card_name.text = data.name
 	icon.texture = data.icon
