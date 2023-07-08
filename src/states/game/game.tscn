@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=7 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
+[ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -90,10 +91,18 @@ text = "Options"
 layout_mode = 2
 text = "Quit to Menu"
 
+[node name="OptionsMenu" parent="CanvasLayer" instance=ExtResource("5_xdl8y")]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("5_r6md7")
 autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="show_options"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="CanvasLayer/PauseMenu" method="_on_to_menu_button_pressed"]

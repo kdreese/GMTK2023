@@ -31,6 +31,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Fanfare" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("3_3jue0")
+bus = &"Music"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

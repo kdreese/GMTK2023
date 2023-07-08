@@ -6,6 +6,7 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
 
 @onready var pause_menu: ColorRect = %PauseMenu
+@onready var options_menu: Control = %OptionsMenu
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
 @onready var end_round_button: Button = $EndRoundButton
@@ -16,10 +17,10 @@ var cards: Array[Resource]
 var num_rounds: int = 0
 var red_max_health: int = 150
 var blue_max_health: int = 200
-var anim_step_time = 0.25 # in seconds.
 
 
 func _ready() -> void:
+	options_menu.get_node("CenterContainer/VBoxContainer/BackButton").pressed.connect(hide_options)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	var unit = preload("res://src/units/unit.tscn").instantiate()
@@ -63,6 +64,16 @@ func pause() -> void:
 	pause_menu.show()
 
 
+func show_options() -> void:
+	pause_menu.hide()
+	options_menu.show()
+
+
+func hide_options() -> void:
+	options_menu.hide()
+	pause_menu.show()
+
+
 func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
 	upgrade_defenses()
@@ -97,18 +108,18 @@ func instant_defensive_damage() -> void:
 		if unit.row < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
-		await get_tree().create_timer(anim_step_time).timeout
+		await get_tree().create_timer(Global.animation_speed).timeout
 		# Do the attack.
 		target.health -= unit.attack_damage
 		target.update_health_bar()
-		await get_tree().create_timer(anim_step_time).timeout
+		await get_tree().create_timer(Global.animation_speed).timeout
 		# Kill the target, if necessary.
 		if target.health < 0:
 			target.queue_free()
-			await get_tree().create_timer(anim_step_time).timeout
+			await get_tree().create_timer(Global.animation_speed).timeout
 		# Move the archer back.
 		unit.update_position()
-		await get_tree().create_timer(anim_step_time).timeout
+		await get_tree().create_timer(Global.animation_speed).timeout
 
 
 func perpetual_defensive_damage() -> void:
@@ -127,7 +138,7 @@ func offensive_action_sweep() -> void:
 				unit.grid_position += Vector2i.RIGHT
 				unit.update_position()
 				steps_left -= 1
-				await get_tree().create_timer(anim_step_time).timeout
+				await get_tree().create_timer(Global.animation_speed).timeout
 		if unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 	# for each offensive square, check if a unit is occupying that square
@@ -137,22 +148,22 @@ func offensive_action_sweep() -> void:
 func melee_attack(unit: Unit) -> void:
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
-		await get_tree().create_timer(anim_step_time).timeout
+		await get_tree().create_timer(Global.animation_speed).timeout
 		red_castle_health_bar.current_health -= unit.attack_power
 		red_castle_health_bar.update()
 	else:
 		unit.position = BLUE_CASTLE_DOOR
-		await get_tree().create_timer(anim_step_time).timeout
+		await get_tree().create_timer(Global.animation_speed).timeout
 		blue_castle_health_bar.current_health -= unit.attack_power
 		blue_castle_health_bar.update()
 	unit.health -= unit.recoil
 	unit.update_health_bar()
-	await get_tree().create_timer(anim_step_time).timeout
+	await get_tree().create_timer(Global.animation_speed).timeout
 	if unit.health <= 0:
 		unit.queue_free()
 	else:
 		unit.update_position()
-		await get_tree().create_timer(anim_step_time).timeout
+		await get_tree().create_timer(Global.animation_speed).timeout
 
 
 func melee_attack_order(a, b) -> bool:

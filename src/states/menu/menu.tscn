@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/states/menu/menu.gd" id="1_nkfw1"]
 [ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="2_thjg8"]
 [ext_resource type="Texture2D" uid="uid://bvc383nxlmy7o" path="res://assets/title_screen.png" id="3_p44ns"]
-[ext_resource type="AudioStream" uid="uid://cmvlp6vmvubha" path="res://assets/music/siege_for_yourself.ogg" id="4_42t6l"]
+[ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="4_7gl75"]
 
 [node name="Menu" type="CenterContainer"]
 texture_filter = 2
@@ -66,11 +66,12 @@ grow_vertical = 2
 texture = ExtResource("3_p44ns")
 metadata/_edit_use_anchors_ = true
 
-[node name="Fanfare" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("4_42t6l")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="OptionsMenu" parent="CanvasLayer" instance=ExtResource("4_7gl75")]
+visible = false
 
 [connection signal="pressed" from="UI/Buttons/PlayButton" to="." method="play"]
-[connection signal="pressed" from="UI/Buttons/OptionsButton" to="." method="options"]
+[connection signal="pressed" from="UI/Buttons/OptionsButton" to="." method="show_options"]
 [connection signal="pressed" from="UI/Buttons/CreditsButton" to="." method="credits"]
 [connection signal="pressed" from="UI/Buttons/QuitButton" to="." method="quit"]
