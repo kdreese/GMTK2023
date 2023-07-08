@@ -1,6 +1,7 @@
 class_name DualCardData
 extends Resource
 
+
 @export var attack: AttackCardData
 @export var defense: DefenseCardData
 @export var rank: int

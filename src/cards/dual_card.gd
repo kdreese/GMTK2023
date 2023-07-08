@@ -1,5 +1,6 @@
 extends Control
 
+
 @onready var rank_icon: TextureRect = $RankIcon
 @onready var attack_label: Label = $AttackLabel
 @onready var attack_icon: TextureRect = $AttackIcon

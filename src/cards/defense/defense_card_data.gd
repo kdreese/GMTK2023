@@ -1,6 +1,7 @@
 class_name DefenseCardData
 extends Resource
 
+
 @export var name: String ## The name of the card.
 @export_multiline var description: String ## A detailed description
 @export var icon: Texture2D ## The icon for this card.
