@@ -165,6 +165,7 @@ func melee_attack_order(a, b) -> bool:
 		else:
 			return false
 
+
 func ranged_attack_order(a, b) -> bool:
 	if b.row > a.row:
 		return false
