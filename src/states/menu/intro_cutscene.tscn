@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4e1elen8asme"]
+
+[ext_resource type="Script" path="res://src/states/menu/intro_cutscene.gd" id="1_42wam"]
+[ext_resource type="Texture2D" uid="uid://bvc383nxlmy7o" path="res://assets/title_screen.png" id="2_vi3pe"]
+[ext_resource type="AudioStream" uid="uid://cmvlp6vmvubha" path="res://assets/music/siege_for_yourself.ogg" id="3_3jue0"]
+[ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="4_ixrka"]
+
+[node name="IntroCutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_42wam")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BackgroundTexture" type="TextureRect" parent="Background"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vi3pe")
+metadata/_edit_use_anchors_ = true
+
+[node name="Fanfare" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_3jue0")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI" type="VBoxContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="CenterContainer/UI"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("4_ixrka")
+theme_override_font_sizes/font_size = 96
+text = "Siege For
+Yourself!"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="CenterContainer/UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="PlayButton" type="Button" parent="CenterContainer/UI/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="CenterContainer/UI/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Options"
+
+[node name="CreditsButton" type="Button" parent="CenterContainer/UI/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/UI/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Quit"

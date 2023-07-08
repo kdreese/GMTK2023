@@ -1,14 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=5 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
+[ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
 
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2_bwdb4")
+
+[node name="CastleHealthBar" parent="." instance=ExtResource("3_a3and")]
+offset_left = -1.0
+offset_top = 202.0
+offset_right = -1.0
+offset_bottom = 202.0
+
+[node name="CastleHealthBar2" parent="." instance=ExtResource("3_a3and")]
+offset_left = 601.0
+offset_top = 41.0
+offset_right = 601.0
+offset_bottom = 41.0
 
 [node name="Monsters" type="Node" parent="."]
 
