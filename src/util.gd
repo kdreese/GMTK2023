@@ -1,5 +1,6 @@
 class_name Util
 
+
 static func rank_to_texture(rank: int) -> Texture2D:
 	if rank == 1:
 		return preload("res://assets/ranks/rank_1.png")

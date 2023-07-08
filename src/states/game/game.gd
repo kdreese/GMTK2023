@@ -4,6 +4,7 @@ extends Node2D
 const RED_CASTLE_DOOR = Vector2(160, 240)
 const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
+
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
