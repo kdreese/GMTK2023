@@ -176,7 +176,7 @@ Wir erteilen die Erlaubnis, inoffizielle Übersetzungen in andere Sprachen zu ve
 "Dies ist eine inoffizielle Übersetzung der SIL Open Font-Lizenz in die Sprache $. Sie wurde nicht von SIL International veröffentlicht und enthält keine rechtlichen Bestimmungen für die Vertriebsbedingungen für Schriftarten, die OFL verwenden. Eine Veröffentlichung unter OFL ist nur gültig, wenn die englischer Originaltext.
 
 Wir sind uns jedoch bewusst, dass diese inoffizielle Übersetzung Benutzern und Designern, die nicht mit Englisch vertraut sind, helfen wird, die SIL OFL besser zu verstehen und die Verwendung und Freigabe von Schriftfamilien unter diesem kollaborativen Schriftdesignmodell zu vereinfachen. Wir empfehlen Designern, die erwägen, ihre Kreation unter dem OFL zu veröffentlichen, die FAQ in ihrer eigenen Sprache zu lesen, sofern sie verfügbar ist.
- 
+
 Die offizielle Version der Lizenz und die dazugehörigen FAQ finden Sie unter http://scripts.sil.org/OFL. "
 
 - Halten Sie Ihre inoffizielle Übersetzung auf dem neuesten Stand und aktualisieren Sie sie bei Bedarf auf unsere Anfrage, z. B. wenn Unklarheiten bestehen, die zu Verwirrung führen können.
@@ -234,7 +234,7 @@ Yes. You may use them like most other fonts, but unlike some fonts you may inclu
 Yes! Go ahead! Using CSS (Cascading Style Sheets) is recommended. Direct usage of fonts retrieved from a remote server - also referred to as font linking - using cross-platform open standards like @font-face is encouraged. This is considered to be use and distribution for which the OFL explicitly grants permission. The font file itself is not embedded in the webpage but referenced through a web address (i.e. a URI regardless of file format or access protocol) which will cause the browser to retrieve and use the corresponding font to render the webpage. This usage scenario is different from font embedding within a document (i.e. a PDF) where the font or some of its elements become part of the document. Note that embedding in a document is also permitted by the license as indicated in 1.1. (See 1.10 for details related to URL-based access restrictions methods or DRM mechanisms).
 
 1.3  Can I make the fonts available to others from my web site?
-Yes, as long as you meet the conditions of the license (do not sell by itself, include the necessary files, include the necessary copyright and license information, rename Modified Versions, do not abuse the Author(s)' name(s) and do not sublicense). In the case where you are hosting fonts to be served on the web, make sure the file contains the needed copyright notice(s) and licensing information in its metadata. Please double-check the accuracy of every field to prevent contradictory information. If you are making the font available for use via the @font-face open standard, putting this information in the standard font metadata fields is sufficient. Other font formats, including EOT and proposed superior alternatives, already provide fields for this information. 
+Yes, as long as you meet the conditions of the license (do not sell by itself, include the necessary files, include the necessary copyright and license information, rename Modified Versions, do not abuse the Author(s)' name(s) and do not sublicense). In the case where you are hosting fonts to be served on the web, make sure the file contains the needed copyright notice(s) and licensing information in its metadata. Please double-check the accuracy of every field to prevent contradictory information. If you are making the font available for use via the @font-face open standard, putting this information in the standard font metadata fields is sufficient. Other font formats, including EOT and proposed superior alternatives, already provide fields for this information.
 
 1.4  Can the fonts be included with Free/Libre and Open Source Software collections such as GNU/Linux and BSD distributions?
 Yes! Fonts licensed under the OFL can be freely aggregated with software under FLOSS (Free/Libre and Open Source Software) licenses. Since fonts are much more useful aggregated to than merged with existing software, possible incompatibility with existing software licenses is not a problem. You can also repackage the fonts and the accompanying components in a .rpm or .deb package and include them in distro CD/DVDs and online repositories.
@@ -266,7 +266,7 @@ The vast majority of the time, documents circulated in electronic form reference
 1.13  If OFL fonts are extracted from a document in which they are embedded (such as a PDF file), what can be done with them? Is this a risk to Author(s)?
 The few utilities that can extract fonts embedded in a PDF will only output limited amounts of outlines - not a complete font. To create a working font from this method is much more difficult than finding the source of the original OFL font. So there is little chance that an OFL font would be extracted and redistributed inappropriately through this method. Even so, copyright laws address any misrepresentation of authorship. All Font Software released under the OFL and marked as such by the Author(s) is intended to remain under this license regardless of the distribution method, and cannot be redistributed under any other license. We strongly discourage any font extraction - we recommend directly using the font sources instead - but if you extract font outlines from a document please be considerate, use your common sense and respect the work of the Author(s) and the licensing model.
 
-1.14  What about sharing OFL fonts with friends on a CD, DVD or USB stick? 
+1.14  What about sharing OFL fonts with friends on a CD, DVD or USB stick?
 You are very welcome to share open fonts with friends, family and colleagues on such removable media. Please make sure that you share and share-alike as much as possible from what the Author(s) released and that you don't strip away useful information which may not be present in the binary font files themselves. Just remember that in the case where you sell the font, it has to come bundled with software.
 
 
@@ -343,14 +343,14 @@ This file provides detailed information on the <FontFamilyName> Font Software. T
 - Corrected minor typos in the documentation
 - Fixed position of combining inverted breve below (U+032F)
 - Added OpenType/Graphite smart code for Armenian
-- Added Armenian glyphs (U+0531 -> U+0587) 
+- Added Armenian glyphs (U+0531 -> U+0587)
 - Released as "<NewFontFamilyName>"
 
 1 Jan 2005 (Joe Smith) <FontFamilyName> Version 1.0
 - Initial release of font "<FontFamilyName>"
 
 3.4  Acknowledgements
-(Here is where contributors can be acknowledged. 
+(Here is where contributors can be acknowledged.
 
 If you make modifications be sure to add your name (N), email (E), web-address (W) and description (D). This list is sorted by last name in alphabetical order.)
 
@@ -422,10 +422,10 @@ We give permission to publish unofficial translations into other languages provi
 "This is an unofficial translation of the SIL Open Font License into $language. It was not published by SIL International, and does not legally state the distribution terms for fonts that use the OFL. A release under the OFL is only valid when using the original English text.
 
 However, we recognize that this unofficial translation will help users and designers not familiar with English to understand the SIL OFL better and make it easier to use and release font families under this collaborative font design model. We encourage designers who consider releasing their creation under the OFL to read the FAQ in their own language if it is available.
- 
+
 Please go to http://scripts.sil.org/OFL for the official version of the license and the accompanying FAQ."
 
-- keep your unofficial translation current and update it at our request if needed, for example if there is any ambiguity which could lead to confusion.  
+- keep your unofficial translation current and update it at our request if needed, for example if there is any ambiguity which could lead to confusion.
 
 If you start such a unofficial translation effort of the OFL and its accompanying FAQ please let us know, thank you.
 
