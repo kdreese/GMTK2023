@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=6 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
+[ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -11,23 +12,19 @@ script = ExtResource("1_xpc6h")
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2_bwdb4")
 
-[node name="CastleHealthBar" parent="." instance=ExtResource("3_a3and")]
-offset_left = -1.0
+[node name="RedCastleHealthBar" parent="." instance=ExtResource("3_a3and")]
+offset_left = -5.0
 offset_top = 202.0
-offset_right = -1.0
+offset_right = -5.0
 offset_bottom = 202.0
 
-[node name="CastleHealthBar2" parent="." instance=ExtResource("3_a3and")]
-offset_left = 601.0
+[node name="BlueCastleHealthBar" parent="." instance=ExtResource("3_a3and")]
+offset_left = 595.0
 offset_top = 41.0
-offset_right = 601.0
+offset_right = 595.0
 offset_bottom = 41.0
 
-[node name="Monsters" type="Node" parent="."]
-
-[node name="Friendly" type="Node" parent="Monsters"]
-
-[node name="Enemy" type="Node" parent="Monsters"]
+[node name="Units" type="Node" parent="."]
 
 [node name="Cards" type="Node" parent="."]
 
@@ -88,6 +85,10 @@ text = "Options"
 [node name="ToMenuButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit to Menu"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_r6md7")
+autoplay = true
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]

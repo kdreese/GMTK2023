@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ng2ml31k6uhf"]
+[gd_scene load_steps=6 format=3 uid="uid://ng2ml31k6uhf"]
 
+[ext_resource type="Script" path="res://src/units/unit.gd" id="1_doot4"]
 [ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_t4avs"]
 [ext_resource type="Texture2D" uid="uid://0fasvutovcm" path="res://assets/ranks/rank_1.png" id="3_1v6hk"]
-[ext_resource type="StyleBox" uid="uid://mvv732gy1ops" path="res://src/ui/castle_health_bar_fill.tres" id="4_fq84v"]
+[ext_resource type="StyleBox" uid="uid://mvv732gy1ops" path="res://src/ui/health_bar_fill_red.tres" id="4_voe4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17boe"]
 bg_color = Color(0, 0, 0, 1)
@@ -12,22 +13,27 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
 [node name="Unit" type="Node2D"]
+script = ExtResource("1_doot4")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_t4avs")
 
-[node name="Rank Icon" type="Sprite2D" parent="."]
-position = Vector2(-25, -25)
-scale = Vector2(0.5, 0.5)
+[node name="RankIcon" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-10, -10)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_1v6hk")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -25.0
-offset_top = 40.0
-offset_right = 25.0
-offset_bottom = 50.0
+unique_name_in_owner = true
+offset_left = -12.0
+offset_top = 15.0
+offset_right = 12.0
+offset_bottom = 21.0
 theme_override_styles/background = SubResource("StyleBoxFlat_17boe")
-theme_override_styles/fill = ExtResource("4_fq84v")
+theme_override_styles/fill = ExtResource("4_voe4r")
 max_value = 1.0
 value = 0.5
 show_percentage = false
