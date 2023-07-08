@@ -28,8 +28,6 @@ func _ready() -> void:
 	$Units.add_child(unit)
 	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 3)
 
-	pass
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -91,7 +89,6 @@ func offensive_action_sweep() -> void:
 			await melee_attack(unit)
 	# for each offensive square, check if a unit is occupying that square
 	# if so, call that unit's offensive_action function
-	pass
 
 
 func melee_attack(unit: Unit) -> void:
