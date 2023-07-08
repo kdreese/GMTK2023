@@ -1,11 +1,11 @@
 extends Node2D
 
 
-var enemyMoves: Array[Dictionary]
+var enemy_moves: Array[Dictionary]
 var cards: Array[Resource]
-var numRounds: int = 0
-var friendlyHealth: int = 150
-var enemyHealth: int = 200
+var num_rounds: int = 0
+var friendly_health: int = 150
+var enemy_health: int = 200
 
 
 func _ready() -> void:
@@ -18,7 +18,7 @@ func _on_end_round_button_pressed() -> void:
 	perpetual_defensive_damage()
 	offensive_action_sweep()
 	place_new_offenses()
-	numRounds += 1
+	num_rounds += 1
 
 
 func upgrade_defenses() -> void:
