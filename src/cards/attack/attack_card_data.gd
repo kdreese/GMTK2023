@@ -10,4 +10,4 @@ extends Resource
 @export var attack_power: int ## The amount of damage this card does each turn.
 @export var attack_recoil: int ## The amount of damage this card takes after attacking.
 @export var health: int ## The card's max health.
-@export_file() var unit ## A path the the unit this card will spawn.
+@export_file() var unit ## A path to the unit this card will spawn.
