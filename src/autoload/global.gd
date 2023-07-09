@@ -31,9 +31,22 @@ var card_replay_moves := {
 	0: [
 		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 1],
 	],
+	2: [
+		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 2],
+	],
+	4: [
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 4],
+	],
 	6: [
 		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), 3],
 	],
+	8: [
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 3],
+		[preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), 0]
+	],
+	10: [
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 5]
+	]
 } # The moves played last round, which will be replayed by the enemy this round
 var card_current_moves := {} # The moves currently played this round. The lanes are in player POV and need to be shifted
 
