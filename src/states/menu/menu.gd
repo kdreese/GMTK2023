@@ -15,6 +15,7 @@ func _ready() -> void:
 
 
 func play() -> void:
+	Global.curr_stage = 0
 	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
 
 

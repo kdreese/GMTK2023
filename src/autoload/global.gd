@@ -9,13 +9,11 @@ var attack_cards := {}		# Dictionary[int, Array[CardData]]
 var defense_cards := {}		# Dictionary[int, Array[CardData]]
 var curr_stage: int = 0
 var draft_card_ranks_per_stage := {
-	1 : [1, 1],
-	2 : [1, 2],
-	3 : [2, 2],
-	4 : [2, 3],
+	1 : [1, 2],
+	2 : [2, 2],
+	3 : [2, 3],
+	4 : [3, 3],
 	5 : [3, 3],
-	6 : [3, 4],
-	7 : [4, 4],
 }
 var deck: Array[DualCardData] = [
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
