@@ -20,7 +20,7 @@ var blue_max_health: int = 200
 
 
 func _ready() -> void:
-	options_menu.get_node("CenterContainer/VBoxContainer/BackButton").pressed.connect(hide_options)
+	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	var unit = preload("res://src/units/unit.tscn").instantiate()

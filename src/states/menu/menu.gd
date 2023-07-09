@@ -5,7 +5,7 @@ extends Control
 
 
 func _ready() -> void:
-	options_menu.get_node("CenterContainer/VBoxContainer/BackButton").pressed.connect(hide_options)
+	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 
 
 func play() -> void:

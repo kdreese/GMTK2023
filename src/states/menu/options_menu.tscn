@@ -71,7 +71,7 @@ value = 0.5
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 2.08165e-12)
 layout_mode = 2
-text = "50%"
+text = "50"
 
 [node name="AnimSpeedLabel" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -95,6 +95,7 @@ layout_mode = 2
 text = "Medium"
 
 [node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Back"
