@@ -127,27 +127,32 @@ func _on_card_dropped(card: Control) -> void:
 		put_down_this_turn[lane] = true
 	else:
 		data = card.card_data.defense
-	card_nodes.remove_child(card)
-	arrange_cards()
-	card.queue_free()
-	perform_card(data, lane)
+	var should_remove := perform_card(data, lane)
+	if should_remove:
+		card_nodes.remove_child(card)
+		arrange_cards()
+		card.queue_free()
 
 
-func perform_card(data: CardData, lane: int) -> void:
+func perform_card(data: CardData, lane: int) -> bool:
 	if data.effect_script == null:
 		push_error("CardData %s has no script!", data.name)
-		return
+		return false
 	var card_script := load(data.effect_script)
 	if card_script == null or not (card_script is Script):
 		push_error("CardData %s has invalid script!", data.name)
-		return
-	var script_node := Node.new() # Is this the right way to do it?
-	add_child(script_node)
-	script_node.set_script(card_script)
+		return false
+	var script_node_generic = Node.new() # Is this the right way to do it?
+	add_child(script_node_generic)
+	script_node_generic.set_script(card_script)
+	var script_node: CardAction = script_node_generic
 	script_node.set_game(self)
-	script_node.perform_action(data, lane)
+	var success := script_node.can_perform(data, lane)
+	if success:
+		script_node.perform_action(data, lane)
 	remove_child(script_node)
 	script_node.queue_free()
+	return success
 
 
 

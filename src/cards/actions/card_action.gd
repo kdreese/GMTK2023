@@ -14,6 +14,12 @@ func set_game(game_scene: Node) -> void:
 	ranged_units = game.get_node("Units/Ranged")
 
 
+
+## An optional function which can prevent an action from being run (and card consumed).
+func can_perform(_data: CardData, _lane: int) -> bool:
+	return true
+
+
 ## The action which is performed when the card is dropped. Accepts the card data and lane
 func perform_action(_data: CardData, _lane: int) -> void:
 	push_warning("Unimplemented action")
