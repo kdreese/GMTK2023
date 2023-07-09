@@ -5,6 +5,7 @@ extends Control
 @onready var fanfare: AudioStreamPlayer = %Fanfare
 @onready var title: Label = %Title
 @onready var buttons: VBoxContainer = %Buttons
+@onready var skip_label: Label = %SkipLabel
 
 
 const MENU = preload("res://src/states/menu/menu.tscn")
@@ -33,6 +34,10 @@ func skip_cutscene() -> void:
 	go_to_menu()
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		skip_cutscene()
+	elif event is InputEventKey or event is InputEventMouseButton:
+		if not skip_label.visible:
+			print("Showing skip label.")
+			skip_label.show()
