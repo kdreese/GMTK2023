@@ -61,21 +61,31 @@ func _ready() -> void:
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
+		$CanvasLayer/OffenseMask.show()
 		await $Cards.get_children()[0].dropped_card
+		$CanvasLayer/OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
+		await text_box.text_finished
 		await turn_finished
 		text_box.play(preload("res://assets/dialog/dialog_3.tres"))
+		await text_box.text_finished
+		$CanvasLayer/DefenseMask.show()
 		await $Cards.get_children()[0].dropped_card
+		$CanvasLayer/DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
+		await text_box.text_finished
 		await turn_finished
 		text_box.play(preload("res://assets/dialog/dialog_4.tres"))
+		await text_box.text_finished
 		await $Cards.get_children()[0].dropped_card
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
+		await text_box.text_finished
 	else:
 		for i in range(3):
 			await draw_card()
 		if Global.curr_stage == 2:
 			text_box.play(preload("res://assets/dialog/dialog_7.tres"))
+			await text_box.text_finished
 
 	Global.curr_stage += 1
 
@@ -210,6 +220,8 @@ func draw_card() -> void:
 		deck = discard.duplicate()
 		deck.shuffle()
 		discard.clear()
+		if deck.size() == 0:
+			return
 
 	var dual_card_data = deck.pop_front()
 	hand.append(dual_card_data)
