@@ -33,6 +33,8 @@ func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
+	red_castle_health_bar.current_health = 50
+	red_castle_health_bar.update()
 
 	var DualCard := preload("res://src/cards/dual_card.tscn")
 	var base_position := get_viewport_rect().size
@@ -43,7 +45,7 @@ func _ready() -> void:
 		var card := DualCard.instantiate()
 		$Cards.add_child(card)
 		card.initialize(DualCardData.new(
-			preload("res://src/cards/attack/swordsman_1.tres"), preload("res://src/cards/defense/archer_1.tres")
+			preload("res://src/cards/attack/swordsman_1.tres"), preload("res://src/cards/defense/walls_1.tres")
 		))
 		card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()
@@ -109,26 +111,44 @@ func _on_end_round_button_pressed() -> void:
 
 
 func _on_card_dropped(card: Control) -> void:
-	var found := -1
+	var lane := -1
 	for drop in lane_drops:
 		if drop.is_mouse_inside:
-			found = drop.lane_index
+			lane = drop.lane_index
 			break
-	if found < 0:
+	if lane < 0:
 		return
-	if found < 3 and put_down_this_turn[found]:
+	if lane < 3 and put_down_this_turn[lane]:
 		return # Don't want to waste an attacking unit by overriding it before it can go
 	# We have a thing to put down! Let's do it
-	var unit_data: CardData
-	if found < 3:
-		unit_data = card.card_data.attack
-		put_down_this_turn[found] = true
+	var data: CardData
+	if lane < 3:
+		data = card.card_data.attack
+		put_down_this_turn[lane] = true
 	else:
-		unit_data = card.card_data.defense
+		data = card.card_data.defense
 	card_nodes.remove_child(card)
 	arrange_cards()
 	card.queue_free()
-	# TODO: Use unit_data script to do something
+	perform_card(data, lane)
+
+
+func perform_card(data: CardData, lane: int) -> void:
+	if data.effect_script == null:
+		push_error("CardData %s has no script!", data.name)
+		return
+	var card_script := load(data.effect_script)
+	if card_script == null or not (card_script is Script):
+		push_error("CardData %s has invalid script!", data.name)
+		return
+	var script_node := Node.new() # Is this the right way to do it?
+	add_child(script_node)
+	script_node.set_script(card_script)
+	script_node.set_game(self)
+	script_node.perform_action(data, lane)
+	remove_child(script_node)
+	script_node.queue_free()
+
 
 
 func upgrade_defenses() -> void:

@@ -11,5 +11,5 @@ description = "Repairs the walls of your castle by 50HP"
 icon = ExtResource("1_xyyh6")
 rank = 1
 card_role = "Defense"
-effect_script = null
-script_args = Array[String](["50"])
+effect_script = "res://src/cards/actions/increase_health.gd"
+extra_data = Array[String](["50"])
