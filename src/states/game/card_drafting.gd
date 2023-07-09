@@ -28,7 +28,7 @@ func select_card_set(first_rank: int, second_rank: int) -> void:
 		second_attack_set.append(Global.attack_cards[second_rank].pick_random())
 		second_ranged_set.append(Global.defense_cards[second_rank].pick_random())
 		second_set.append(DualCardData.new(second_attack_set[i], second_ranged_set[i]))
-	
+
 	# Display first_set cards
 	display_cards(first_set)
 
