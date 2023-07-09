@@ -36,6 +36,8 @@ var blue_max_health: int = 50
 
 var put_down_this_turn := [false, false, false] # In the attacking lanes, have we put something down this turn yet?
 
+var game_over := false
+
 
 func _ready() -> void:
 	text_box.lines.clear()
@@ -299,6 +301,8 @@ func offensive_action_sweep() -> void:
 	var units := $Units/Melee.get_children()
 	units.sort_custom(melee_attack_order)
 	for unit in units:
+		if game_over:
+			break
 		var steps_left = unit.speed
 		for _idx in range(unit.speed):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
@@ -343,6 +347,8 @@ func melee_attack(unit: Unit) -> void:
 		blue_castle_health_bar.current_health -= damage
 		blue_castle_health_bar.update()
 	check_for_end_condition()
+	if game_over:
+		return
 	unit.health -= unit.recoil
 	unit.update_health_bar()
 	await get_tree().create_timer(Global.animation_speed).timeout
@@ -374,14 +380,16 @@ func ranged_attack_order(a, b) -> bool:
 
 func check_for_end_condition() -> void:
 	if blue_castle_health_bar.current_health <= 0:
+		game_over = true
 		end_round_button.hide()
-		text_box.play(preload("res://assets/dialog/dialog_6.tres"))
-		await text_box.text_finished
+		if Global.curr_stage == 1:
+			text_box.play(preload("res://assets/dialog/dialog_6.tres"))
+			await text_box.text_finished
 		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
 				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
 		card_drafting.show()
 	elif red_castle_health_bar.current_health <= 0:
-		pass	# Game over screen
+		game_over = true	# Game over screen
 
 
 func arrange_cards() -> void:
