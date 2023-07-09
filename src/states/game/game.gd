@@ -6,6 +6,7 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
 
 @onready var pause_menu: ColorRect = %PauseMenu
+@onready var card_drafting: ColorRect = %CardDrafting
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
 @onready var end_round_button: Button = $EndRoundButton
@@ -23,16 +24,16 @@ func _ready() -> void:
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	var unit = preload("res://src/units/unit.tscn").instantiate()
 	$Units/Melee.add_child(unit)
-	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 0)
+	unit.init(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 0)
 	unit = preload("res://src/units/unit.tscn").instantiate()
 	$Units/Melee.add_child(unit)
-	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 3)
+	unit.init(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 3)
 	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	$Units/Ranged.add_child(unit)
-	unit.init(preload("res://src/cards/defense/archer_1.tres"), 3)
+	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 3)
 	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	$Units/Ranged.add_child(unit)
-	unit.init(preload("res://src/cards/defense/archer_1.tres"), 0)
+	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -129,6 +130,7 @@ func offensive_action_sweep() -> void:
 				await get_tree().create_timer(0.5).timeout
 		if unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
+			check_for_end_condition()
 	# for each offensive square, check if a unit is occupying that square
 	# if so, call that unit's offensive_action function
 
@@ -175,3 +177,12 @@ func ranged_attack_order(a, b) -> bool:
 
 func place_new_offenses() -> void:
 	pass
+
+
+func check_for_end_condition() -> void:
+	if blue_castle_health_bar.current_health <= 0:
+		end_round_button.hide()
+		card_drafting.select_card_set()
+		card_drafting.show()
+	elif red_castle_health_bar.current_health <= 0:
+		pass	# Game over screen

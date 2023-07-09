@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://chfpilf8yymda"]
 
-[ext_resource type="Script" path="res://src/cards/card.gd" id="1_o03w0"]
+[ext_resource type="Script" path="res://src/cards/attack/attack_card_info.gd" id="1_xg468"]
 [ext_resource type="Texture2D" uid="uid://bvb5e8r0kd8pl" path="res://assets/attack_card.png" id="2_xbqto"]
 
-[node name="Card" type="Control"]
+[node name="AttackCard" type="Control"]
 custom_minimum_size = Vector2(78, 120)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 78.0
 offset_bottom = 120.0
-script = ExtResource("1_o03w0")
+script = ExtResource("1_xg468")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0

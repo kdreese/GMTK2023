@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhr87ej3qtdyg"]
 
-[ext_resource type="Script" path="res://src/cards/card.gd" id="1_k7yw5"]
+[ext_resource type="Script" path="res://src/cards/defense/defense_card_info.gd" id="1_ufbm5"]
 [ext_resource type="Texture2D" uid="uid://cbv058mhhuvcn" path="res://assets/defense_card.png" id="2_vcsns"]
 
-[node name="Card" type="Control"]
+[node name="DefenseCard" type="Control"]
 custom_minimum_size = Vector2(78, 120)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 78.0
 offset_bottom = 120.0
-script = ExtResource("1_k7yw5")
+script = ExtResource("1_ufbm5")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0

@@ -1,13 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=10 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
+[ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
 [ext_resource type="PackedScene" uid="uid://ba6j46b74ptrc" path="res://src/cards/dual_card.tscn" id="5_npjr2"]
+[ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="6_5ih0c"]
 [ext_resource type="PackedScene" uid="uid://dhr87ej3qtdyg" path="res://src/cards/defense/defense_card_info.tscn" id="7_vc2mk"]
-[ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -50,50 +51,8 @@ text = "End Round"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PauseMenu" type="ColorRect" parent="CanvasLayer"]
-unique_name_in_owner = true
-process_mode = 3
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.392157)
-script = ExtResource("3_3a4py")
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PauseMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer"]
-layout_mode = 2
-
-[node name="PauseTitle" type="Label" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Paused"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Resume"
-
-[node name="OptionsButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Options"
-
-[node name="ToMenuButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Quit to Menu"
-
 [node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,6 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
 color = Color(0, 0, 0, 0.392157)
+script = ExtResource("4_ss1ks")
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/CardDrafting"]
 layout_mode = 1
@@ -198,10 +158,56 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Take Card"
 
+[node name="PauseMenu" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+script = ExtResource("3_3a4py")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="PauseTitle" type="Label" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="ToMenuButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit to Menu"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_r6md7")
 autoplay = true
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption/SelectButton" to="CanvasLayer/CardDrafting" method="_on_first_select_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption/SelectButton" to="CanvasLayer/CardDrafting" method="_on_second_select_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption/SelectButton" to="CanvasLayer/CardDrafting" method="_on_third_select_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="CanvasLayer/PauseMenu" method="_on_to_menu_button_pressed"]

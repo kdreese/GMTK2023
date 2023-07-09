@@ -7,10 +7,8 @@ extends Control
 @onready var rank_icon: TextureRect = %RankIcon
 
 
-func initialize(data: AttackCardData) -> void:
+func initialize(data: RangedUnitData) -> void:
 	card_name.text = data.name
 	icon.texture = data.icon
 	description.text = data.description
 	rank_icon.texture = Util.rank_to_texture(data.rank)
-
-
