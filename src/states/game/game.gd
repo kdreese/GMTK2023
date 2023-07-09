@@ -7,6 +7,13 @@ signal turn_finished
 const RED_CASTLE_DOOR = Vector2(160, 240)
 const BLUE_CASTLE_DOOR = Vector2(480, 80)
 const MAX_CARDS_IN_HAND = 5
+const ROUND_HEALTHS = [
+	[20, 30],
+	[25, 40],
+	[30, 50],
+	[40, 60],
+	[50, 75]
+]
 
 
 @onready var pause_menu: ColorRect = %PauseMenu
@@ -43,8 +50,8 @@ func _ready() -> void:
 	text_box.lines.clear()
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
-	red_castle_health_bar.initialize(red_max_health, true)
-	blue_castle_health_bar.initialize(blue_max_health, false)
+	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
+	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
 	info_display.hide()
 
 	deck = Global.deck
@@ -58,7 +65,7 @@ func _ready() -> void:
 		],
 	}
 
-	if Global.curr_stage == 1:
+	if Global.curr_stage == 0:
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
@@ -81,10 +88,12 @@ func _ready() -> void:
 		await $EndRoundButton.pressed
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
 		await text_box.text_finished
+		await draw_card()
+		await draw_card()
 	else:
 		for i in range(3):
 			await draw_card()
-		if Global.curr_stage == 2:
+		if Global.curr_stage == 1:
 			text_box.play(preload("res://assets/dialog/dialog_7.tres"))
 			await text_box.text_finished
 

@@ -7,7 +7,7 @@ const MAX_VOLUME_DB = -6.0
 var animation_speed: float = 0.25
 var attack_cards := {}		# Dictionary[int, Array[CardData]]
 var defense_cards := {}		# Dictionary[int, Array[CardData]]
-var curr_stage: int = 1
+var curr_stage: int = 0
 var draft_card_ranks_per_stage := {
 	1 : [1, 1],
 	2 : [1, 2],
