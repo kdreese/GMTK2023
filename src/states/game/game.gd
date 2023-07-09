@@ -13,10 +13,12 @@ const MAX_CARDS_IN_HAND = 5
 @onready var card_nodes: Node = $Cards
 @onready var end_round_button: Button = $EndRoundButton
 @onready var text_box: TextBox = %TextBox
+@onready var info_display: CenterContainer = %InfoDisplay
 
 @onready var lane_drops: Array[Area2D] = [
 	$AttackDropPoints/Lane0, $AttackDropPoints/Lane1, $AttackDropPoints/Lane2,
 	$DefenseDropPoints/Lane3, $DefenseDropPoints/Lane4, $DefenseDropPoints/Lane5,
+	$InfoDropPoint/LaneInfo,
 ]
 
 
@@ -36,6 +38,7 @@ func _ready() -> void:
 	text_box.text_finished.connect(on_text_finish)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
+	info_display.hide()
 
 	deck = Global.deck
 
@@ -141,6 +144,25 @@ func _on_card_dropped(card: Control) -> void:
 			break
 	if lane < 0:
 		return
+	if lane > 5:
+		var info_container := VBoxContainer.new()
+		var card_container := HBoxContainer.new()
+		var attack_card := card.card_data.attack as CardData
+		var attack_card_node := preload("res://src/cards/attack/attack_card_info.tscn").instantiate()
+		var defense_card := card.card_data.defense as CardData
+		var defense_card_node := preload("res://src/cards/defense/defense_card_info.tscn").instantiate()
+		var close_button := Button.new()
+		close_button.pressed.connect(self.remove_info.bind(info_container))
+		close_button.text = "Close"
+		card_container.add_child(attack_card_node)
+		card_container.add_child(defense_card_node)
+		info_container.add_child(card_container)
+		info_container.add_child(close_button)
+		info_display.add_child(info_container)
+		attack_card_node.initialize(attack_card)
+		defense_card_node.initialize(defense_card)
+		info_display.show()
+		return
 	if lane < 3 and put_down_this_turn[lane]:
 		return # Don't want to waste an attacking unit by overriding it before it can go
 	# We have a thing to put down! Let's do it
@@ -157,6 +179,11 @@ func _on_card_dropped(card: Control) -> void:
 		card.queue_free()
 		discard.append(card.card_data)
 		hand.remove_at(hand.find(card.card_data))
+
+
+func remove_info(card_container: Node) -> void:
+	info_display.hide()
+	card_container.queue_free()
 
 
 func draw_card() -> void:
