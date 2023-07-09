@@ -302,6 +302,7 @@ func instant_defensive_damage() -> void:
 		# Kill the target, if necessary.
 		if target.health < 0:
 			target.queue_free()
+			$Units/Melee.remove_child(target)
 			await get_tree().create_timer(Global.animation_speed).timeout
 		# Move the archer back.
 		unit.update_position()
@@ -365,6 +366,7 @@ func melee_attack(unit: Unit) -> void:
 	await get_tree().create_timer(Global.animation_speed).timeout
 	if unit.health <= 0:
 		unit.queue_free()
+		$Units/Melee.remove_child(unit)
 	else:
 		unit.update_position()
 		await get_tree().create_timer(Global.animation_speed).timeout
