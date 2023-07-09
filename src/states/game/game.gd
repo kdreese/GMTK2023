@@ -46,8 +46,6 @@ func _ready() -> void:
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	info_display.hide()
-	blue_castle_health_bar.current_health = 1
-	blue_castle_health_bar.update()
 
 	deck = Global.deck
 
@@ -380,6 +378,8 @@ func ranged_attack_order(a, b) -> bool:
 
 func check_for_end_condition() -> void:
 	if blue_castle_health_bar.current_health <= 0:
+		if Global.curr_stage >= 5:
+			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true
 		end_round_button.hide()
 		if Global.curr_stage == 1:
@@ -389,7 +389,8 @@ func check_for_end_condition() -> void:
 				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
 		card_drafting.show()
 	elif red_castle_health_bar.current_health <= 0:
-		game_over = true	# Game over screen
+		game_over = true
+		get_tree().change_scene_to_file("res://src/states/menu/lose_screen.tscn")	# Game over screen
 
 
 func arrange_cards() -> void:
