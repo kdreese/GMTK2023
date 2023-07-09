@@ -269,3 +269,5 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_052hy")
 stretch_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
