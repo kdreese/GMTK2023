@@ -1,14 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=8 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
 [ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
-[ext_resource type="PackedScene" uid="uid://ba6j46b74ptrc" path="res://src/cards/dual_card.tscn" id="5_npjr2"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
-[ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="6_5ih0c"]
-[ext_resource type="PackedScene" uid="uid://dhr87ej3qtdyg" path="res://src/cards/defense/defense_card_info.tscn" id="7_vc2mk"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
 
 [node name="Game" type="Node2D"]
@@ -83,81 +80,10 @@ text = "Choose a card to add to your deck!"
 horizontal_alignment = 1
 
 [node name="CardChoices" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
-
-[node name="FirstOption" type="VBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="DualCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption" instance=ExtResource("5_npjr2")]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="AttackCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption/HBoxContainer" instance=ExtResource("6_5ih0c")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="DefenseCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption/HBoxContainer" instance=ExtResource("7_vc2mk")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="SelectButton" type="Button" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Take Card"
-
-[node name="SecondOption" type="VBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="DualCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption" instance=ExtResource("5_npjr2")]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="AttackCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption/HBoxContainer" instance=ExtResource("6_5ih0c")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="DefenseCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption/HBoxContainer" instance=ExtResource("7_vc2mk")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="SelectButton" type="Button" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Take Card"
-
-[node name="ThirdOption" type="VBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="DualCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption" instance=ExtResource("5_npjr2")]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="AttackCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption/HBoxContainer" instance=ExtResource("6_5ih0c")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="DefenseCard" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption/HBoxContainer" instance=ExtResource("7_vc2mk")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="SelectButton" type="Button" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Take Card"
 
 [node name="PauseMenu" type="ColorRect" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -214,9 +140,6 @@ autoplay = true
 bus = &"Music"
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/FirstOption/SelectButton" to="CanvasLayer/CardDrafting" method="_on_first_select_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/SecondOption/SelectButton" to="CanvasLayer/CardDrafting" method="_on_second_select_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer/CardChoices/ThirdOption/SelectButton" to="CanvasLayer/CardDrafting" method="_on_third_select_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="show_options"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="CanvasLayer/PauseMenu" method="_on_to_menu_button_pressed"]

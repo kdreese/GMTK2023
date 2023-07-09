@@ -15,7 +15,7 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
 var enemy_moves: Array[Dictionary]
 var cards: Array[Resource]
-var num_rounds: int = 0
+var curr_round: int = 0
 var red_max_health: int = 150
 var blue_max_health: int = 200
 
@@ -36,6 +36,8 @@ func _ready() -> void:
 	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	$Units/Ranged.add_child(unit)
 	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 0)
+	
+	Global.curr_stage += 1
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -82,7 +84,7 @@ func _on_end_round_button_pressed() -> void:
 	perpetual_defensive_damage()
 	await offensive_action_sweep()
 	place_new_offenses()
-	num_rounds += 1
+	curr_round += 1
 	end_round_button.disabled = false
 
 
@@ -194,7 +196,8 @@ func place_new_offenses() -> void:
 func check_for_end_condition() -> void:
 	if blue_castle_health_bar.current_health <= 0:
 		end_round_button.hide()
-		card_drafting.select_card_set()
+		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
+				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
 		card_drafting.show()
 	elif red_castle_health_bar.current_health <= 0:
 		pass	# Game over screen

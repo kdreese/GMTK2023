@@ -7,7 +7,7 @@ extends Control
 @onready var rank_icon: TextureRect = %RankIcon
 
 
-func initialize(data: MeleeUnitData) -> void:
+func initialize(data: CardData) -> void:
 	card_name.text = data.name
 	icon.texture = data.icon
 	description.text = data.description
