@@ -18,8 +18,8 @@ func generate_license_bbcode_text() -> String:
 	var text := "[center][font_size=36][b]Licenses[/b][/font_size][/center]"
 
 	for license in main_licenses:
-		text += "\n\n[center][font_size=20][b]" + license[0].strip_edges() + "[/b][/font_size][/center]\n\n"
-		text += "[font_size=13]" + license[1] + "[/font_size]"
+		text += "\n\n[center][font_size=20][b]" + license[0] + "[/b][/font_size][/center]\n\n"
+		text += "[font_size=13]" + license[1].strip_edges() + "[/font_size]"
 
 	text += "\n\n[center][font_size=26][b]All Licenses[/b][/font_size][/center]"
 
