@@ -54,7 +54,7 @@ func _ready() -> void:
 	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
 	info_display.hide()
 
-	deck = Global.deck
+	deck = Global.deck.duplicate()
 
 	if Global.curr_stage == 0:
 		draw_card()
