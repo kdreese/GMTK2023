@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Dialog" load_steps=5 format=3 uid="uid://hsmwnl4md25t"]
+
+[ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_3ans1"]
+[ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_oe5u1"]
+
+[sub_resource type="Resource" id="Resource_p1ga0"]
+script = ExtResource("1_3ans1")
+speaker = "Military Advisor"
+text = "In war, you have to decide how to allocate your resources."
+
+[sub_resource type="Resource" id="Resource_y6vqv"]
+script = ExtResource("1_3ans1")
+speaker = "Military Advisor"
+text = "This card can be used for either [b]attack[/b] or [b]defense[/b], but not both. Choose wisely!"
+
+[resource]
+script = ExtResource("1_oe5u1")
+lines = Array[ExtResource("1_3ans1")]([SubResource("Resource_p1ga0"), SubResource("Resource_y6vqv")])
