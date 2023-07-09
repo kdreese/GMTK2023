@@ -4,6 +4,7 @@ extends Resource
 
 
 @export var name: String ## The name of the card.
+@export var short_name: String ## An abbreviated name.
 @export_multiline var description: String ## A detailed description
 @export var icon: Texture2D ## The icon for this card.
 @export var rank: int ## The power rank of this card.
