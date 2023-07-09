@@ -116,7 +116,7 @@ func _on_end_round_button_pressed() -> void:
 		card.draggable = true
 
 
-func _on_card_dropped(card: Control, card_id: int) -> void:
+func _on_card_dropped(card: Control) -> void:
 	var lane := -1
 	for drop in lane_drops:
 		if drop.is_mouse_inside:
@@ -151,7 +151,7 @@ func draw_card() -> void:
 	card.name = str(card_id)
 	next_card_id += 1
 	card.initialize(dual_card_data)
-	card.dropped_card.connect(self._on_card_dropped.bind(card_id))
+	card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()
 
 	# If the deck is now empty, rearrange the cards from discard.
