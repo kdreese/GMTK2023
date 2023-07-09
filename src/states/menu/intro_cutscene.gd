@@ -39,5 +39,4 @@ func _input(event: InputEvent) -> void:
 		skip_cutscene()
 	elif event is InputEventKey or event is InputEventMouseButton:
 		if not skip_label.visible:
-			print("Showing skip label.")
 			skip_label.show()

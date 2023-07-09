@@ -140,7 +140,6 @@ func on_text_finish() -> void:
 
 
 func _on_end_round_button_pressed() -> void:
-	print("Replay: ", Global.card_replay_moves)
 	end_round_button.disabled = true
 	for card in card_nodes.get_children():
 		card.draggable = false
@@ -258,7 +257,6 @@ func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
 			if not Global.card_current_moves.has(curr_round):
 				Global.card_current_moves[curr_round] = []
 			Global.card_current_moves[curr_round].append([data, lane])
-			print(Global.card_current_moves)
 	remove_child(script_node)
 	script_node.queue_free()
 	return success
