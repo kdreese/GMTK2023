@@ -75,8 +75,8 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb_event := event as InputEventMouseButton
-		if mb_event.button_index == 1:
-			if draggable and mb_event.pressed and not dragging:
+		if draggable and mb_event.button_index == 1:
+			if mb_event.pressed and not dragging:
 				dragging = true
 				rotation = -0.5 # radians
 				scale = Vector2(0.5, 0.5)
