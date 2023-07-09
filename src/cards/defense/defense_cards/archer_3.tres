@@ -13,5 +13,5 @@ description = "A skilled archer."
 icon = ExtResource("1_67qeh")
 rank = 3
 card_role = "Defense"
-effect_script = null
-script_args = null
+effect_script = "res://src/cards/actions/create_ranged_unit.gd"
+extra_data = Array[String]([])

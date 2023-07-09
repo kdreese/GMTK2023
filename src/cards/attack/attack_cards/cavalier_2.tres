@@ -17,4 +17,4 @@ icon = ExtResource("1_qlihe")
 rank = 2
 card_role = "Attack"
 effect_script = "res://src/cards/actions/create_melee_unit.gd"
-script_args = null
+extra_data = Array[String]([])
