@@ -2,7 +2,27 @@ extends Node
 
 
 const MAX_VOLUME_DB = -6.0
-
+const FIRST_REPLAY_MOVES = {
+	0: [
+		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 1],
+	],
+	2: [
+		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 2],
+	],
+	4: [
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 4],
+	],
+	6: [
+		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), 3],
+	],
+	8: [
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 3],
+		[preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), 0]
+	],
+	10: [
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 5]
+	]
+}
 
 var animation_speed: float = 0.25
 var attack_cards := {}		# Dictionary[int, Array[CardData]]
@@ -25,27 +45,7 @@ var deck: Array[DualCardData] = [
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/oil_1.tres")),
 ]
 # The next two variables are in the format: Dictionary[turn_number: int, moves: Array[Array[data: CardData, lane: int]]]
-var card_replay_moves := {
-	0: [
-		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 1],
-	],
-	2: [
-		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 2],
-	],
-	4: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 4],
-	],
-	6: [
-		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), 3],
-	],
-	8: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 3],
-		[preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), 0]
-	],
-	10: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), 5]
-	]
-} # The moves played last round, which will be replayed by the enemy this round
+var card_replay_moves := FIRST_REPLAY_MOVES # The moves played last round, which will be replayed by the enemy this round
 var card_current_moves := {} # The moves currently played this round. The lanes are in player POV and need to be shifted
 
 

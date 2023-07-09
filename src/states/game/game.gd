@@ -60,6 +60,7 @@ func _ready() -> void:
 	deck = Global.deck.duplicate()
 
 	if Global.curr_stage == 0:
+		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
