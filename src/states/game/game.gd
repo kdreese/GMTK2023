@@ -141,6 +141,12 @@ func _on_card_dropped(card: Control) -> void:
 
 
 func draw_card() -> void:
+	# If the deck is empty, rearrange the cards from discard.
+	if deck.size() == 0:
+		deck = discard.duplicate()
+		deck.shuffle()
+		discard.clear()
+
 	var dual_card_data = deck.pop_front()
 	hand.append(dual_card_data)
 	var card = preload("res://src/cards/dual_card.tscn").instantiate()
@@ -148,12 +154,6 @@ func draw_card() -> void:
 	card.initialize(dual_card_data)
 	card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()
-
-	# If the deck is now empty, rearrange the cards from discard.
-	if deck.size() == 0:
-		deck = discard.duplicate()
-		deck.shuffle()
-		discard.clear()
 
 	await get_tree().create_timer(Global.animation_speed * 2).timeout
 
