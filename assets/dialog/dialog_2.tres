@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_t6qi0"]
 script = ExtResource("1_8mh6t")
 speaker = "Military Advisor"
-text = "Great work! Now all we can do is wait. Hit the [b]end round[/b] and let's see what our foe decides to do."
+text = "Great work! Now all we can do is wait. Hit the [b]end turn[/b] and let's see what our foe decides to do."
 
 [resource]
 script = ExtResource("1_0xfmx")

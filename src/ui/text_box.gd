@@ -15,7 +15,7 @@ var lines: Array[DialogLine]
 
 
 func play(new_dialog: Dialog) -> void:
-	lines = new_dialog.lines
+	lines = new_dialog.lines.duplicate()
 	show()
 	display_line()
 
