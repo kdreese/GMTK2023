@@ -25,6 +25,8 @@ const ROUND_HEALTHS = [
 @onready var end_round_button: Button = $EndRoundButton
 @onready var text_box: TextBox = %TextBox
 @onready var info_display: CenterContainer = %InfoDisplay
+@onready var enemy_attack_card: Control = $EnemyAttackCard
+@onready var enemy_defense_card: Control = $EnemyDefenseCard
 
 @onready var lane_drops: Array[Area2D] = [
 	$AttackDropPoints/Lane0, $AttackDropPoints/Lane1, $AttackDropPoints/Lane2,
@@ -147,6 +149,16 @@ func _on_end_round_button_pressed() -> void:
 	# Make enemy moves
 	if Global.card_replay_moves.has(curr_round):
 		for move in Global.card_replay_moves[curr_round]:
+			if move[0].card_role == "Attack":
+				enemy_attack_card.initialize(move[0])
+				enemy_attack_card.show()
+				await get_tree().create_timer(Global.animation_speed * 2).timeout
+				enemy_attack_card.hide()
+			else:
+				enemy_defense_card.initialize(move[0])
+				enemy_defense_card.show()
+				await get_tree().create_timer(Global.animation_speed * 2).timeout
+				enemy_defense_card.hide()
 			perform_card(move[0], move[1], true)
 
 	await instant_defensive_damage()

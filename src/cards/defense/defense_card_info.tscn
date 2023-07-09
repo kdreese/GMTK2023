@@ -88,6 +88,7 @@ vertical_alignment = 2
 autowrap_mode = 2
 
 [node name="Stats" type="GridContainer" parent="."]
+layout_mode = 0
 offset_left = 53.0
 offset_top = 24.0
 offset_right = 75.0
