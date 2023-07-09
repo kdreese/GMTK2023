@@ -1,18 +1,25 @@
 extends Control
 
 
-@onready var title: Label = $UI/Title
-@onready var buttons: VBoxContainer = $UI/Buttons
-@onready var fanfare: AudioStreamPlayer = %Fanfare
-@onready var background_texture: TextureRect = $Background/BackgroundTexture
+@onready var options_menu: Control = $CanvasLayer/OptionsMenu
+
+
+func _ready() -> void:
+	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 
 
 func play() -> void:
 	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
 
 
-func options() -> void:
-	pass
+func show_options() -> void:
+	$UI.hide()
+	options_menu.show()
+
+
+func hide_options() -> void:
+	options_menu.hide()
+	$UI.show()
 
 
 func credits() -> void:
