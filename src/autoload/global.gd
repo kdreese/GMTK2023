@@ -7,7 +7,7 @@ const MAX_VOLUME_DB = -6.0
 var animation_speed: float = 0.25
 var attack_cards := {}		# Dictionary[int, Array[CardData]]
 var defense_cards := {}		# Dictionary[int, Array[CardData]]
-var curr_stage: int = 1
+var curr_stage: int = 0
 var draft_card_ranks_per_stage := {
 	1 : [1, 1],
 	2 : [1, 2],
@@ -24,7 +24,14 @@ var deck: Array[DualCardData] = [
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/battering_ram.tres"), preload("res://src/cards/defense/defense_cards/walls_2.tres"))
 ]
 # The next two variables are in the format: Dictionary[turn_number: int, moves: Array[Array[data: CardData, lane: int]]]
-var card_replay_moves := {} # The moves played last round, which will be replayed by the enemy this round
+var card_replay_moves := {
+	0: [
+		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 1],
+	],
+	6: [
+		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), 3],
+	],
+} # The moves played last round, which will be replayed by the enemy this round
 var card_current_moves := {} # The moves currently played this round. The lanes are in player POV and need to be shifted
 
 
