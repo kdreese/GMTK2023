@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://fo7ktlteh5a5"]
+
+[ext_resource type="Texture2D" uid="uid://dviouaw1aihwr" path="res://assets/icons/walls.png" id="1_r1sid"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_y3yur"]
+
+[resource]
+script = ExtResource("2_y3yur")
+name = "Fix Walls"
+short_name = "Walls"
+description = "Repairs the walls of your castle by 30HP"
+icon = ExtResource("1_r1sid")
+rank = 3
+card_role = "Defense"
+effect_script = "res://src/cards/actions/increase_health.gd"
+extra_data = Array[String](["30"])

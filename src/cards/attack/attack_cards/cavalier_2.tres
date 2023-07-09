@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MeleeUnitData" load_steps=3 format=3 uid="uid://knut416ykslc"]
+
+[ext_resource type="Texture2D" uid="uid://cxb7tipkeyik5" path="res://assets/icons/horse.png" id="1_qlihe"]
+[ext_resource type="Script" path="res://src/cards/attack/melee_unit_data.gd" id="2_mq7k3"]
+
+[resource]
+script = ExtResource("2_mq7k3")
+attack_power = 3
+attack_recoil = 1
+health = 4
+speed = 3
+unit = null
+name = "Cavalier"
+short_name = "Cav."
+description = "A competent mounted unit."
+icon = ExtResource("1_qlihe")
+rank = 2
+card_role = "Attack"
+effect_script = "res://src/cards/actions/create_melee_unit.gd"
+script_args = null
