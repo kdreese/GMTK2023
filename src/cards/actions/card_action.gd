@@ -14,7 +14,6 @@ func set_game(game_scene: Node) -> void:
 	ranged_units = game.get_node("Units/Ranged")
 
 
-
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(_data: CardData, _lane: int) -> bool:
 	return true

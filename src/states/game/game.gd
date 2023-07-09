@@ -156,7 +156,6 @@ func perform_card(data: CardData, lane: int) -> bool:
 	return success
 
 
-
 func upgrade_defenses() -> void:
 	pass
 

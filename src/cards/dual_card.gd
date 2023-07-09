@@ -8,8 +8,8 @@ const DRAGGING_OFFSET := Vector2(-32, -18)
 var card_data: DualCardData
 
 var dragging := false ## Whether or not this card is being dragged
-var hand_position : Vector2 ## The position of the card in the hand
-var drop_lane:= -1 ## In which lane the card will be dropped, 0-5. -1 means not used
+var hand_position: Vector2 ## The screen position of the card when in the hand
+var drop_lane := -1 ## In which lane the card will be dropped, 0-5. -1 means not used
 
 
 @onready var rank_icon: TextureRect = $RankIcon
