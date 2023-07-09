@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_2vwq2")
 name = "Fix Walls"
+short_name = "Walls"
 description = "Repairs the walls of your castle by 50HP"
 icon = ExtResource("1_xyyh6")
 rank = 1
