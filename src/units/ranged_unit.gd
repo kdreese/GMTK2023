@@ -1,3 +1,4 @@
+class_name RangedUnit
 extends Node2D
 
 

@@ -17,6 +17,15 @@ var draft_card_ranks_per_stage := {
 	6 : [3, 4],
 	7 : [4, 4],
 }
+var deck: Array[DualCardData] = [
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/battering_ram.tres"), preload("res://src/cards/defense/defense_cards/walls_2.tres"))
+]
+# The next two variables are in the format: Dictionary[turn_number: int, moves: Array[Array[data: CardData, lane: int]]]
+var card_replay_moves := {} # The moves played last round, which will be replayed by the enemy this round
+var card_current_moves := {} # The moves currently played this round. The lanes are in player POV and need to be shifted
 
 
 func _ready() -> void:
