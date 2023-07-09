@@ -51,3 +51,5 @@ text = "Back to Menu"
 stream = ExtResource("2_1ltm8")
 autoplay = true
 bus = &"Music"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="to_menu"]
