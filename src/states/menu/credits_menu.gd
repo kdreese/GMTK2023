@@ -2,9 +2,9 @@ extends Control
 
 
 var main_licenses := [
-	["Godot Engine", Engine.get_license_text().strip_edges()],
+	["Godot Engine", Engine.get_license_text()],
 	["CAT Engravers Font", FileAccess.get_file_as_string("res://assets/fonts/engravers/Open Font License.txt")],
-	# Here we can put other licenses if we use asset packs/libraries/etc
+	["Bailleul Roman Font", FileAccess.get_file_as_string("res://assets/fonts/bailleul_roman/LICENSE.txt")],
 ]
 
 @onready var licenses_label: RichTextLabel = %LicensesRichLabel
@@ -14,15 +14,11 @@ func _ready() -> void:
 	licenses_label.text = generate_license_bbcode_text()
 
 
-func back_to_menu() -> void:
-	get_tree().change_scene_to_file("res://src/states/menu/menu.tscn")
-
-
 func generate_license_bbcode_text() -> String:
 	var text := "[center][font_size=36][b]Licenses[/b][/font_size][/center]"
 
 	for license in main_licenses:
-		text += "\n\n[center][font_size=20][b]" + license[0] + "[/b][/font_size][/center]\n\n"
+		text += "\n\n[center][font_size=20][b]" + license[0].strip_edges() + "[/b][/font_size][/center]\n\n"
 		text += "[font_size=13]" + license[1] + "[/font_size]"
 
 	text += "\n\n[center][font_size=26][b]All Licenses[/b][/font_size][/center]"
