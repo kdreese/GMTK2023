@@ -30,8 +30,6 @@ var blue_max_health: int = 50
 
 var put_down_this_turn := [false, false, false] # In the attacking lanes, have we put something down this turn yet?
 
-var next_card_id: int = 1
-
 
 func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
@@ -147,9 +145,6 @@ func draw_card() -> void:
 	hand.append(dual_card_data)
 	var card = preload("res://src/cards/dual_card.tscn").instantiate()
 	$Cards.add_child(card)
-	var card_id = next_card_id
-	card.name = str(card_id)
-	next_card_id += 1
 	card.initialize(dual_card_data)
 	card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()
