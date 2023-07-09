@@ -45,7 +45,8 @@ func _ready() -> void:
 		var card := DualCard.instantiate()
 		$Cards.add_child(card)
 		card.initialize(DualCardData.new(
-			preload("res://src/cards/attack/swordsman_1.tres"), preload("res://src/cards/defense/walls_1.tres")
+			preload("res://src/cards/attack/attack_cards/swordsman_1.tres"),
+			preload("res://src/cards/defense/defense_cards/walls_1.tres")
 		))
 		card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()

@@ -1,4 +1,4 @@
-## A generic ranged unit creation action
+## A generic melee unit creation action
 extends CardAction
 
 

@@ -1,7 +1,7 @@
 extends CardAction
 
 
-func can_perform(data: CardData, lane: int) -> bool:
+func can_perform(_data: CardData, lane: int) -> bool:
 	# Make sure the side isn't already at max health
 	var health_bar
 	if lane < 3: # The enemy is using this
