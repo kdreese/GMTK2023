@@ -85,6 +85,7 @@ func _ready() -> void:
 		await draw_card()
 		await draw_card()
 	else:
+		deck.shuffle()
 		for i in range(3):
 			await draw_card()
 		if Global.curr_stage == 1:
