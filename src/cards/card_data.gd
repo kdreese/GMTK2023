@@ -10,4 +10,4 @@ extends Resource
 @export var rank: int ## The power rank of this card.
 @export_enum("Attack", "Defense") var card_role: String ## The role of this card.
 @export_file() var effect_script ## A path to the script run by this card.
-@export var script_args: Array[String] ## Extra arguments to be passed to the script.
+@export var extra_data: Array[String] ## Extra data to be accessed by the script.

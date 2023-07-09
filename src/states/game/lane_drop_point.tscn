@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqeuuh545y06g"]
+
+[ext_resource type="Script" path="res://src/states/game/lane_drop_point.gd" id="1_dpggr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8yfdq"]
+size = Vector2(34, 34)
+
+[node name="LaneDropPoint" type="Area2D"]
+script = ExtResource("1_dpggr")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8yfdq")

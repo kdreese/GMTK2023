@@ -10,8 +10,14 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 @onready var options_menu: Control = %OptionsMenu
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
+@onready var card_nodes: Node = $Cards
 @onready var end_round_button: Button = $EndRoundButton
 @onready var text_box: TextBox = %TextBox
+
+@onready var lane_drops: Array[Area2D] = [
+	$AttackDropPoints/Lane0, $AttackDropPoints/Lane1, $AttackDropPoints/Lane2,
+	$DefenseDropPoints/Lane3, $DefenseDropPoints/Lane4, $DefenseDropPoints/Lane5,
+]
 
 
 var enemy_moves: Array[Dictionary]
@@ -20,23 +26,31 @@ var curr_round: int = 0
 var red_max_health: int = 150
 var blue_max_health: int = 200
 
+var put_down_this_turn := [false, false, false] # In the attacking lanes, have we put something down this turn yet?
+
 
 func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
-	var unit = preload("res://src/units/unit.tscn").instantiate()
-	$Units/Melee.add_child(unit)
-	unit.init(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 0)
-	unit = preload("res://src/units/unit.tscn").instantiate()
-	$Units/Melee.add_child(unit)
-	unit.init(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 3)
-	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
-	$Units/Ranged.add_child(unit)
-	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 3)
-	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
-	$Units/Ranged.add_child(unit)
-	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 0)
+	red_castle_health_bar.current_health = 50
+	red_castle_health_bar.update()
+
+	var DualCard := preload("res://src/cards/dual_card.tscn")
+	var base_position := get_viewport_rect().size
+	base_position.x = base_position.x / 2.0 - 39.0
+	base_position.y -= 150.0
+
+	for i in range(3):
+		var card := DualCard.instantiate()
+		$Cards.add_child(card)
+		card.initialize(DualCardData.new(
+			preload("res://src/cards/attack/attack_cards/swordsman_1.tres"),
+			preload("res://src/cards/defense/defense_cards/walls_1.tres")
+		))
+		card.dropped_card.connect(self._on_card_dropped)
+	arrange_cards()
+
 	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 
 	Global.curr_stage += 1
@@ -94,6 +108,52 @@ func _on_end_round_button_pressed() -> void:
 	place_new_offenses()
 	curr_round += 1
 	end_round_button.disabled = false
+	put_down_this_turn = [false, false, false]
+
+
+func _on_card_dropped(card: Control) -> void:
+	var lane := -1
+	for drop in lane_drops:
+		if drop.is_mouse_inside:
+			lane = drop.lane_index
+			break
+	if lane < 0:
+		return
+	if lane < 3 and put_down_this_turn[lane]:
+		return # Don't want to waste an attacking unit by overriding it before it can go
+	# We have a thing to put down! Let's do it
+	var data: CardData
+	if lane < 3:
+		data = card.card_data.attack
+		put_down_this_turn[lane] = true
+	else:
+		data = card.card_data.defense
+	var should_remove := perform_card(data, lane)
+	if should_remove:
+		card_nodes.remove_child(card)
+		arrange_cards()
+		card.queue_free()
+
+
+func perform_card(data: CardData, lane: int) -> bool:
+	if data.effect_script == null:
+		push_error("CardData %s has no script!", data.name)
+		return false
+	var card_script := load(data.effect_script)
+	if card_script == null or not (card_script is Script):
+		push_error("CardData %s has invalid script!", data.name)
+		return false
+	var script_node_generic = Node.new() # Is this the right way to do it?
+	add_child(script_node_generic)
+	script_node_generic.set_script(card_script)
+	var script_node: CardAction = script_node_generic
+	script_node.set_game(self)
+	var success := script_node.can_perform(data, lane)
+	if success:
+		script_node.perform_action(data, lane)
+	remove_child(script_node)
+	script_node.queue_free()
+	return success
 
 
 func upgrade_defenses() -> void:
@@ -209,3 +269,18 @@ func check_for_end_condition() -> void:
 		card_drafting.show()
 	elif red_castle_health_bar.current_health <= 0:
 		pass	# Game over screen
+
+
+func arrange_cards() -> void:
+	var num_cards := card_nodes.get_child_count()
+	var base_position := get_viewport_rect().size
+	base_position.x = base_position.x / 2 - 39 # Magic number 39 is half the width of scaled DualCard
+	base_position.y -= 150
+	var card_spacing := 84
+	base_position.x -= (num_cards - 1) * card_spacing / 2.0
+
+	for i in range(num_cards):
+		var card: Control = card_nodes.get_child(i)
+		card.position = base_position
+		card.position.x += i * card_spacing
+		card.hand_position = card.position

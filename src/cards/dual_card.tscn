@@ -184,18 +184,11 @@ vertical_alignment = 2
 
 [node name="DefenseStats" type="GridContainer" parent="."]
 layout_direction = 3
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -19.0
-offset_top = 68.0
-offset_right = -1.0
-offset_bottom = 128.0
-grow_horizontal = 2
-grow_vertical = 0
+layout_mode = 0
+offset_left = 59.0
+offset_top = 69.0
+offset_right = 77.0
+offset_bottom = 129.0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = -5
 columns = 2
@@ -269,3 +262,5 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_052hy")
 stretch_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

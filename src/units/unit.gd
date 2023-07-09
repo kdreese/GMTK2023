@@ -36,7 +36,7 @@ func update_health_bar() -> void:
 
 
 func update_position() -> void:
-	if grid_position.y < 2:
+	if grid_position.y < 3:
 		position.y = 40 + 40 * grid_position.y
 		if grid_position.x == 0:
 			position.x = 50

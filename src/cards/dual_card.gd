@@ -1,6 +1,17 @@
 extends Control
 
 
+signal dropped_card(Control)
+
+const DRAGGING_OFFSET := Vector2(-32, -18)
+
+var card_data: DualCardData
+
+var dragging := false ## Whether or not this card is being dragged
+var hand_position: Vector2 ## The screen position of the card when in the hand
+var drop_lane := -1 ## In which lane the card will be dropped, 0-5. -1 means not used
+
+
 @onready var rank_icon: TextureRect = $RankIcon
 @onready var attack_label: Label = $AttackLabel
 @onready var attack_icon: TextureRect = $AttackIcon
@@ -8,7 +19,18 @@ extends Control
 @onready var defense_label: Label = $DefenseLabel
 
 
+# For debugging only
+func _ready() -> void:
+	hand_position = position
+
+
+func _process(_delta: float) -> void:
+	if dragging:
+		position = get_viewport().get_mouse_position() + DRAGGING_OFFSET
+
+
 func initialize(data: DualCardData) -> void:
+	card_data = data
 	rank_icon.texture = Util.rank_to_texture(data.rank)
 	attack_label.text = data.attack.short_name
 	attack_icon.texture = data.attack.icon
@@ -41,3 +63,19 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 	else:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mb_event := event as InputEventMouseButton
+		if mb_event.button_index == 1:
+			if mb_event.pressed and not dragging:
+				dragging = true
+				rotation = -0.5 # radians
+				scale = Vector2(0.5, 0.5)
+			elif not mb_event.pressed and dragging:
+				dragging = false
+				position = hand_position
+				rotation = 0.0
+				scale = Vector2.ONE
+				dropped_card.emit(self)
