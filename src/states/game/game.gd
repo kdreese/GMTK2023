@@ -33,6 +33,7 @@ var put_down_this_turn := [false, false, false] # In the attacking lanes, have w
 
 func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
+	text_box.text_finished.connect(on_text_finish)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	red_castle_health_bar.current_health = 50
@@ -48,7 +49,10 @@ func _ready() -> void:
 	for i in range(3):
 		await draw_card()
 
+	for card in $Cards.get_children():
+		card.draggable = false
 	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
+
 
 	Global.curr_stage += 1
 
@@ -94,6 +98,11 @@ func show_options() -> void:
 func hide_options() -> void:
 	options_menu.hide()
 	pause_menu.show()
+
+
+func on_text_finish() -> void:
+	for card in $Cards.get_children():
+		card.draggable = true
 
 
 func _on_end_round_button_pressed() -> void:
