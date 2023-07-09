@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=13 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
+[ext_resource type="Texture2D" uid="uid://dlbhstwqe15et" path="res://assets/masks/unit_deploy.png" id="9_is28s"]
+[ext_resource type="Texture2D" uid="uid://dx0jwoqavojxx" path="res://assets/masks/castle.png" id="10_o06tk"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -83,7 +85,7 @@ offset_left = 510.0
 offset_top = 368.0
 offset_right = 575.0
 offset_bottom = 425.0
-text = "End Round"
+text = "End Turn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -183,6 +185,20 @@ text = "Quit to Menu"
 unique_name_in_owner = true
 process_mode = 3
 visible = false
+
+[node name="OffenseMask" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("9_is28s")
+
+[node name="DefenseMask" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("10_o06tk")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
