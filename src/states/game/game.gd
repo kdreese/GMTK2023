@@ -48,9 +48,8 @@ func _ready() -> void:
 	deck = Global.deck
 
 	Global.card_replay_moves = {
-		1: [
+		0: [
 			[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 1],
-			[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 2],
 		],
 		6: [
 			[preload("res://src/cards/defense/defense_cards/walls_1.tres"), 3],
@@ -77,7 +76,7 @@ func _ready() -> void:
 		await turn_finished
 		text_box.play(preload("res://assets/dialog/dialog_4.tres"))
 		await text_box.text_finished
-		await $Cards.get_children()[0].dropped_card
+		await $EndRoundButton.pressed
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
 		await text_box.text_finished
 	else:
