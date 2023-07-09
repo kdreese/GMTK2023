@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Dialog" load_steps=6 format=3 uid="uid://b80spphin342e"]
+
+[ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_8xxpg"]
+[ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_tj87q"]
+
+[sub_resource type="Resource" id="Resource_mubik"]
+script = ExtResource("1_tj87q")
+speaker = "Scientist"
+text = "I found some new technology in the castle we plundered."
+
+[sub_resource type="Resource" id="Resource_u3q53"]
+script = ExtResource("1_tj87q")
+speaker = "Military Advisor"
+text = "Technology? Can we use it for war?"
+
+[sub_resource type="Resource" id="Resource_7sg78"]
+script = ExtResource("1_tj87q")
+speaker = "Scientist"
+text = "Of course, let me see what I can come up with."
+
+[resource]
+script = ExtResource("1_8xxpg")
+lines = Array[ExtResource("1_tj87q")]([SubResource("Resource_mubik"), SubResource("Resource_u3q53"), SubResource("Resource_7sg78")])

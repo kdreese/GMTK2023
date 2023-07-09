@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Dialog" load_steps=5 format=3 uid="uid://dyx8dxp08di08"]
+
+[ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_brli2"]
+[ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_sjsbf"]
+
+[sub_resource type="Resource" id="Resource_ftcpl"]
+script = ExtResource("1_brli2")
+speaker = "Military Advisor"
+text = "I see your tactics are sharp as ever. I'll leave you to it."
+
+[sub_resource type="Resource" id="Resource_4200w"]
+script = ExtResource("1_brli2")
+speaker = "Military Advisor"
+text = "Try to destroy the blue castle as fast as possible."
+
+[resource]
+script = ExtResource("1_sjsbf")
+lines = Array[ExtResource("1_brli2")]([SubResource("Resource_ftcpl"), SubResource("Resource_4200w")])

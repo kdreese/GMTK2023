@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Dialog" load_steps=9 format=3 uid="uid://dv77wrsj87gjt"]
+
+[ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_6jglx"]
+[ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_howxo"]
+
+[sub_resource type="Resource" id="Resource_ultsn"]
+script = ExtResource("1_howxo")
+speaker = ""
+text = "Once upon a time in a faraway land there were two kingdoms, Redland and Bluetopia."
+
+[sub_resource type="Resource" id="Resource_q2cit"]
+script = ExtResource("1_howxo")
+speaker = ""
+text = "Bickering neighbors, they were constantly at war with one another, in a battle for dominance over their domain."
+
+[sub_resource type="Resource" id="Resource_3hyld"]
+script = ExtResource("1_howxo")
+speaker = "Military Advisor"
+text = "Your Highness, our troops are prepared, and it seems like so are our enemies in blue."
+
+[sub_resource type="Resource" id="Resource_wy5pd"]
+script = ExtResource("1_howxo")
+speaker = "Military Advisor"
+text = "Let us pray this battle will be quick and painless."
+
+[sub_resource type="Resource" id="Resource_whkr5"]
+script = ExtResource("1_howxo")
+speaker = "Soldier"
+text = "Yeah! Let's whoop some blue butts!"
+
+[sub_resource type="Resource" id="Resource_rss6l"]
+script = ExtResource("1_howxo")
+speaker = "Military Advisor"
+text = "Our swordsmen yearn for the battlefield! Drag your [b]swordsman[/b] card to the [b]middle lane[/b]."
+
+[resource]
+script = ExtResource("1_6jglx")
+lines = Array[ExtResource("1_howxo")]([SubResource("Resource_ultsn"), SubResource("Resource_q2cit"), SubResource("Resource_3hyld"), SubResource("Resource_wy5pd"), SubResource("Resource_whkr5"), SubResource("Resource_rss6l")])

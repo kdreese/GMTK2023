@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Dialog" load_steps=6 format=3 uid="uid://b83c1kdtsng5"]
+
+[ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_26p5m"]
+[ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_sm6xl"]
+
+[sub_resource type="Resource" id="Resource_rcbu0"]
+script = ExtResource("1_26p5m")
+speaker = "Military Advisor"
+text = "It looks like their army is awake too. Let's be safe and put one of our archers in the same lane to defend."
+
+[sub_resource type="Resource" id="Resource_k6jc8"]
+script = ExtResource("1_26p5m")
+speaker = "Archer"
+text = "Got my arrows locked and loaded, sir!"
+
+[sub_resource type="Resource" id="Resource_2y54p"]
+script = ExtResource("1_26p5m")
+speaker = "Military Advisor"
+text = "Drag your [b]archer[/b] card onto your own castle to place your unit there."
+
+[resource]
+script = ExtResource("1_sm6xl")
+lines = Array[ExtResource("1_26p5m")]([SubResource("Resource_rcbu0"), SubResource("Resource_k6jc8"), SubResource("Resource_2y54p")])

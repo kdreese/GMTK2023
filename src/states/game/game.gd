@@ -10,6 +10,7 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
 @onready var end_round_button: Button = $EndRoundButton
+@onready var text_box: TextBox = %TextBox
 
 
 var enemy_moves: Array[Dictionary]
@@ -35,6 +36,7 @@ func _ready() -> void:
 	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	$Units/Ranged.add_child(unit)
 	unit.init(preload("res://src/cards/defense/archer_1.tres"), 0)
+	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -62,6 +64,12 @@ func get_unit(grid_position: Vector2i) -> Unit:
 func pause() -> void:
 	get_tree().paused = true
 	pause_menu.show()
+	text_box.hide()
+
+
+func resume() -> void:
+	if text_box.lines:
+		text_box.show()
 
 
 func show_options() -> void:
