@@ -240,12 +240,12 @@ func melee_attack(unit: Unit) -> void:
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
 		await get_tree().create_timer(Global.animation_speed).timeout
-		red_castle_health_bar.current_health -= unit.attack_power
+		red_castle_health_bar.current_health -= damage
 		red_castle_health_bar.update()
 	else:
 		unit.position = BLUE_CASTLE_DOOR
 		await get_tree().create_timer(Global.animation_speed).timeout
-		blue_castle_health_bar.current_health -= unit.attack_power
+		blue_castle_health_bar.current_health -= damage
 		blue_castle_health_bar.update()
 	unit.health -= unit.recoil
 	unit.update_health_bar()

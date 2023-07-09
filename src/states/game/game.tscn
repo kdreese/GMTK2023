@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
-[ext_resource type="PackedScene" path="res://src/states/game/lane_drop_point.tscn" id="4_oe5te"]
+[ext_resource type="PackedScene" uid="uid://cqeuuh545y06g" path="res://src/states/game/lane_drop_point.tscn" id="4_oe5te"]
 [ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
