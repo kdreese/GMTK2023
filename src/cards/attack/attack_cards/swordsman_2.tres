@@ -1,19 +1,20 @@
 [gd_resource type="Resource" script_class="MeleeUnitData" load_steps=3 format=3 uid="uid://cgnkicm2lj6gc"]
 
-[ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_056es"]
-[ext_resource type="Script" path="res://src/cards/attack/melee_unit_data.gd" id="1_ssk3v"]
+[ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_62l4s"]
+[ext_resource type="Script" path="res://src/cards/attack/melee_unit_data.gd" id="2_uries"]
 
 [resource]
-script = ExtResource("1_ssk3v")
-attack_power = 8
-attack_recoil = 4
-health = 25
+script = ExtResource("2_uries")
+attack_power = 6
+attack_recoil = 1
+health = 7
 speed = 2
 unit = null
 name = "Swordsman"
-description = "A skilled swordfighter"
-icon = ExtResource("1_056es")
+short_name = "S.Man"
+description = "A competent swordsman"
+icon = ExtResource("1_62l4s")
 rank = 2
 card_role = "Attack"
-effect_script = null
-script_args = Array[String]([])
+effect_script = "res://src/cards/actions/create_melee_unit.gd"
+extra_data = Array[String]([])

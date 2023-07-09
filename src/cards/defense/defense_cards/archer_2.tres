@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="RangedUnitData" load_steps=3 format=3 uid="uid://i2r8e8ugpjv4"]
+
+[ext_resource type="Texture2D" uid="uid://b1v1l3sgmb7bd" path="res://assets/icons/bow.png" id="1_gvjhh"]
+[ext_resource type="Script" path="res://src/cards/defense/ranged_unit_data.gd" id="2_5c4a7"]
+
+[resource]
+script = ExtResource("2_5c4a7")
+attack_range = 1
+attack_damage = 2
+name = "Archer"
+short_name = "Archer"
+description = "A competent archer."
+icon = ExtResource("1_gvjhh")
+rank = 2
+card_role = "Defense"
+effect_script = "res://src/cards/actions/create_ranged_unit.gd"
+extra_data = Array[String]([])

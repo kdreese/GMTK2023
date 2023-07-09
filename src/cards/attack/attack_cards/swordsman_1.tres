@@ -5,14 +5,14 @@
 
 [resource]
 script = ExtResource("1_h7uhr")
-attack_power = 5
-attack_recoil = 3
-health = 15
+attack_power = 4
+attack_recoil = 1
+health = 5
 speed = 2
 unit = null
 name = "Swordsman"
 short_name = "S.Man"
-description = "A basic swordsman. Does 5 damage when attacking."
+description = "A novice swordsman."
 icon = ExtResource("1_vww7p")
 rank = 1
 card_role = "Attack"

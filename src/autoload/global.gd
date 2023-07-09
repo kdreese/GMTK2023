@@ -22,13 +22,13 @@ var draft_card_ranks_per_stage := {
 func _ready() -> void:
 	var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
 	var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
-	
+
 	for attack_card_path in attack_card_strings:
 		var attack_card := load("res://src/cards/attack/attack_cards/" + attack_card_path) as CardData
 		if not attack_cards.has(attack_card.rank):
 			attack_cards[attack_card.rank] = []
 		attack_cards[attack_card.rank].append(attack_card)
-	
+
 	for defense_card_path in defense_card_strings:
 		var defense_card := load("res://src/cards/defense/defense_cards/" + defense_card_path) as CardData
 		if not defense_cards.has(defense_card.rank):

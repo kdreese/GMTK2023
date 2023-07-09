@@ -218,15 +218,34 @@ func offensive_action_sweep() -> void:
 
 
 func melee_attack(unit: Unit) -> void:
+	var damage = unit.attack_power
+	# Handle battering rams (ugly, but it should work).
+	if unit.grid_position.y in [1, 2]:
+		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
+		if neighbor != null and neighbor.attack_power == 0:
+			damage += 2
+	if unit.grid_position.y in [0, 1]:
+		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
+		if neighbor != null and neighbor.attack_power == 0:
+			damage += 2
+	if unit.grid_position.y in [3, 4]:
+		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
+		if neighbor != null and neighbor.attack_power == 0:
+			damage += 2
+	if unit.grid_position.y in [4, 5]:
+		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
+		if neighbor != null and neighbor.attack_power == 0:
+			damage += 2
+
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
 		await get_tree().create_timer(Global.animation_speed).timeout
-		red_castle_health_bar.current_health -= unit.attack_power
+		red_castle_health_bar.current_health -= damage
 		red_castle_health_bar.update()
 	else:
 		unit.position = BLUE_CASTLE_DOOR
 		await get_tree().create_timer(Global.animation_speed).timeout
-		blue_castle_health_bar.current_health -= unit.attack_power
+		blue_castle_health_bar.current_health -= damage
 		blue_castle_health_bar.update()
 	unit.health -= unit.recoil
 	unit.update_health_bar()

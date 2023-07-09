@@ -7,9 +7,9 @@
 script = ExtResource("1_2vwq2")
 name = "Fix Walls"
 short_name = "Walls"
-description = "Repairs the walls of your castle by 50HP"
+description = "Repairs the walls of your castle by 10HP"
 icon = ExtResource("1_xyyh6")
 rank = 1
 card_role = "Defense"
 effect_script = "res://src/cards/actions/increase_health.gd"
-extra_data = Array[String](["50"])
+extra_data = Array[String](["10"])
