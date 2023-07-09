@@ -36,13 +36,6 @@ func _ready() -> void:
 	text_box.text_finished.connect(on_text_finish)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
-	red_castle_health_bar.current_health = 50
-	red_castle_health_bar.update()
-
-	var DualCard := preload("res://src/cards/dual_card.tscn")
-	var base_position := get_viewport_rect().size
-	base_position.x = base_position.x / 2.0 - 39.0
-	base_position.y -= 150.0
 
 	deck = Global.deck
 
@@ -63,7 +56,6 @@ func _ready() -> void:
 	}
 
 	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
-
 
 	Global.curr_stage += 1
 
