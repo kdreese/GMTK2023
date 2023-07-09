@@ -7,6 +7,7 @@ const DRAGGING_OFFSET := Vector2(-32, -18)
 
 var card_data: DualCardData
 
+var draggable := true ## If the card can be dragged
 var dragging := false ## Whether or not this card is being dragged
 var hand_position: Vector2 ## The screen position of the card when in the hand
 var drop_lane := -1 ## In which lane the card will be dropped, 0-5. -1 means not used
@@ -26,7 +27,13 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if dragging:
-		position = get_viewport().get_mouse_position() + DRAGGING_OFFSET
+		if not draggable:
+			dragging = false
+			position = hand_position
+			rotation = 0.0
+			scale = Vector2.ONE
+		else:
+			position = get_viewport().get_mouse_position() + DRAGGING_OFFSET
 
 
 func initialize(data: DualCardData) -> void:
@@ -69,7 +76,7 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb_event := event as InputEventMouseButton
 		if mb_event.button_index == 1:
-			if mb_event.pressed and not dragging:
+			if draggable and mb_event.pressed and not dragging:
 				dragging = true
 				rotation = -0.5 # radians
 				scale = Vector2(0.5, 0.5)

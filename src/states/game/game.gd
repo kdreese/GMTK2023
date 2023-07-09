@@ -101,6 +101,8 @@ func hide_options() -> void:
 
 func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
+	for card in card_nodes.get_children():
+		card.draggable = false
 	upgrade_defenses()
 	await instant_defensive_damage()
 	perpetual_defensive_damage()
@@ -109,6 +111,8 @@ func _on_end_round_button_pressed() -> void:
 	curr_round += 1
 	end_round_button.disabled = false
 	put_down_this_turn = [false, false, false]
+	for card in card_nodes.get_children():
+		card.draggable = true
 
 
 func _on_card_dropped(card: Control) -> void:
