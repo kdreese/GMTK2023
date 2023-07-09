@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=11 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
 [ext_resource type="PackedScene" uid="uid://cqeuuh545y06g" path="res://src/states/game/lane_drop_point.tscn" id="4_oe5te"]
 [ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
+[ext_resource type="Texture2D" uid="uid://coa7h12oinw5o" path="res://assets/help_card.png" id="5_j4lg2"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
@@ -61,6 +62,18 @@ lane_index = 4
 position = Vector2(0, 40)
 lane_index = 5
 
+[node name="InfoDropPoint" type="Node2D" parent="."]
+
+[node name="InfoIcon" type="Sprite2D" parent="InfoDropPoint"]
+position = Vector2(60, 400)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_j4lg2")
+
+[node name="LaneInfo" parent="InfoDropPoint" instance=ExtResource("4_oe5te")]
+position = Vector2(60, 400)
+scale = Vector2(2, 3)
+lane_index = 6
+
 [node name="Monsters" type="Node" parent="."]
 
 [node name="Cards" type="Node" parent="."]
@@ -73,6 +86,15 @@ offset_bottom = 425.0
 text = "End Round"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InfoDisplay" type="CenterContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
 unique_name_in_owner = true

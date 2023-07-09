@@ -1,7 +1,7 @@
 extends Area2D
 
 
-@export_range(0, 5) var lane_index := 0
+@export_range(0, 6) var lane_index := 0
 
 var is_mouse_inside := false # Is there a native variable for this?
 
