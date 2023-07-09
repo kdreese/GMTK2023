@@ -36,13 +36,6 @@ func _ready() -> void:
 	text_box.text_finished.connect(on_text_finish)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
-	red_castle_health_bar.current_health = 50
-	red_castle_health_bar.update()
-
-	var DualCard := preload("res://src/cards/dual_card.tscn")
-	var base_position := get_viewport_rect().size
-	base_position.x = base_position.x / 2.0 - 39.0
-	base_position.y -= 150.0
 
 	deck = Global.deck
 
@@ -51,8 +44,18 @@ func _ready() -> void:
 
 	for card in $Cards.get_children():
 		card.draggable = false
-	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 
+	Global.card_replay_moves = {
+		1: [
+			[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 1],
+			[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 2],
+		],
+		6: [
+			[preload("res://src/cards/defense/defense_cards/walls_1.tres"), 3],
+		],
+	}
+
+	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 
 	Global.curr_stage += 1
 
@@ -109,6 +112,12 @@ func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
 	for card in card_nodes.get_children():
 		card.draggable = false
+
+	# Make enemy moves
+	if Global.card_replay_moves.has(curr_round):
+		for move in Global.card_replay_moves[curr_round]:
+			perform_card(move[0], move[1], true)
+
 	upgrade_defenses()
 	await instant_defensive_damage()
 	perpetual_defensive_damage()
@@ -117,6 +126,7 @@ func _on_end_round_button_pressed() -> void:
 	if hand.size() < MAX_CARDS_IN_HAND:
 		await draw_card()
 	curr_round += 1
+
 	end_round_button.disabled = false
 	put_down_this_turn = [false, false, false]
 	for card in card_nodes.get_children():
@@ -167,7 +177,7 @@ func draw_card() -> void:
 	await get_tree().create_timer(Global.animation_speed * 2).timeout
 
 
-func perform_card(data: CardData, lane: int) -> bool:
+func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
 	if data.effect_script == null:
 		push_error("CardData %s has no script!", data.name)
 		return false
@@ -180,9 +190,18 @@ func perform_card(data: CardData, lane: int) -> bool:
 	script_node_generic.set_script(card_script)
 	var script_node: CardAction = script_node_generic
 	script_node.set_game(self)
+	if is_enemy:
+		if lane < 3:
+			lane += 3
+		else:
+			lane -= 3
 	var success := script_node.can_perform(data, lane)
 	if success:
 		script_node.perform_action(data, lane)
+		if not is_enemy:
+			if not Global.card_current_moves.has(curr_round):
+				Global.card_current_moves[curr_round] = []
+			Global.card_current_moves[curr_round].append([data, lane])
 	remove_child(script_node)
 	script_node.queue_free()
 	return success
