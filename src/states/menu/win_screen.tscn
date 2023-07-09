@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0pqot87fpl3x"]
+
+[ext_resource type="Script" path="res://src/states/menu/end_screen.gd" id="1_frdey"]
+[ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="1_hfy34"]
+[ext_resource type="AudioStream" uid="uid://cmvlp6vmvubha" path="res://assets/music/siege_for_yourself.ogg" id="2_1ltm8"]
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_frdey")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -10.5
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.909804, 0.729412, 0, 1)
+theme_override_fonts/font = ExtResource("1_hfy34")
+theme_override_font_sizes/font_size = 108
+text = "You Win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back to Menu"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_1ltm8")
+autoplay = true
+bus = &"Music"
