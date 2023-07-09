@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=9 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
 [ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
+[ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
@@ -48,6 +49,42 @@ offset_bottom = 425.0
 text = "End Round"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.392157)
+script = ExtResource("4_ss1ks")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/CardDrafting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="DraftText" type="Label" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Choose a card to add to your deck!"
+horizontal_alignment = 1
+
+[node name="CardChoices" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
 
 [node name="TextBox" parent="CanvasLayer" instance=ExtResource("7_ju0gj")]
 unique_name_in_owner = true

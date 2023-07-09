@@ -6,6 +6,7 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
 
 @onready var pause_menu: ColorRect = %PauseMenu
+@onready var card_drafting: ColorRect = %CardDrafting
 @onready var options_menu: Control = %OptionsMenu
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
@@ -15,7 +16,7 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
 var enemy_moves: Array[Dictionary]
 var cards: Array[Resource]
-var num_rounds: int = 0
+var curr_round: int = 0
 var red_max_health: int = 150
 var blue_max_health: int = 200
 
@@ -26,17 +27,19 @@ func _ready() -> void:
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	var unit = preload("res://src/units/unit.tscn").instantiate()
 	$Units/Melee.add_child(unit)
-	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 0)
+	unit.init(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 0)
 	unit = preload("res://src/units/unit.tscn").instantiate()
 	$Units/Melee.add_child(unit)
-	unit.init(preload("res://src/cards/attack/swordsman_1.tres"), 3)
+	unit.init(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), 3)
 	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	$Units/Ranged.add_child(unit)
-	unit.init(preload("res://src/cards/defense/archer_1.tres"), 3)
+	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 3)
 	unit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	$Units/Ranged.add_child(unit)
-	unit.init(preload("res://src/cards/defense/archer_1.tres"), 0)
+	unit.init(preload("res://src/cards/defense/defense_cards/archer_1.tres"), 0)
 	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
+
+	Global.curr_stage += 1
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -89,7 +92,7 @@ func _on_end_round_button_pressed() -> void:
 	perpetual_defensive_damage()
 	await offensive_action_sweep()
 	place_new_offenses()
-	num_rounds += 1
+	curr_round += 1
 	end_round_button.disabled = false
 
 
@@ -149,6 +152,7 @@ func offensive_action_sweep() -> void:
 				await get_tree().create_timer(Global.animation_speed).timeout
 		if unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
+			check_for_end_condition()
 	# for each offensive square, check if a unit is occupying that square
 	# if so, call that unit's offensive_action function
 
@@ -195,3 +199,13 @@ func ranged_attack_order(a, b) -> bool:
 
 func place_new_offenses() -> void:
 	pass
+
+
+func check_for_end_condition() -> void:
+	if blue_castle_health_bar.current_health <= 0:
+		end_round_button.hide()
+		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
+				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
+		card_drafting.show()
+	elif red_castle_health_bar.current_health <= 0:
+		pass	# Game over screen

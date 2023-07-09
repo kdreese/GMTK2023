@@ -28,8 +28,11 @@ atlas = ExtResource("5_y2yds")
 region = Rect2(2.08165e-12, 10, 10, 10)
 
 [node name="DualCard" type="Control"]
+custom_minimum_size = Vector2(78, 120)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 78.0
+offset_bottom = 120.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_1xj2b")
