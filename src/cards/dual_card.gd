@@ -1,3 +1,4 @@
+class_name DualCard
 extends Control
 
 

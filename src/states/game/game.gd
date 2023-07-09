@@ -3,7 +3,7 @@ extends Node2D
 
 const RED_CASTLE_DOOR = Vector2(160, 240)
 const BLUE_CASTLE_DOOR = Vector2(480, 80)
-
+const MAX_CARDS_IN_HAND = 5
 
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var card_drafting: ColorRect = %CardDrafting
@@ -21,16 +21,19 @@ const BLUE_CASTLE_DOOR = Vector2(480, 80)
 
 
 var enemy_moves: Array[Dictionary]
-var cards: Array[Resource]
+var deck: Array[DualCardData]
+var hand: Array[DualCardData]
+var discard: Array[DualCardData]
 var curr_round: int = 0
-var red_max_health: int = 150
-var blue_max_health: int = 200
+var red_max_health: int = 30
+var blue_max_health: int = 50
 
 var put_down_this_turn := [false, false, false] # In the attacking lanes, have we put something down this turn yet?
 
 
 func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
+	text_box.text_finished.connect(on_text_finish)
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	red_castle_health_bar.current_health = 50
@@ -41,17 +44,15 @@ func _ready() -> void:
 	base_position.x = base_position.x / 2.0 - 39.0
 	base_position.y -= 150.0
 
-	for i in range(3):
-		var card := DualCard.instantiate()
-		$Cards.add_child(card)
-		card.initialize(DualCardData.new(
-			preload("res://src/cards/attack/attack_cards/swordsman_1.tres"),
-			preload("res://src/cards/defense/defense_cards/walls_1.tres")
-		))
-		card.dropped_card.connect(self._on_card_dropped)
-	arrange_cards()
+	deck = Global.deck
 
+	for i in range(3):
+		await draw_card()
+
+	for card in $Cards.get_children():
+		card.draggable = false
 	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
+
 
 	Global.curr_stage += 1
 
@@ -99,6 +100,11 @@ func hide_options() -> void:
 	pause_menu.show()
 
 
+func on_text_finish() -> void:
+	for card in $Cards.get_children():
+		card.draggable = true
+
+
 func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
 	for card in card_nodes.get_children():
@@ -108,6 +114,8 @@ func _on_end_round_button_pressed() -> void:
 	perpetual_defensive_damage()
 	await offensive_action_sweep()
 	place_new_offenses()
+	if hand.size() < MAX_CARDS_IN_HAND:
+		await draw_card()
 	curr_round += 1
 	end_round_button.disabled = false
 	put_down_this_turn = [false, false, false]
@@ -137,6 +145,26 @@ func _on_card_dropped(card: Control) -> void:
 		card_nodes.remove_child(card)
 		arrange_cards()
 		card.queue_free()
+		discard.append(card.card_data)
+		hand.remove_at(hand.find(card.card_data))
+
+
+func draw_card() -> void:
+	# If the deck is empty, rearrange the cards from discard.
+	if deck.size() == 0:
+		deck = discard.duplicate()
+		deck.shuffle()
+		discard.clear()
+
+	var dual_card_data = deck.pop_front()
+	hand.append(dual_card_data)
+	var card = preload("res://src/cards/dual_card.tscn").instantiate()
+	$Cards.add_child(card)
+	card.initialize(dual_card_data)
+	card.dropped_card.connect(self._on_card_dropped)
+	arrange_cards()
+
+	await get_tree().create_timer(Global.animation_speed * 2).timeout
 
 
 func perform_card(data: CardData, lane: int) -> bool:

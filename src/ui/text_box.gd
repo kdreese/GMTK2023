@@ -2,6 +2,9 @@ class_name TextBox
 extends Control
 
 
+signal text_finished
+
+
 @onready var dialog: RichTextLabel = %Dialog
 @onready var speaker: PanelContainer = %Speaker
 @onready var speaker_text: Label = %SpeakerText
@@ -32,4 +35,5 @@ func next() -> void:
 	if lines:
 		display_line()
 	else:
+		text_finished.emit()
 		hide()
