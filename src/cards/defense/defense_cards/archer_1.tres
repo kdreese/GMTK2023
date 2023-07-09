@@ -8,6 +8,7 @@ script = ExtResource("1_onhje")
 attack_range = 3
 attack_damage = 5
 name = "Archer"
+short_name = "Archer"
 description = "A novice archer."
 icon = ExtResource("1_3bokg")
 rank = 1

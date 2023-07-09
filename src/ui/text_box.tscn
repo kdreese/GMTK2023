@@ -1,0 +1,110 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsvd5f6vvydfg"]
+
+[ext_resource type="Script" path="res://src/ui/text_box.gd" id="1_griop"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1ges"]
+bg_color = Color(0, 0, 0, 0.54902)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xy0cu"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="TextBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_griop")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.282353)
+
+[node name="PanelContainer" type="PanelContainer" parent="ColorRect"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h1ges")
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Dialog" type="RichTextLabel" parent="ColorRect/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 12
+bbcode_enabled = true
+text = "This is a [b]bold[/b]"
+
+[node name="Speaker" type="PanelContainer" parent="ColorRect"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 15)
+layout_mode = 0
+offset_left = 159.0
+offset_top = 175.0
+offset_right = 255.0
+offset_bottom = 205.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xy0cu")
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/Speaker"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SpeakerText" type="Label" parent="ColorRect/Speaker/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.815686, 0.286275, 0.286275, 1)
+theme_override_font_sizes/font_size = 10
+text = "Military Advisor"
+horizontal_alignment = 1
+
+[node name="NextButton" type="Button" parent="ColorRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 425.0
+offset_top = 255.0
+offset_right = 462.0
+offset_bottom = 284.0
+text = ">>>"
+
+[connection signal="pressed" from="ColorRect/NextButton" to="." method="next"]

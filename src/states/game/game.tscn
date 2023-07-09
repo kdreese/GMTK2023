@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
+[ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -85,6 +86,10 @@ layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
+[node name="TextBox" parent="CanvasLayer" instance=ExtResource("7_ju0gj")]
+unique_name_in_owner = true
+visible = false
+
 [node name="PauseMenu" type="ColorRect" parent="CanvasLayer"]
 unique_name_in_owner = true
 process_mode = 3
@@ -140,6 +145,7 @@ autoplay = true
 bus = &"Music"
 
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="." method="resume"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="show_options"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="CanvasLayer/PauseMenu" method="_on_to_menu_button_pressed"]

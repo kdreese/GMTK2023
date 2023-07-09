@@ -1,11 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://ba6j46b74ptrc"]
+[gd_scene load_steps=12 format=3 uid="uid://dwie270483p4m"]
 
 [ext_resource type="Script" path="res://src/cards/dual_card.gd" id="1_1xj2b"]
 [ext_resource type="Texture2D" uid="uid://cptxnmpjn0yys" path="res://assets/dual_card.png" id="1_dra32"]
 [ext_resource type="Texture2D" uid="uid://0fasvutovcm" path="res://assets/ranks/rank_1.png" id="2_ehnn1"]
-[ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="3_ymth1"]
 [ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="4_hcvln"]
 [ext_resource type="Texture2D" uid="uid://dviouaw1aihwr" path="res://assets/icons/walls.png" id="5_t14rv"]
+[ext_resource type="Texture2D" uid="uid://pofb034lf2kp" path="res://assets/icons/tiny_icons.png" id="5_y2yds"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_culc3"]
+atlas = ExtResource("5_y2yds")
+region = Rect2(2.08165e-12, 2.08165e-12, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sm6t0"]
+atlas = ExtResource("5_y2yds")
+region = Rect2(10, 2.08165e-12, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xabr1"]
+atlas = ExtResource("5_y2yds")
+region = Rect2(20, 2.08165e-12, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wh2e"]
+atlas = ExtResource("5_y2yds")
+region = Rect2(30, 2.08165e-12, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_052hy"]
+atlas = ExtResource("5_y2yds")
+region = Rect2(2.08165e-12, 10, 10, 10)
 
 [node name="DualCard" type="Control"]
 custom_minimum_size = Vector2(78, 120)
@@ -37,11 +57,100 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 74.0
+offset_right = 58.0
 offset_bottom = 27.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_ymth1")
+theme_override_font_sizes/font_size = 10
 text = "Sword"
+
+[node name="AttackStats" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 53.0
+offset_right = 75.0
+offset_bottom = 60.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = -5
+columns = 2
+
+[node name="HealthLabel" type="Label" parent="AttackStats"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HealthIcon" type="TextureRect" parent="AttackStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_culc3")
+stretch_mode = 2
+
+[node name="MvmtLabel" type="Label" parent="AttackStats"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MvmtIcon" type="TextureRect" parent="AttackStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_sm6t0")
+stretch_mode = 2
+
+[node name="AttLabel" type="Label" parent="AttackStats"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AttIcon" type="TextureRect" parent="AttackStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xabr1")
+stretch_mode = 2
+
+[node name="RangeLabel" type="Label" parent="AttackStats"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RangeIcon" type="TextureRect" parent="AttackStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_5wh2e")
+stretch_mode = 2
+
+[node name="SpecialLabel" type="Label" parent="AttackStats"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = " "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SpecialIcon" type="TextureRect" parent="AttackStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_052hy")
+stretch_mode = 2
 
 [node name="AttackIcon" type="TextureRect" parent="."]
 layout_mode = 0
@@ -63,12 +172,100 @@ texture = ExtResource("5_t14rv")
 
 [node name="DefenseLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 20.0
 offset_top = 94.0
 offset_right = 75.0
 offset_bottom = 120.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_ymth1")
+theme_override_font_sizes/font_size = 10
 text = "Walls"
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="DefenseStats" type="GridContainer" parent="."]
+layout_direction = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -19.0
+offset_top = 68.0
+offset_right = -1.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = -5
+columns = 2
+
+[node name="HealthLabel" type="Label" parent="DefenseStats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+vertical_alignment = 1
+
+[node name="HealthIcon" type="TextureRect" parent="DefenseStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_culc3")
+stretch_mode = 2
+
+[node name="MvmtLabel" type="Label" parent="DefenseStats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+vertical_alignment = 1
+
+[node name="MvmtIcon" type="TextureRect" parent="DefenseStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_sm6t0")
+stretch_mode = 2
+
+[node name="AttLabel" type="Label" parent="DefenseStats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+vertical_alignment = 1
+
+[node name="AttIcon" type="TextureRect" parent="DefenseStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xabr1")
+stretch_mode = 2
+
+[node name="RangeLabel" type="Label" parent="DefenseStats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "1"
+vertical_alignment = 1
+
+[node name="RangeIcon" type="TextureRect" parent="DefenseStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_5wh2e")
+stretch_mode = 2
+
+[node name="SpecialLabel" type="Label" parent="DefenseStats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = " "
+vertical_alignment = 1
+
+[node name="SpecialIcon" type="TextureRect" parent="DefenseStats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_052hy")
+stretch_mode = 2

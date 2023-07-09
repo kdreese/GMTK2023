@@ -11,6 +11,7 @@ health = 15
 speed = 2
 unit = null
 name = "Swordsman"
+short_name = "S.Man"
 description = "A basic swordsman. Does 5 damage when attacking."
 icon = ExtResource("1_vww7p")
 rank = 1
