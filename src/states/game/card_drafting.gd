@@ -69,5 +69,6 @@ func select_card(selection: DualCardData) -> void:
 		draft_round += 1
 	elif draft_round == 2:
 		draft_round = 1
-		Global.card_replay_moves = Global.card_replay_moves
+		Global.card_replay_moves = Global.card_current_moves
+		Global.card_current_moves = {}
 		get_tree().reload_current_scene()

@@ -13,7 +13,7 @@ config_version=5
 config/name="gmtk-2023"
 run/main_scene="res://src/states/menu/intro_cutscene.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://assets/icon.svg"
+config/icon="res://assets/icon.png"
 
 [autoload]
 
