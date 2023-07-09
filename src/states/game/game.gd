@@ -39,6 +39,8 @@ func _ready() -> void:
 	red_castle_health_bar.initialize(red_max_health, true)
 	blue_castle_health_bar.initialize(blue_max_health, false)
 	info_display.hide()
+	blue_castle_health_bar.current_health = 1
+	blue_castle_health_bar.update()
 
 	deck = Global.deck
 
@@ -121,11 +123,8 @@ func _on_end_round_button_pressed() -> void:
 		for move in Global.card_replay_moves[curr_round]:
 			perform_card(move[0], move[1], true)
 
-	upgrade_defenses()
 	await instant_defensive_damage()
-	perpetual_defensive_damage()
 	await offensive_action_sweep()
-	place_new_offenses()
 	if hand.size() < MAX_CARDS_IN_HAND:
 		await draw_card()
 	curr_round += 1
@@ -234,10 +233,6 @@ func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
 	return success
 
 
-func upgrade_defenses() -> void:
-	pass
-
-
 func instant_defensive_damage() -> void:
 	var units := $Units/Ranged.get_children()
 	units.sort_custom(ranged_attack_order)
@@ -271,12 +266,6 @@ func instant_defensive_damage() -> void:
 		await get_tree().create_timer(Global.animation_speed).timeout
 
 
-func perpetual_defensive_damage() -> void:
-	# for each defensive square, check if a unit is occupying that square
-	# if so, call that unit's defensive_action function
-	pass
-
-
 func offensive_action_sweep() -> void:
 	var units := $Units/Melee.get_children()
 	units.sort_custom(melee_attack_order)
@@ -290,7 +279,6 @@ func offensive_action_sweep() -> void:
 				await get_tree().create_timer(Global.animation_speed).timeout
 		if unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
-			check_for_end_condition()
 	# for each offensive square, check if a unit is occupying that square
 	# if so, call that unit's offensive_action function
 
@@ -325,6 +313,7 @@ func melee_attack(unit: Unit) -> void:
 		await get_tree().create_timer(Global.animation_speed).timeout
 		blue_castle_health_bar.current_health -= damage
 		blue_castle_health_bar.update()
+	check_for_end_condition()
 	unit.health -= unit.recoil
 	unit.update_health_bar()
 	await get_tree().create_timer(Global.animation_speed).timeout
@@ -354,13 +343,11 @@ func ranged_attack_order(a, b) -> bool:
 		return true
 
 
-func place_new_offenses() -> void:
-	pass
-
-
 func check_for_end_condition() -> void:
 	if blue_castle_health_bar.current_health <= 0:
 		end_round_button.hide()
+		text_box.play(preload("res://assets/dialog/dialog_6.tres"))
+		await text_box.text_finished
 		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
 				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
 		card_drafting.show()
