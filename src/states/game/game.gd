@@ -55,6 +55,7 @@ func _ready() -> void:
 	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
 	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
 	info_display.hide()
+	curr_round = 0
 
 	deck = Global.deck.duplicate()
 
