@@ -1,11 +1,17 @@
 extends Control
 
 
+@onready var quit_button: Button = %QuitButton
 @onready var options_menu: Control = $CanvasLayer/OptionsMenu
+@onready var credits_menu: ColorRect = $CanvasLayer/CreditsMenu
 
 
 func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
+	credits_menu.get_node("%BackButton").pressed.connect(hide_credits)
+
+	if OS.has_feature("web"):
+		quit_button.hide()
 
 
 func play() -> void:
@@ -22,8 +28,14 @@ func hide_options() -> void:
 	$UI.show()
 
 
-func credits() -> void:
-	get_tree().change_scene_to_file("res://src/states/menu/credits_menu.tscn")
+func show_credits() -> void:
+	$UI.hide()
+	credits_menu.show()
+
+
+func hide_credits() -> void:
+	credits_menu.hide()
+	$UI.show()
 
 
 func quit() -> void:
