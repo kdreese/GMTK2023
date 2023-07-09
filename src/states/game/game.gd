@@ -1,9 +1,13 @@
 extends Node2D
 
 
+signal turn_finished
+
+
 const RED_CASTLE_DOOR = Vector2(160, 240)
 const BLUE_CASTLE_DOOR = Vector2(480, 80)
 const MAX_CARDS_IN_HAND = 5
+
 
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var card_drafting: ColorRect = %CardDrafting
@@ -34,6 +38,7 @@ var put_down_this_turn := [false, false, false] # In the attacking lanes, have w
 
 
 func _ready() -> void:
+	text_box.lines.clear()
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
 	red_castle_health_bar.initialize(red_max_health, true)
@@ -41,12 +46,6 @@ func _ready() -> void:
 	info_display.hide()
 
 	deck = Global.deck
-
-	for i in range(3):
-		await draw_card()
-
-	for card in $Cards.get_children():
-		card.draggable = false
 
 	Global.card_replay_moves = {
 		1: [
@@ -58,7 +57,25 @@ func _ready() -> void:
 		],
 	}
 
-	text_box.play(preload("res://assets/dialog/dialog_1.tres"))
+	if Global.curr_stage == 1:
+		draw_card()
+		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
+		await text_box.text_finished
+		await $Cards.get_children()[0].dropped_card
+		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
+		await turn_finished
+		text_box.play(preload("res://assets/dialog/dialog_3.tres"))
+		await $Cards.get_children()[0].dropped_card
+		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
+		await turn_finished
+		text_box.play(preload("res://assets/dialog/dialog_4.tres"))
+		await $Cards.get_children()[0].dropped_card
+		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
+	else:
+		for i in range(3):
+			await draw_card()
+		if Global.curr_stage == 2:
+			text_box.play(preload("res://assets/dialog/dialog_7.tres"))
 
 	Global.curr_stage += 1
 
@@ -134,6 +151,7 @@ func _on_end_round_button_pressed() -> void:
 	put_down_this_turn = [false, false, false]
 	for card in card_nodes.get_children():
 		card.draggable = true
+	turn_finished.emit()
 
 
 func _on_card_dropped(card: Control) -> void:
@@ -341,7 +359,7 @@ func melee_attack_order(a, b) -> bool:
 	elif b.grid_position.y < a.grid_position.y:
 		return false
 	else:
-		if b.grid_position.x > a.grid_position.x:
+		if b.grid_position.x < a.grid_position.x:
 			return true
 		else:
 			return false
