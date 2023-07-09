@@ -3,3 +3,6 @@
 
 # Art GIMP files
 _assets
+
+# Exported games
+.exports/
