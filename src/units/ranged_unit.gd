@@ -20,7 +20,7 @@ func init(data: RangedUnitData, starting_position: Vector2i) -> void:
 
 
 func update_position() -> void:
-	if grid_position.y < 2:
+	if grid_position.y < 3:
 		position = Vector2(580, 40) + grid_position.y * Vector2(0, 40)
 	else:
 		position = Vector2(60, 200) + (grid_position.y - 3) * Vector2(0, 40)
