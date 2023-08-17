@@ -206,11 +206,11 @@ func _on_card_dropped(card: Control) -> void:
 		return
 	if lane < 3 and put_down_this_turn[lane]:
 		return # Don't want to waste an attacking unit by overriding it before it can go
-	if lane in [3, 4, 5] and get_unit(Vector2i(lane, 0)):
-		var existing_unit := get_unit(Vector2i(lane, 0))
+	if lane in [3, 4, 5] and get_unit(Vector2i(0, lane)):
+		var existing_unit := get_unit(Vector2i(0, lane))
 		var new_card := card.card_data.defense as CardData
 		if new_card is RangedUnitData:
-			if existing_unit.attack_power >= new_card.attack_damage:
+			if existing_unit.attack_damage >= new_card.attack_damage:
 				return	# Don't overwrite with a defensive unit of a lower or equal rank
 	# We have a thing to put down! Let's do it
 	var data: CardData
