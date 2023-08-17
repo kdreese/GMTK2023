@@ -3,6 +3,6 @@ extends CardAction
 
 
 func perform_action(data: CardData, lane: int) -> void:
-	var unit: Unit = preload("res://src/units/unit.tscn").instantiate()
+	var unit: MeleeUnit = preload("res://src/units/melee_unit.tscn").instantiate()
 	melee_units.add_child(unit)
 	unit.init(data, lane)
