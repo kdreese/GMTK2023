@@ -50,6 +50,8 @@ var card_current_moves := {} # The moves currently played this round. The lanes 
 
 var endless_mode := false
 
+var current_music_volume := 0.5
+
 func _ready() -> void:
 	#var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
 	#var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
@@ -78,6 +80,11 @@ func _ready() -> void:
 #		defense_cards[defense_card.rank].append(defense_card)
 
 
+func get_music_volume() -> float:
+	return current_music_volume
+
+
 func set_music_volume(value: float):
+	current_music_volume = value
 	var music_bus_index := AudioServer.get_bus_index("Music")
-	AudioServer.set_bus_volume_db(music_bus_index, MAX_VOLUME_DB + (20 * log(value) / log(10)))
+	AudioServer.set_bus_volume_db(music_bus_index, MAX_VOLUME_DB + (20 * log(current_music_volume) / log(10)))
