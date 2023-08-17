@@ -15,6 +15,16 @@ func _ready() -> void:
 
 
 func play() -> void:
+	Global.endless_mode = false
+	play_game()
+
+
+func endless() -> void:
+	Global.endless_mode = true
+	play_game()
+
+
+func play_game() -> void:
 	Global.curr_stage = 0
 	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
 

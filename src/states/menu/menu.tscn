@@ -37,15 +37,27 @@ size_flags_vertical = 6
 [node name="PlayButton" type="Button" parent="UI/Buttons"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Play"
+text = "Play Campaign"
 
-[node name="OptionsButton" type="Button" parent="UI/Buttons"]
+[node name="EndlessButton" type="Button" parent="UI/Buttons"]
 layout_mode = 2
+size_flags_vertical = 3
+text = "Endless Mode"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="OptionsButton" type="Button" parent="UI/Buttons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Options"
 
-[node name="CreditsButton" type="Button" parent="UI/Buttons"]
+[node name="CreditsButton" type="Button" parent="UI/Buttons/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Credits"
 
@@ -77,6 +89,7 @@ visible = false
 visible = false
 
 [connection signal="pressed" from="UI/Buttons/PlayButton" to="." method="play"]
-[connection signal="pressed" from="UI/Buttons/OptionsButton" to="." method="show_options"]
-[connection signal="pressed" from="UI/Buttons/CreditsButton" to="." method="show_credits"]
+[connection signal="pressed" from="UI/Buttons/EndlessButton" to="." method="endless"]
+[connection signal="pressed" from="UI/Buttons/HBoxContainer/OptionsButton" to="." method="show_options"]
+[connection signal="pressed" from="UI/Buttons/HBoxContainer/CreditsButton" to="." method="show_credits"]
 [connection signal="pressed" from="UI/Buttons/QuitButton" to="." method="quit"]

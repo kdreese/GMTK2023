@@ -48,6 +48,7 @@ var deck: Array[DualCardData] = [
 var card_replay_moves := FIRST_REPLAY_MOVES # The moves played last round, which will be replayed by the enemy this round
 var card_current_moves := {} # The moves currently played this round. The lanes are in player POV and need to be shifted
 
+var endless_mode := false
 
 func _ready() -> void:
 	var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
