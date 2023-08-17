@@ -49,7 +49,6 @@ var game_over := false
 
 
 func _ready() -> void:
-	seed(0)
 	text_box.lines.clear()
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
