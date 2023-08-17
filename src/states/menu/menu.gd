@@ -28,6 +28,7 @@ func play_game() -> void:
 	Global.curr_stage = 0
 	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
 
+
 func show_options() -> void:
 	$UI.hide()
 	options_menu.show()
