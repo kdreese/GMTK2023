@@ -52,6 +52,7 @@ func _ready() -> void:
 	text_box.lines.clear()
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
+	text_box.text_started.connect(on_text_start)
 	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
 	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
 	info_display.hide()
@@ -66,17 +67,19 @@ func _ready() -> void:
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
-		$CanvasLayer/OffenseMask.show()
-		await $Cards.get_children()[0].dropped_card
-		$CanvasLayer/OffenseMask.hide()
+		$OffenseMask.show()
+		while card_nodes.get_child_count() > 0:
+			await card_nodes.get_children()[0].dropped_card
+		$OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
 		await text_box.text_finished
 		await turn_finished
 		text_box.play(preload("res://assets/dialog/dialog_3.tres"))
 		await text_box.text_finished
-		$CanvasLayer/DefenseMask.show()
-		await $Cards.get_children()[0].dropped_card
-		$CanvasLayer/DefenseMask.hide()
+		$DefenseMask.show()
+		while card_nodes.get_child_count() > 0:
+			await card_nodes.get_children()[0].dropped_card
+		$DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
 		await text_box.text_finished
 		await turn_finished
@@ -142,8 +145,13 @@ func hide_options() -> void:
 	pause_menu.show()
 
 
+func on_text_start() -> void:
+	for card in card_nodes.get_children():
+		card.draggable = false
+
+
 func on_text_finish() -> void:
-	for card in $Cards.get_children():
+	for card in card_nodes.get_children():
 		card.draggable = true
 
 

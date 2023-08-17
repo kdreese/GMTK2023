@@ -10,6 +10,12 @@ const ANIMATION_SPEED_STRINGS = ["Slow", "Normal", "Fast", "Very Fast", "Hypersp
 @onready var anim_speed_value: Label = %AnimSpeedValue
 
 
+func _ready() -> void:
+	var volume := Global.get_music_volume()
+	music_volume_slider.set_value_no_signal(volume)
+	music_volume_value.text = "%d" % (volume * 100)
+
+
 func on_music_volume_slider_change(value: float) -> void:
 	Global.set_music_volume(value)
 	music_volume_value.text = "%d" % (value * 100)

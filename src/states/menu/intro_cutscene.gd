@@ -38,6 +38,7 @@ func skip_cutscene() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		skip_cutscene()
+		get_viewport().set_input_as_handled()
 	elif event is InputEventKey or event is InputEventMouseButton:
 		if not skip_button.visible:
 			skip_button.show()

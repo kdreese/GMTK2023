@@ -2,6 +2,7 @@ class_name TextBox
 extends Control
 
 
+signal text_started
 signal text_finished
 
 
@@ -18,6 +19,7 @@ func play(new_dialog: Dialog) -> void:
 	lines = new_dialog.lines.duplicate()
 	show()
 	display_line()
+	text_started.emit()
 
 
 func display_line() -> void:
