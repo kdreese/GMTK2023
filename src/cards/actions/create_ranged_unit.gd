@@ -3,7 +3,11 @@ extends CardAction
 
 
 func perform_action(data: CardData, lane: int) -> void:
-	var unit: RangedUnit = preload("res://src/units/ranged_unit.tscn").instantiate()
+	var new_unit: RangedUnit = preload("res://src/units/ranged_unit.tscn").instantiate()
 	var grid_position = Vector2i(0, lane)
-	ranged_units.add_child(unit)
-	unit.init(data, grid_position)
+	for unit in ranged_units.get_children():
+		if unit.grid_position.y == lane:
+			ranged_units.remove_child(unit)
+			unit.queue_free()
+	ranged_units.add_child(new_unit)
+	new_unit.init(data, grid_position)

@@ -112,7 +112,7 @@ func is_spot_open(grid_position: Vector2i):
 
 
 func get_unit(grid_position: Vector2i) -> Unit:
-	for unit in $Units/Melee.get_children():
+	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children():
 		if unit.grid_position == grid_position:
 			return unit
 	return null
@@ -185,7 +185,7 @@ func _on_card_dropped(card: Control) -> void:
 			break
 	if lane < 0:
 		return
-	if lane > 5:
+	if lane > 5:		# Help box
 		var info_container := VBoxContainer.new()
 		var card_container := HBoxContainer.new()
 		var attack_card := card.card_data.attack as CardData
@@ -206,6 +206,12 @@ func _on_card_dropped(card: Control) -> void:
 		return
 	if lane < 3 and put_down_this_turn[lane]:
 		return # Don't want to waste an attacking unit by overriding it before it can go
+	if lane in [3, 4, 5] and get_unit(Vector2i(0, lane)):
+		var existing_unit := get_unit(Vector2i(0, lane))
+		var new_card := card.card_data.defense as CardData
+		if new_card is RangedUnitData:
+			if existing_unit.attack_damage >= new_card.attack_damage:
+				return	# Don't overwrite with a defensive unit of a lower or equal rank
 	# We have a thing to put down! Let's do it
 	var data: CardData
 	if lane < 3:
