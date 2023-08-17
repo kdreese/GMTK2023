@@ -1,6 +1,9 @@
 extends ColorRect
 
 
+signal resumed
+
+
 func _ready() -> void:
 	hide()
 
@@ -16,6 +19,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func resume() -> void:
 	get_tree().paused = false
 	hide()
+	resumed.emit()
 
 
 func _on_to_menu_button_pressed() -> void:

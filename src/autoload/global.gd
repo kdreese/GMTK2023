@@ -51,8 +51,8 @@ var card_current_moves := {} # The moves currently played this round. The lanes 
 var endless_mode := false
 
 func _ready() -> void:
-	var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
-	var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
+	#var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
+	#var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
 
 	attack_cards = {
 		1: [preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/attack/attack_cards/swordsman_1.tres")],
