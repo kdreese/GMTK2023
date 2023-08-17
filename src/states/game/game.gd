@@ -284,7 +284,7 @@ func instant_defensive_damage() -> void:
 		# Search for the closest non-empty square within the range.
 		var target: Node = null
 		for x_pos in range(7, 7 - unit.attack_range, -1):
-			target = get_unit(Vector2i(x_pos, unit.row))
+			target = get_unit(Vector2i(x_pos, unit.grid_position.y))
 			if target != null:
 				break
 
@@ -293,7 +293,7 @@ func instant_defensive_damage() -> void:
 
 		# Move the archer forward, slightly.
 		var position_offset := Vector2(10.0, 0.0)
-		if unit.row < 3:
+		if unit.grid_position.y < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
 		await get_tree().create_timer(Global.animation_speed).timeout
@@ -387,7 +387,7 @@ func melee_attack_order(a, b) -> bool:
 
 
 func ranged_attack_order(a, b) -> bool:
-	if b.row > a.row:
+	if b.grid_position.y > a.grid_position.y:
 		return false
 	else:
 		return true
