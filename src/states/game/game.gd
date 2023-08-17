@@ -49,6 +49,7 @@ var game_over := false
 
 
 func _ready() -> void:
+	seed(0)
 	text_box.lines.clear()
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
@@ -302,7 +303,7 @@ func instant_defensive_damage() -> void:
 		target.update_health_bar()
 		await get_tree().create_timer(Global.animation_speed).timeout
 		# Kill the target, if necessary.
-		if target.health < 0:
+		if target.health <= 0:
 			target.queue_free()
 			$Units/Melee.remove_child(target)
 			await get_tree().create_timer(Global.animation_speed).timeout
@@ -367,8 +368,8 @@ func melee_attack(unit: Unit) -> void:
 	unit.update_health_bar()
 	await get_tree().create_timer(Global.animation_speed).timeout
 	if unit.health <= 0:
-		unit.queue_free()
 		$Units/Melee.remove_child(unit)
+		unit.queue_free()
 	else:
 		unit.update_position()
 		await get_tree().create_timer(Global.animation_speed).timeout

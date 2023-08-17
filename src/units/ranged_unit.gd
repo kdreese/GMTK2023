@@ -1,5 +1,5 @@
 class_name RangedUnit
-extends Node2D
+extends Unit
 
 
 @onready var sprite: Sprite2D = %Sprite
