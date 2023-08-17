@@ -61,6 +61,8 @@ func _ready() -> void:
 
 	if Global.curr_stage == 0:
 		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES
+
+	if not Global.endless_mode and Global.curr_stage == 0:
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
@@ -89,9 +91,10 @@ func _ready() -> void:
 		deck.shuffle()
 		for i in range(3):
 			await draw_card()
-		if Global.curr_stage == 1:
-			text_box.play(preload("res://assets/dialog/dialog_7.tres"))
-			await text_box.text_finished
+
+	if not Global.endless_mode and Global.curr_stage == 1:
+		text_box.play(preload("res://assets/dialog/dialog_7.tres"))
+		await text_box.text_finished
 
 	Global.curr_stage += 1
 
@@ -399,7 +402,7 @@ func check_for_end_condition() -> void:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true
 		end_round_button.hide()
-		if Global.curr_stage == 1:
+		if Global.curr_stage == 1 and not Global.endless_mode:
 			text_box.play(preload("res://assets/dialog/dialog_6.tres"))
 			await text_box.text_finished
 		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
