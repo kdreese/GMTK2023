@@ -7,7 +7,7 @@
 script = ExtResource("1_h7uhr")
 attack_power = 4
 attack_recoil = 1
-health = 5
+health = 4
 speed = 2
 unit = null
 name = "Swordsman"
