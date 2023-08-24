@@ -147,8 +147,7 @@ func load_config() -> void:
 	if "window_size" in config:
 		var raw_size := config["window_size"] as Vector2i
 		var fixed_size: Vector2i
-		@warning_ignore("integer_division")
-		if raw_size.x > 3 * raw_size.y / 4:
+		if 4 * raw_size.x > 3 * raw_size.y:
 			# Wider than it is supposed to be, use the height as the guide.
 			fixed_size = Vector2i(snapped(raw_size.y, 3) * 4 / 3, snapped(raw_size.y, 3))
 		else:
