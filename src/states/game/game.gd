@@ -109,10 +109,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func wait_for_timer(time: float) -> void:
-	await get_tree().create_timer(time).timeout
-	while get_tree().paused:
-		# Keep going if paused
-		await get_tree().create_timer(time).timeout
+	await get_tree().create_timer(time, false).timeout
 
 
 func is_spot_open(grid_position: Vector2i):
