@@ -80,21 +80,25 @@ lane_index = 6
 
 [node name="Monsters" type="Node" parent="."]
 
-[node name="OffenseMask" type="TextureRect" parent="."]
+[node name="MaskCanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="OffenseMask" type="TextureRect" parent="MaskCanvasLayer"]
+unique_name_in_owner = true
 visible = false
 offset_right = 640.0
 offset_bottom = 480.0
 mouse_filter = 2
 texture = ExtResource("9_is28s")
 
-[node name="DefenseMask" type="TextureRect" parent="."]
+[node name="DefenseMask" type="TextureRect" parent="MaskCanvasLayer"]
+unique_name_in_owner = true
 visible = false
 offset_right = 640.0
 offset_bottom = 480.0
 mouse_filter = 2
 texture = ExtResource("10_o06tk")
 
-[node name="Cards" type="Node" parent="."]
+[node name="CardCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="EndRoundButton" type="Button" parent="."]
 offset_left = 510.0
