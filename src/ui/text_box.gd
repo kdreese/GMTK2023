@@ -13,9 +13,11 @@ signal text_finished
 
 
 var lines: Array[DialogLine]
+var active: bool
 
 
 func play(new_dialog: Dialog) -> void:
+	active = true
 	lines = new_dialog.lines.duplicate()
 	show()
 	display_line()
@@ -37,5 +39,6 @@ func next() -> void:
 	if lines:
 		display_line()
 	else:
+		active = false
 		text_finished.emit()
 		hide()
