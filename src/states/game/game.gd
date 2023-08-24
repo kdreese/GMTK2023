@@ -116,6 +116,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func wait_for_timer(time: float) -> void:
+	await get_tree().create_timer(time, false).timeout
+
+
 func is_spot_open(grid_position: Vector2i):
 	if grid_position.x > 7:
 		return false
@@ -178,12 +182,12 @@ func _on_end_round_button_pressed() -> void:
 			if move[0].card_role == "Attack":
 				enemy_attack_card.initialize(move[0])
 				enemy_attack_card.show()
-				await get_tree().create_timer(Global.animation_speed * 2).timeout
+				await wait_for_timer(Global.animation_speed * 2)
 				enemy_attack_card.hide()
 			else:
 				enemy_defense_card.initialize(move[0])
 				enemy_defense_card.show()
-				await get_tree().create_timer(Global.animation_speed * 2).timeout
+				await wait_for_timer(Global.animation_speed * 2)
 				enemy_defense_card.hide()
 			perform_card(move[0], move[1], true)
 
@@ -275,7 +279,7 @@ func draw_card() -> void:
 	card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()
 
-	await get_tree().create_timer(Global.animation_speed * 2).timeout
+	await wait_for_timer(Global.animation_speed * 2)
 
 
 func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
@@ -327,19 +331,19 @@ func instant_defensive_damage() -> void:
 		if unit.grid_position.y < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
-		await get_tree().create_timer(Global.animation_speed).timeout
+		await wait_for_timer(Global.animation_speed)
 		# Do the attack.
 		target.health -= unit.attack_damage
 		target.update_health_bar()
-		await get_tree().create_timer(Global.animation_speed).timeout
+		await wait_for_timer(Global.animation_speed)
 		# Kill the target, if necessary.
 		if target.health <= 0:
 			target.queue_free()
 			$Units/Melee.remove_child(target)
-			await get_tree().create_timer(Global.animation_speed).timeout
+			await wait_for_timer(Global.animation_speed)
 		# Move the archer back.
 		unit.update_position()
-		await get_tree().create_timer(Global.animation_speed).timeout
+		await wait_for_timer(Global.animation_speed)
 
 
 func offensive_action_sweep() -> void:
@@ -354,7 +358,7 @@ func offensive_action_sweep() -> void:
 				unit.grid_position += Vector2i.RIGHT
 				unit.update_position()
 				steps_left -= 1
-				await get_tree().create_timer(Global.animation_speed).timeout
+				await wait_for_timer(Global.animation_speed)
 		if unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 	# for each offensive square, check if a unit is occupying that square
@@ -383,12 +387,12 @@ func melee_attack(unit: Unit) -> void:
 
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
-		await get_tree().create_timer(Global.animation_speed).timeout
+		await wait_for_timer(Global.animation_speed)
 		red_castle_health_bar.current_health -= damage
 		red_castle_health_bar.update()
 	else:
 		unit.position = BLUE_CASTLE_DOOR
-		await get_tree().create_timer(Global.animation_speed).timeout
+		await wait_for_timer(Global.animation_speed)
 		blue_castle_health_bar.current_health -= damage
 		blue_castle_health_bar.update()
 	check_for_end_condition()
@@ -396,13 +400,13 @@ func melee_attack(unit: Unit) -> void:
 		return
 	unit.health -= unit.recoil
 	unit.update_health_bar()
-	await get_tree().create_timer(Global.animation_speed).timeout
+	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
 		$Units/Melee.remove_child(unit)
 		unit.queue_free()
 	else:
 		unit.update_position()
-		await get_tree().create_timer(Global.animation_speed).timeout
+		await wait_for_timer(Global.animation_speed)
 
 
 func melee_attack_order(a, b) -> bool:
