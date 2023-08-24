@@ -21,7 +21,7 @@ const ROUND_HEALTHS = [
 @onready var options_menu: Control = %OptionsMenu
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
-@onready var card_nodes: Node = $Cards
+@onready var card_nodes: CanvasLayer = $CardCanvasLayer
 @onready var end_round_button: Button = %EndRoundButton
 @onready var view_deck_button: Button = %ViewDeckButton
 @onready var view_discard_button: Button = %ViewDiscardButton
@@ -72,10 +72,10 @@ func _ready() -> void:
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
-		$OffenseMask.show()
+		%OffenseMask.show()
 		while card_nodes.get_child_count() > 0:
 			await card_nodes.get_children()[0].dropped_card
-		$OffenseMask.hide()
+		%OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
 		await text_box.text_finished
 		end_round_button.disabled = false
@@ -83,10 +83,10 @@ func _ready() -> void:
 		end_round_button.disabled = true
 		text_box.play(preload("res://assets/dialog/dialog_3.tres"))
 		await text_box.text_finished
-		$DefenseMask.show()
+		%DefenseMask.show()
 		while card_nodes.get_child_count() > 0:
 			await card_nodes.get_children()[0].dropped_card
-		$DefenseMask.hide()
+		%DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
 		await text_box.text_finished
 		end_round_button.disabled = false
@@ -146,7 +146,7 @@ func pause(menu: Node) -> void:
 
 func resume() -> void:
 	get_tree().paused = false
-	if text_box.lines:
+	if text_box.active:
 		text_box.show()
 
 
@@ -174,7 +174,7 @@ func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
 	view_deck_button.disabled = true
 	view_discard_button.disabled = true
-	
+
 	for card in card_nodes.get_children():
 		card.draggable = false
 
@@ -276,7 +276,7 @@ func draw_card() -> void:
 	var dual_card_data = deck.pop_front()
 	hand.append(dual_card_data)
 	var card = preload("res://src/cards/dual_card.tscn").instantiate()
-	$Cards.add_child(card)
+	card_nodes.add_child(card)
 	card.initialize(dual_card_data)
 	card.dropped_card.connect(self._on_card_dropped)
 	arrange_cards()
