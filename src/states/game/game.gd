@@ -135,7 +135,7 @@ func pause() -> void:
 
 
 func resume() -> void:
-	if text_box.lines:
+	if text_box.active:
 		text_box.show()
 
 
