@@ -34,6 +34,7 @@ const FIRST_REPLAY_MOVES = {
 	]
 }
 
+
 var config := DEFAULT_CONFIG.duplicate()
 
 var animation_speed: float = 0.25
