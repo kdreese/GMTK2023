@@ -17,7 +17,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func resume() -> void:
-	get_tree().paused = false
 	hide()
 	resumed.emit()
 

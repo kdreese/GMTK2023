@@ -22,11 +22,14 @@ const ROUND_HEALTHS = [
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
 @onready var card_nodes: CanvasLayer = $CardCanvasLayer
-@onready var end_round_button: Button = $EndRoundButton
+@onready var end_round_button: Button = %EndRoundButton
+@onready var view_deck_button: Button = %ViewDeckButton
+@onready var view_discard_button: Button = %ViewDiscardButton
 @onready var text_box: TextBox = %TextBox
 @onready var info_display: CenterContainer = %InfoDisplay
 @onready var enemy_attack_card: Control = $EnemyAttackCard
 @onready var enemy_defense_card: Control = $EnemyDefenseCard
+@onready var card_viewer: Control = %CardViewer
 
 @onready var lane_drops: Array[Area2D] = [
 	$AttackDropPoints/Lane0, $AttackDropPoints/Lane1, $AttackDropPoints/Lane2,
@@ -53,6 +56,7 @@ func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
+	card_viewer.close_requested.connect(close_card_viewer)
 	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
 	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
 	info_display.hide()
@@ -64,6 +68,7 @@ func _ready() -> void:
 		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES
 
 	if not Global.endless_mode and Global.curr_stage == 0:
+		end_round_button.disabled = true
 		draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
@@ -73,7 +78,9 @@ func _ready() -> void:
 		%OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
 		await text_box.text_finished
+		end_round_button.disabled = false
 		await turn_finished
+		end_round_button.disabled = true
 		text_box.play(preload("res://assets/dialog/dialog_3.tres"))
 		await text_box.text_finished
 		%DefenseMask.show()
@@ -82,14 +89,17 @@ func _ready() -> void:
 		%DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
 		await text_box.text_finished
+		end_round_button.disabled = false
 		await turn_finished
 		text_box.play(preload("res://assets/dialog/dialog_4.tres"))
 		await text_box.text_finished
-		await $EndRoundButton.pressed
+		await turn_finished
+		end_round_button.disabled = true
+		await draw_card()
+		await draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
 		await text_box.text_finished
-		await draw_card()
-		await draw_card()
+		end_round_button.disabled = false
 	else:
 		deck.shuffle()
 		for i in range(3):
@@ -104,7 +114,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		pause()
+		pause(pause_menu)
 		get_viewport().set_input_as_handled()
 
 
@@ -128,13 +138,14 @@ func get_unit(grid_position: Vector2i) -> Unit:
 	return null
 
 
-func pause() -> void:
+func pause(menu: Node) -> void:
 	get_tree().paused = true
-	pause_menu.show()
+	menu.show()
 	text_box.hide()
 
 
 func resume() -> void:
+	get_tree().paused = false
 	if text_box.active:
 		text_box.show()
 
@@ -161,6 +172,9 @@ func on_text_finish() -> void:
 
 func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = true
+	view_deck_button.disabled = true
+	view_discard_button.disabled = true
+
 	for card in card_nodes.get_children():
 		card.draggable = false
 
@@ -186,6 +200,8 @@ func _on_end_round_button_pressed() -> void:
 	curr_round += 1
 
 	end_round_button.disabled = false
+	view_deck_button.disabled = false
+	view_discard_button.disabled = false
 	put_down_this_turn = [false, false, false]
 	for card in card_nodes.get_children():
 		card.draggable = true
@@ -420,6 +436,8 @@ func check_for_end_condition() -> void:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true
 		end_round_button.hide()
+		view_deck_button.hide()
+		view_discard_button.hide()
 		if Global.curr_stage == 1 and not Global.endless_mode:
 			text_box.play(preload("res://assets/dialog/dialog_6.tres"))
 			await text_box.text_finished
@@ -444,3 +462,20 @@ func arrange_cards() -> void:
 		card.position = base_position
 		card.position.x += i * card_spacing
 		card.hand_position = card.position
+
+
+func _on_view_deck_button_pressed() -> void:
+	card_viewer.update_cards(deck)
+	card_viewer.show()
+	pause(card_viewer)
+
+
+func _on_view_discard_button_pressed() -> void:
+	card_viewer.update_cards(discard)
+	card_viewer.show()
+	pause(card_viewer)
+
+
+func close_card_viewer() -> void:
+	card_viewer.hide()
+	resume()
