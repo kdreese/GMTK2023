@@ -72,10 +72,11 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreen"):
 		# If we're not currently in fullscreen, change to fullscreen. If we are, change back.
 		set_fullscreen(get_window().mode != Window.MODE_FULLSCREEN)
+		get_viewport().set_input_as_handled()
 
 
 func _ready() -> void:
@@ -107,7 +108,7 @@ func _ready() -> void:
 
 
 func save_config() -> void:
-	var config_file = FileAccess.open(CONFIG_PATH, FileAccess.WRITE)
+	var config_file := FileAccess.open(CONFIG_PATH, FileAccess.WRITE)
 	if not config_file:
 		push_error("Could not open config file for writing!")
 		return
