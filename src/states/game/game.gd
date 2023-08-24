@@ -56,7 +56,7 @@ func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
-	card_viewer.close.connect(close_card_viewer)
+	card_viewer.close_requested.connect(close_card_viewer)
 	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
 	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
 	info_display.hide()
@@ -93,11 +93,13 @@ func _ready() -> void:
 		await turn_finished
 		text_box.play(preload("res://assets/dialog/dialog_4.tres"))
 		await text_box.text_finished
-		await end_round_button.pressed
+		await turn_finished
+		end_round_button.disabled = true
+		await draw_card()
+		await draw_card()
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
 		await text_box.text_finished
-		await draw_card()
-		await draw_card()
+		end_round_button.disabled = false
 	else:
 		deck.shuffle()
 		for i in range(3):

@@ -1,10 +1,10 @@
 extends Control
 
 
-signal close
+signal close_requested
 
 
-const CARDSPERROW := 7.0
+const CARDS_PER_ROW := 7
 
 
 @onready var card_container: VBoxContainer = %CardContainer
@@ -13,18 +13,19 @@ const CARDSPERROW := 7.0
 func update_cards(cards: Array[DualCardData]) -> void:
 	var displayed_cards := cards.duplicate()
 	displayed_cards.shuffle()	# TODO: Replace with custom sort
-	for child in card_container.get_children():
-		card_container.remove_child(child)
-		child.queue_free()
-	for num in ceili(displayed_cards.size() / CARDSPERROW):
+	for num in ceili(displayed_cards.size() / float(CARDS_PER_ROW)):
 		var hbox := HBoxContainer.new()
 		card_container.add_child(hbox)
 	for card in displayed_cards:
 		var card_node := preload("res://src/cards/dual_card.tscn").instantiate()
-		card_container.get_child(floori(displayed_cards.find(card) / CARDSPERROW)).add_child(card_node)
+		@warning_ignore("integer_division")
+		card_container.get_child(displayed_cards.find(card) / CARDS_PER_ROW).add_child(card_node)
 		card_node.initialize(card)
 		card_node.draggable = false
 
 
 func _on_close_button_pressed() -> void:
-	close.emit()
+	close_requested.emit()
+	for child in card_container.get_children():
+		card_container.remove_child(child)
+		child.queue_free()
