@@ -14,6 +14,7 @@ const ROUND_HEALTHS = [
 	[40, 60],
 	[50, 75]
 ]
+const COPY_ROUND_DOWNTIME = 3
 
 
 @onready var pause_menu: ColorRect = %PauseMenu
@@ -179,8 +180,9 @@ func _on_end_round_button_pressed() -> void:
 		card.draggable = false
 
 	# Make enemy moves
-	if Global.card_replay_moves.has(curr_round):
-		for move in Global.card_replay_moves[curr_round]:
+	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
+	if Global.card_replay_moves.has(looping_index):
+		for move in Global.card_replay_moves[looping_index]:
 			if move[0].card_role == "Attack":
 				enemy_attack_card.initialize(move[0])
 				enemy_attack_card.show()
