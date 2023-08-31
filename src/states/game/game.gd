@@ -352,10 +352,12 @@ func instant_defensive_damage() -> void:
 		if unit.grid_position.y < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
+		unit.play_shoot_sound()
 		await wait_for_timer(Global.animation_speed)
 		# Do the attack.
 		target.health -= unit.attack_damage
 		target.update_health_bar()
+		target.play_damage_sound()
 		await wait_for_timer(Global.animation_speed)
 		# Kill the target, if necessary.
 		if target.health <= 0:
@@ -378,6 +380,7 @@ func offensive_action_sweep() -> void:
 		var steps_left = unit.speed
 		for _idx in range(unit.speed):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
+				unit.play_step_sound()
 				unit.grid_position += Vector2i.RIGHT
 				unit.update_position()
 				steps_left -= 1
@@ -408,6 +411,7 @@ func melee_attack(unit: Unit) -> void:
 		if neighbor != null and neighbor.attack_power == 0:
 			damage += 2
 
+	unit.play_step_sound()
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
 		await wait_for_timer(Global.animation_speed)

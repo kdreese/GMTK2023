@@ -6,6 +6,9 @@ extends Unit
 @onready var rank_icon: Sprite2D = %RankIcon
 @onready var health_bar: ProgressBar = %HealthBar
 
+@onready var step_sounds: Node2D = $StepSounds
+@onready var damage_sound: AudioStreamPlayer2D = $DamageSound
+
 
 var attack_power: int
 var recoil: int
@@ -47,3 +50,12 @@ func update_position() -> void:
 			position.x = 590
 		else:
 			position.x = 560 - 40 * grid_position.x
+
+
+func play_step_sound() -> void:
+	var i := randi_range(0, step_sounds.get_child_count() - 1)
+	step_sounds.get_child(i).play()
+
+
+func play_damage_sound() -> void:
+	damage_sound.play()
