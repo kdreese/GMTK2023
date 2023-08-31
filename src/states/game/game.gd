@@ -356,9 +356,7 @@ func offensive_action_sweep() -> void:
 	for unit in units:
 		if game_over:
 			break
-		if unit == null:
-			continue
-		if unit.is_queued_for_deletion():
+		if unit == null or unit.is_queued_for_deletion():
 			continue
 		var steps_left = unit.speed
 		for _idx in range(unit.speed):
