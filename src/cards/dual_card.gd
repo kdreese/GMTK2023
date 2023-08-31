@@ -2,6 +2,7 @@ class_name DualCard
 extends Control
 
 
+signal started_drag(Control)
 signal dropped_card(Control)
 
 const DRAGGING_OFFSET := Vector2(-32, -18)
@@ -76,15 +77,15 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 
 
 func _on_mouse_enter() -> void:
-	if draggable:
+	if draggable and not dragging:
 		get_tree().create_tween().tween_property(self, "position", self.hand_position + MOUSEOVER_OFFSET, 0.1)
 		get_tree().create_tween().tween_property(self, "size", self.original_size - MOUSEOVER_OFFSET, 0.1)
 
 
 func _on_mouse_exit() -> void:
-	print("Mouse exited.")
-	get_tree().create_tween().tween_property(self, "position", self.hand_position, 0.1)
-	get_tree().create_tween().tween_property(self, "size", self.original_size, 0.1)
+	if draggable and not dragging:
+		get_tree().create_tween().tween_property(self, "position", self.hand_position, 0.1)
+		get_tree().create_tween().tween_property(self, "size", self.original_size, 0.1)
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -95,6 +96,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				dragging = true
 				rotation = -0.5 # radians
 				scale = Vector2(0.5, 0.5)
+				started_drag.emit(self)
 			elif not mb_event.pressed and dragging:
 				dragging = false
 				position = hand_position

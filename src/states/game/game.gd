@@ -209,7 +209,15 @@ func _on_end_round_button_pressed() -> void:
 	turn_finished.emit()
 
 
+func _on_card_dragged(dragged_card: Control) -> void:
+	for card in card_nodes.get_children() as Array[DualCard]:
+		if card != dragged_card:
+			card.draggable = false
+
+
 func _on_card_dropped(card: Control) -> void:
+	for other_card in card_nodes.get_children() as Array[DualCard]:
+		other_card.draggable = true
 	var lane := -1
 	for drop in lane_drops:
 		if drop.is_mouse_inside:
@@ -274,15 +282,23 @@ func draw_card() -> void:
 		if deck.size() == 0:
 			return
 
+	for card in card_nodes.get_children() as Array[DualCard]:
+		card.draggable = false
+
 	var dual_card_data = deck.pop_front()
 	hand.append(dual_card_data)
-	var card = preload("res://src/cards/dual_card.tscn").instantiate()
-	card_nodes.add_child(card)
-	card.initialize(dual_card_data)
-	card.dropped_card.connect(self._on_card_dropped)
+	var new_card = preload("res://src/cards/dual_card.tscn").instantiate()
+	card_nodes.add_child(new_card)
+	new_card.initialize(dual_card_data)
+	new_card.draggable = false
+	new_card.started_drag.connect(_on_card_dragged)
+	new_card.dropped_card.connect(_on_card_dropped)
 	arrange_cards()
 
 	await wait_for_timer(Global.animation_speed * 2)
+
+	for card in card_nodes.get_children() as Array[DualCard]:
+		card.draggable = true
 
 
 func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
