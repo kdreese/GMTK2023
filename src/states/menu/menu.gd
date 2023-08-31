@@ -26,6 +26,7 @@ func endless() -> void:
 
 func play_game() -> void:
 	Global.curr_stage = 0
+	Global.deck = Global.INITIAL_DECK.duplicate()
 	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
 
 
