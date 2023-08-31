@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb0awu3nwb806"]
+[gd_scene load_steps=4 format=3 uid="uid://bb0awu3nwb806"]
 
 [ext_resource type="Script" path="res://src/states/menu/end_screen.gd" id="1_chrcx"]
 [ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="2_31qdh"]
+[ext_resource type="AudioStream" uid="uid://p2gjpjfgasal" path="res://assets/sounds/lose.wav" id="3_48ix8"]
 
 [node name="LoseScreen" type="Control"]
 layout_mode = 3
@@ -45,5 +46,9 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Back to Menu"
+
+[node name="LoseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_48ix8")
+autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="to_menu"]

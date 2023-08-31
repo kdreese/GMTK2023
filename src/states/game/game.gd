@@ -455,6 +455,7 @@ func melee_attack(unit: Unit) -> void:
 		return
 	unit.health -= unit.recoil
 	unit.update_health_bar()
+	unit.play_damage_sound()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
 		$Units/Melee.remove_child(unit)
