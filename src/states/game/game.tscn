@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=17 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dimjfi53hnnof" path="res://src/ui/card_viewer.tscn" id="12_tdele"]
 [ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="13_3jc40"]
 [ext_resource type="PackedScene" uid="uid://dhr87ej3qtdyg" path="res://src/cards/defense/defense_card_info.tscn" id="14_hndgf"]
+[ext_resource type="AudioStream" uid="uid://c1fl0ub5m4yg5" path="res://assets/sounds/oil.wav" id="16_urxts"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -255,6 +256,18 @@ offset_left = 125.0
 offset_top = 316.0
 offset_right = 492.0
 offset_bottom = 464.0
+
+[node name="LeftOilSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(60, 240)
+stream = ExtResource("16_urxts")
+volume_db = -2.0
+max_polyphony = 3
+
+[node name="RightOilSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(580, 80)
+stream = ExtResource("16_urxts")
+volume_db = -2.0
+max_polyphony = 3
 
 [connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]

@@ -194,7 +194,7 @@ func _on_end_round_button_pressed() -> void:
 				enemy_defense_card.show()
 				await wait_for_timer(Global.animation_speed * 2)
 				enemy_defense_card.hide()
-			perform_card(move[0], move[1], true)
+			await perform_card(move[0], move[1], true)
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
@@ -261,13 +261,16 @@ func _on_card_dropped(card: Control) -> void:
 		put_down_this_turn[lane] = true
 	else:
 		data = card.card_data.defense
-	var should_remove := perform_card(data, lane)
+	var should_remove := can_perform_card(data, lane)
 	if should_remove:
 		card_nodes.remove_child(card)
 		arrange_cards()
 		card.queue_free()
 		discard.append(card.card_data)
 		hand.remove_at(hand.find(card.card_data))
+	end_round_button.disabled = true
+	await perform_card(data, lane)
+	end_round_button.disabled = false
 
 
 func remove_info(card_container: Node) -> void:
@@ -303,14 +306,14 @@ func draw_card() -> void:
 		card.draggable = true
 
 
-func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
+func card_script_setup(data: CardData, lane: int, is_enemy := false) -> Array:
 	if data.effect_script == null:
 		push_error("CardData %s has no script!", data.name)
-		return false
+		return [false]
 	var card_script := load(data.effect_script)
 	if card_script == null or not (card_script is Script):
 		push_error("CardData %s has invalid script!", data.name)
-		return false
+		return [false]
 	var script_node_generic = Node.new() # Is this the right way to do it?
 	add_child(script_node_generic)
 	script_node_generic.set_script(card_script)
@@ -321,9 +324,31 @@ func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
 			lane += 3
 		else:
 			lane -= 3
+	return [true, script_node, lane]
+
+
+func can_perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
+	var setup := card_script_setup(data, lane, is_enemy)
+	if not setup[0]:
+		return false
+	var script_node: CardAction = setup[1]
+	lane = setup[2]
+	var success := script_node.can_perform(data, lane)
+	remove_child(script_node)
+	script_node.queue_free()
+	return success
+
+
+func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
+	var setup := card_script_setup(data, lane, is_enemy)
+	if not setup[0]:
+		return false
+	var script_node: CardAction = setup[1]
+	lane = setup[2]
 	var success := script_node.can_perform(data, lane)
 	if success:
-		script_node.perform_action(data, lane)
+		@warning_ignore("redundant_await") # Not all need the await call
+		await script_node.perform_action(data, lane)
 		if not is_enemy:
 			if not Global.card_current_moves.has(curr_round):
 				Global.card_current_moves[curr_round] = []
