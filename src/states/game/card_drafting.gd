@@ -56,6 +56,7 @@ func display_cards(cards : Array[DualCardData]) -> void:
 		attack_card_node.initialize(attack_card)
 		defense_card_node.initialize(defense_card)
 		dual_card_node.initialize(dual_card)
+		dual_card_node.draggable = false
 
 
 func select_card(selection: DualCardData) -> void:

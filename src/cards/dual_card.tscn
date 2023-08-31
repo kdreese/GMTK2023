@@ -29,7 +29,7 @@ region = Rect2(2.08165e-12, 10, 10, 10)
 
 [node name="DualCard" type="Control"]
 z_index = 2
-custom_minimum_size = Vector2(78, 120)
+custom_minimum_size = Vector2(97, 150)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 97.0
