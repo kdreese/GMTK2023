@@ -187,14 +187,14 @@ func _on_end_round_button_pressed() -> void:
 			if move[0].card_role == "Attack":
 				enemy_attack_card.initialize(move[0])
 				enemy_attack_card.show()
-				await wait_for_timer(Global.animation_speed * 2)
-				enemy_attack_card.hide()
 			else:
 				enemy_defense_card.initialize(move[0])
 				enemy_defense_card.show()
-				await wait_for_timer(Global.animation_speed * 2)
-				enemy_defense_card.hide()
+
 			await perform_card(move[0], move[1], true)
+			await wait_for_timer(Global.animation_speed * 2)
+			enemy_attack_card.hide()
+			enemy_defense_card.hide()
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
