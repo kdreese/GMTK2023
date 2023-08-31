@@ -287,7 +287,7 @@ func draw_card() -> void:
 
 	var dual_card_data = deck.pop_front()
 	hand.append(dual_card_data)
-	var new_card = preload("res://src/cards/dual_card.tscn").instantiate()
+	var new_card := preload("res://src/cards/dual_card.tscn").instantiate()
 	card_nodes.add_child(new_card)
 	new_card.initialize(dual_card_data)
 	new_card.draggable = false
