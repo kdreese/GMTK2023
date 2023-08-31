@@ -134,7 +134,7 @@ func is_spot_open(grid_position: Vector2i):
 
 func get_unit(grid_position: Vector2i) -> Unit:
 	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children():
-		if unit.grid_position == grid_position:
+		if not unit.is_queued_for_deletion() and unit.grid_position == grid_position:
 			return unit
 	return null
 
@@ -356,6 +356,10 @@ func offensive_action_sweep() -> void:
 	for unit in units:
 		if game_over:
 			break
+		if unit == null:
+			continue
+		if unit.is_queued_for_deletion():
+			continue
 		var steps_left = unit.speed
 		for _idx in range(unit.speed):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
