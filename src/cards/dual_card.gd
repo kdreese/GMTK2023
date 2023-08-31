@@ -2,17 +2,19 @@ class_name DualCard
 extends Control
 
 
+signal started_drag(Control)
 signal dropped_card(Control)
 
 const DRAGGING_OFFSET := Vector2(-32, -18)
+const MOUSEOVER_OFFSET := Vector2(0, -50)
 
 var card_data: DualCardData
 
 var draggable := true ## If the card can be dragged
 var dragging := false ## Whether or not this card is being dragged
 var hand_position: Vector2 ## The screen position of the card when in the hand
+var original_size: Vector2 ## The original size of the top-level control node.
 var drop_lane := -1 ## In which lane the card will be dropped, 0-5. -1 means not used
-
 
 @onready var rank_icon: TextureRect = $RankIcon
 @onready var attack_label: Label = $AttackLabel
@@ -23,6 +25,7 @@ var drop_lane := -1 ## In which lane the card will be dropped, 0-5. -1 means not
 
 # For debugging only
 func _ready() -> void:
+	original_size = size
 	hand_position = position
 
 
@@ -40,9 +43,9 @@ func _process(_delta: float) -> void:
 func initialize(data: DualCardData) -> void:
 	card_data = data
 	rank_icon.texture = Util.rank_to_texture(data.rank)
-	attack_label.text = data.attack.short_name
+	attack_label.text = data.attack.name
 	attack_icon.texture = data.attack.icon
-	defense_label.text = data.defense.short_name
+	defense_label.text = data.defense.name
 	defense_icon.texture = data.defense.icon
 	update_icons(data.attack, $AttackStats)
 	update_icons(data.defense, $DefenseStats)
@@ -73,6 +76,18 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 		grid.get_node("SpecialIcon").show()
 
 
+func _on_mouse_enter() -> void:
+	if draggable and not dragging:
+		get_tree().create_tween().tween_property(self, "position", self.hand_position + MOUSEOVER_OFFSET, 0.1)
+		get_tree().create_tween().tween_property(self, "size", self.original_size - MOUSEOVER_OFFSET, 0.1)
+
+
+func _on_mouse_exit() -> void:
+	if draggable and not dragging:
+		get_tree().create_tween().tween_property(self, "position", self.hand_position, 0.1)
+		get_tree().create_tween().tween_property(self, "size", self.original_size, 0.1)
+
+
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb_event := event as InputEventMouseButton
@@ -81,6 +96,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				dragging = true
 				rotation = -0.5 # radians
 				scale = Vector2(0.5, 0.5)
+				started_drag.emit(self)
 			elif not mb_event.pressed and dragging:
 				dragging = false
 				position = hand_position

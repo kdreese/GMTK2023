@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
 [ext_resource type="Texture2D" uid="uid://dlbhstwqe15et" path="res://assets/masks/unit_deploy.png" id="9_is28s"]
 [ext_resource type="Texture2D" uid="uid://dx0jwoqavojxx" path="res://assets/masks/castle.png" id="10_o06tk"]
-[ext_resource type="PackedScene" uid="uid://j24hlutfi1ip" path="res://src/ui/card_viewer.tscn" id="12_tdele"]
+[ext_resource type="PackedScene" uid="uid://dimjfi53hnnof" path="res://src/ui/card_viewer.tscn" id="12_tdele"]
 [ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="13_3jc40"]
 [ext_resource type="PackedScene" uid="uid://dhr87ej3qtdyg" path="res://src/cards/defense/defense_card_info.tscn" id="14_hndgf"]
 
@@ -246,6 +246,15 @@ offset_left = 500.0
 offset_top = 97.0
 offset_right = 578.0
 offset_bottom = 217.0
+
+[node name="HandBounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 125.0
+offset_top = 316.0
+offset_right = 492.0
+offset_bottom = 464.0
 
 [connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]

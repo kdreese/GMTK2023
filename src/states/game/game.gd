@@ -6,7 +6,7 @@ signal turn_finished
 
 const RED_CASTLE_DOOR = Vector2(160, 240)
 const BLUE_CASTLE_DOOR = Vector2(480, 80)
-const MAX_CARDS_IN_HAND = 5
+const MAX_CARDS_IN_HAND = 7
 const ROUND_HEALTHS = [
 	[20, 30],
 	[25, 40],
@@ -30,6 +30,7 @@ const ROUND_HEALTHS = [
 @onready var enemy_attack_card: Control = $EnemyAttackCard
 @onready var enemy_defense_card: Control = $EnemyDefenseCard
 @onready var card_viewer: Control = %CardViewer
+@onready var hand_bounds: Control = %HandBounds
 
 @onready var lane_drops: Array[Area2D] = [
 	$AttackDropPoints/Lane0, $AttackDropPoints/Lane1, $AttackDropPoints/Lane2,
@@ -208,7 +209,15 @@ func _on_end_round_button_pressed() -> void:
 	turn_finished.emit()
 
 
+func _on_card_dragged(dragged_card: Control) -> void:
+	for card in card_nodes.get_children() as Array[DualCard]:
+		if card != dragged_card:
+			card.draggable = false
+
+
 func _on_card_dropped(card: Control) -> void:
+	for other_card in card_nodes.get_children() as Array[DualCard]:
+		other_card.draggable = true
 	var lane := -1
 	for drop in lane_drops:
 		if drop.is_mouse_inside:
@@ -273,15 +282,23 @@ func draw_card() -> void:
 		if deck.size() == 0:
 			return
 
+	for card in card_nodes.get_children() as Array[DualCard]:
+		card.draggable = false
+
 	var dual_card_data = deck.pop_front()
 	hand.append(dual_card_data)
-	var card = preload("res://src/cards/dual_card.tscn").instantiate()
-	card_nodes.add_child(card)
-	card.initialize(dual_card_data)
-	card.dropped_card.connect(self._on_card_dropped)
+	var new_card := preload("res://src/cards/dual_card.tscn").instantiate()
+	card_nodes.add_child(new_card)
+	new_card.initialize(dual_card_data)
+	new_card.draggable = false
+	new_card.started_drag.connect(_on_card_dragged)
+	new_card.dropped_card.connect(_on_card_dropped)
 	arrange_cards()
 
 	await wait_for_timer(Global.animation_speed * 2)
+
+	for card in card_nodes.get_children() as Array[DualCard]:
+		card.draggable = true
 
 
 func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
@@ -451,16 +468,32 @@ func check_for_end_condition() -> void:
 
 func arrange_cards() -> void:
 	var num_cards := card_nodes.get_child_count()
-	var base_position := get_viewport_rect().size
-	base_position.x = base_position.x / 2 - 39 # Magic number 39 is half the width of scaled DualCard
-	base_position.y -= 150
-	var card_spacing := 84
-	base_position.x -= (num_cards - 1) * card_spacing / 2.0
+	if num_cards == 0:
+		return
+
+	var card := card_nodes.get_child(0) as DualCard
+	var card_width := card.size.x
+	var buffer := 10 # Pixels of space between cards.
+
+	var card_spacing: Vector2
+	var total_width: float
+
+	if num_cards * (card_width + buffer) < hand_bounds.size.x:
+		# We have enough space to display all cards without overlapping.
+		card_spacing = (card_width + buffer) * Vector2.RIGHT
+		total_width = num_cards * (card_width + buffer) - buffer
+	else:
+		# We must overlap. Set the overlap to a minimum value so that it looks okay.
+		var max_card_spacing := (hand_bounds.size.x - card_width) / num_cards
+		card_spacing = min(max_card_spacing, card_width - buffer) * Vector2.RIGHT
+		total_width = card_width + (num_cards - 1) * card_spacing.x
+
+	var center_of_hand := hand_bounds.position + Vector2(hand_bounds.size.x / 2.0, 0.0)
+	var first_card_position := center_of_hand - total_width / 2.0 * Vector2.RIGHT
 
 	for i in range(num_cards):
-		var card: Control = card_nodes.get_child(i)
-		card.position = base_position
-		card.position.x += i * card_spacing
+		card = card_nodes.get_child(i)
+		card.position = first_card_position + i * card_spacing
 		card.hand_position = card.position
 
 

@@ -4,7 +4,7 @@ extends Control
 signal close_requested
 
 
-const CARDS_PER_ROW := 7
+const CARDS_PER_ROW := 5
 
 
 @onready var card_container: VBoxContainer = %CardContainer

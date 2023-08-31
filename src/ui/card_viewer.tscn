@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://j24hlutfi1ip"]
+[gd_scene load_steps=2 format=3 uid="uid://dimjfi53hnnof"]
 
 [ext_resource type="Script" path="res://src/ui/card_viewer.gd" id="1_a830e"]
 
