@@ -39,6 +39,9 @@ const COPY_ROUND_DOWNTIME = 3
 	$InfoDropPoint/LaneInfo,
 ]
 
+@onready var win_sound: AudioStreamPlayer = $WinSound
+
+
 
 var enemy_moves: Array[Dictionary]
 var deck: Array[DualCardData]
@@ -482,6 +485,7 @@ func ranged_attack_order(a, b) -> bool:
 
 func check_for_end_condition() -> void:
 	if blue_castle_health_bar.current_health <= 0:
+		win_sound.play()
 		if Global.curr_stage >= 5:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true
