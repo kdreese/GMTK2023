@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwie270483p4m"]
+[gd_scene load_steps=13 format=3 uid="uid://dwie270483p4m"]
 
 [ext_resource type="Script" path="res://src/cards/dual_card.gd" id="1_1xj2b"]
 [ext_resource type="Texture2D" uid="uid://cptxnmpjn0yys" path="res://assets/dual_card.png" id="1_dra32"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="4_hcvln"]
 [ext_resource type="Texture2D" uid="uid://dviouaw1aihwr" path="res://assets/icons/walls.png" id="5_t14rv"]
 [ext_resource type="Texture2D" uid="uid://pofb034lf2kp" path="res://assets/icons/tiny_icons.png" id="5_y2yds"]
+[ext_resource type="AudioStream" uid="uid://pxw8ys7vnxq2" path="res://assets/sounds/hover.wav" id="7_qtyu4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_culc3"]
 atlas = ExtResource("5_y2yds")
@@ -276,6 +277,11 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = " "
 vertical_alignment = 1
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_qtyu4")
+volume_db = -4.0
+max_polyphony = 3
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_enter"]
