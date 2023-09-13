@@ -83,6 +83,7 @@ metadata/_edit_group_ = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = SubResource("AtlasTexture_culc3")
 stretch_mode = 2
 
@@ -98,6 +99,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = SubResource("AtlasTexture_sm6t0")
 stretch_mode = 2
 
@@ -113,6 +115,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = SubResource("AtlasTexture_xabr1")
 stretch_mode = 2
 
@@ -128,6 +131,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = SubResource("AtlasTexture_5wh2e")
 stretch_mode = 2
 
@@ -143,6 +147,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = SubResource("AtlasTexture_052hy")
 stretch_mode = 2
 
