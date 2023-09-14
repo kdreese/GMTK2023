@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=20 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://c1fl0ub5m4yg5" path="res://assets/sounds/oil.wav" id="16_urxts"]
 [ext_resource type="AudioStream" uid="uid://4hil2t0swnfe" path="res://assets/sounds/heal.wav" id="17_argrt"]
 [ext_resource type="AudioStream" uid="uid://b6r7j20jhb1ef" path="res://assets/sounds/win.wav" id="18_ncwqh"]
+[ext_resource type="AudioStream" uid="uid://5v0dcrgtdbnj" path="res://assets/sounds/draw.wav" id="19_mbpjm"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -289,6 +290,11 @@ bus = &"Sounds"
 
 [node name="WinSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_ncwqh")
+bus = &"Sounds"
+
+[node name="DrawSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_mbpjm")
+volume_db = -3.0
 bus = &"Sounds"
 
 [connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]

@@ -40,6 +40,7 @@ const COPY_ROUND_DOWNTIME = 3
 ]
 
 @onready var win_sound: AudioStreamPlayer = $WinSound
+@onready var draw_sound: AudioStreamPlayer = $DrawSound
 
 
 
@@ -201,6 +202,9 @@ func _on_end_round_button_pressed() -> void:
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
+
+	await wait_for_timer(Global.animation_speed)
+
 	if hand.size() < MAX_CARDS_IN_HAND:
 		await draw_card()
 	curr_round += 1
@@ -303,7 +307,9 @@ func draw_card() -> void:
 	new_card.dropped_card.connect(_on_card_dropped)
 	arrange_cards()
 
-	await wait_for_timer(Global.animation_speed * 2)
+	draw_sound.play()
+
+	await wait_for_timer(Global.animation_speed)
 
 	for card in card_nodes.get_children() as Array[DualCard]:
 		card.draggable = true
