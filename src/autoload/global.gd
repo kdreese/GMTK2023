@@ -95,7 +95,7 @@ func _ready() -> void:
 		2: [preload("res://src/cards/defense/defense_cards/archer_2.tres"), preload("res://src/cards/defense/defense_cards/oil_2.tres"), preload("res://src/cards/defense/defense_cards/walls_2.tres")],
 		3: [preload("res://src/cards/defense/defense_cards/archer_3.tres"), preload("res://src/cards/defense/defense_cards/oil_3.tres"), preload("res://src/cards/defense/defense_cards/walls_3.tres")],
 	}
-	
+
 	deck = INITIAL_DECK.duplicate()
 #	for attack_card_path in attack_card_strings:
 #		var attack_card := load("res://src/cards/attack/attack_cards/" + attack_card_path) as CardData

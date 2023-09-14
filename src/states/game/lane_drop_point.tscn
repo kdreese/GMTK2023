@@ -11,3 +11,9 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8yfdq")
+
+[node name="TooltipDelay" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+
+[connection signal="timeout" from="TooltipDelay" to="." method="_on_tooltip_delay_timeout"]
