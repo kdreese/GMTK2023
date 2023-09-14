@@ -264,27 +264,32 @@ position = Vector2(60, 240)
 stream = ExtResource("16_urxts")
 volume_db = -2.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="LeftHealSound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(60, 240)
 stream = ExtResource("17_argrt")
 volume_db = -4.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="RightOilSound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(580, 80)
 stream = ExtResource("16_urxts")
 volume_db = -2.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="RightHealSound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(580, 80)
 stream = ExtResource("17_argrt")
 volume_db = -3.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="WinSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_ncwqh")
+bus = &"Sounds"
 
 [connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]

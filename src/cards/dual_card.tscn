@@ -282,6 +282,7 @@ vertical_alignment = 1
 stream = ExtResource("7_qtyu4")
 volume_db = -4.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_enter"]

@@ -22,3 +22,4 @@ texture = ExtResource("2_1g8he")
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_ldec6")
 volume_db = -4.0
+bus = &"Sounds"

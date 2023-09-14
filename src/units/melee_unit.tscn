@@ -48,16 +48,20 @@ show_percentage = false
 stream = ExtResource("5_ynb8p")
 volume_db = -5.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="Step2" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("6_xodv2")
 volume_db = -5.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="Step3" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("7_wgfxq")
 volume_db = -5.0
 max_polyphony = 3
+bus = &"Sounds"
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_plx1h")
+bus = &"Sounds"
