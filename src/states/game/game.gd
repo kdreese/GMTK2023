@@ -39,6 +39,10 @@ const COPY_ROUND_DOWNTIME = 3
 	$InfoDropPoint/LaneInfo,
 ]
 
+@onready var win_sound: AudioStreamPlayer = $WinSound
+@onready var draw_sound: AudioStreamPlayer = $DrawSound
+
+
 
 var enemy_moves: Array[Dictionary]
 var deck: Array[DualCardData]
@@ -187,17 +191,20 @@ func _on_end_round_button_pressed() -> void:
 			if move[0].card_role == "Attack":
 				enemy_attack_card.initialize(move[0])
 				enemy_attack_card.show()
-				await wait_for_timer(Global.animation_speed * 2)
-				enemy_attack_card.hide()
 			else:
 				enemy_defense_card.initialize(move[0])
 				enemy_defense_card.show()
-				await wait_for_timer(Global.animation_speed * 2)
-				enemy_defense_card.hide()
-			perform_card(move[0], move[1], true)
+
+			await perform_card(move[0], move[1], true)
+			await wait_for_timer(Global.animation_speed * 2)
+			enemy_attack_card.hide()
+			enemy_defense_card.hide()
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
+
+	await wait_for_timer(Global.animation_speed)
+
 	if hand.size() < MAX_CARDS_IN_HAND:
 		await draw_card()
 	curr_round += 1
@@ -261,13 +268,16 @@ func _on_card_dropped(card: Control) -> void:
 		put_down_this_turn[lane] = true
 	else:
 		data = card.card_data.defense
-	var should_remove := perform_card(data, lane)
+	var should_remove := can_perform_card(data, lane)
 	if should_remove:
 		card_nodes.remove_child(card)
 		arrange_cards()
 		card.queue_free()
 		discard.append(card.card_data)
 		hand.remove_at(hand.find(card.card_data))
+	end_round_button.disabled = true
+	await perform_card(data, lane)
+	end_round_button.disabled = false
 
 
 func remove_info(card_container: Node) -> void:
@@ -297,20 +307,22 @@ func draw_card() -> void:
 	new_card.dropped_card.connect(_on_card_dropped)
 	arrange_cards()
 
-	await wait_for_timer(Global.animation_speed * 2)
+	draw_sound.play()
+
+	await wait_for_timer(Global.animation_speed)
 
 	for card in card_nodes.get_children() as Array[DualCard]:
 		card.draggable = true
 
 
-func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
+func card_script_setup(data: CardData, lane: int, is_enemy := false) -> Array:
 	if data.effect_script == null:
 		push_error("CardData %s has no script!", data.name)
-		return false
+		return [false]
 	var card_script := load(data.effect_script)
 	if card_script == null or not (card_script is Script):
 		push_error("CardData %s has invalid script!", data.name)
-		return false
+		return [false]
 	var script_node_generic = Node.new() # Is this the right way to do it?
 	add_child(script_node_generic)
 	script_node_generic.set_script(card_script)
@@ -321,9 +333,31 @@ func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
 			lane += 3
 		else:
 			lane -= 3
+	return [true, script_node, lane]
+
+
+func can_perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
+	var setup := card_script_setup(data, lane, is_enemy)
+	if not setup[0]:
+		return false
+	var script_node: CardAction = setup[1]
+	lane = setup[2]
+	var success := script_node.can_perform(data, lane)
+	remove_child(script_node)
+	script_node.queue_free()
+	return success
+
+
+func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
+	var setup := card_script_setup(data, lane, is_enemy)
+	if not setup[0]:
+		return false
+	var script_node: CardAction = setup[1]
+	lane = setup[2]
 	var success := script_node.can_perform(data, lane)
 	if success:
-		script_node.perform_action(data, lane)
+		@warning_ignore("redundant_await") # Not all need the await call
+		await script_node.perform_action(data, lane)
 		if not is_enemy:
 			if not Global.card_current_moves.has(curr_round):
 				Global.card_current_moves[curr_round] = []
@@ -352,10 +386,12 @@ func instant_defensive_damage() -> void:
 		if unit.grid_position.y < 3:
 			position_offset *= -1.0
 		unit.position += position_offset
+		unit.play_shoot_sound()
 		await wait_for_timer(Global.animation_speed)
 		# Do the attack.
 		target.health -= unit.attack_damage
 		target.update_health_bar()
+		target.play_damage_sound()
 		await wait_for_timer(Global.animation_speed)
 		# Kill the target, if necessary.
 		if target.health <= 0:
@@ -378,6 +414,7 @@ func offensive_action_sweep() -> void:
 		var steps_left = unit.speed
 		for _idx in range(unit.speed):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
+				unit.play_step_sound()
 				unit.grid_position += Vector2i.RIGHT
 				unit.update_position()
 				steps_left -= 1
@@ -408,6 +445,7 @@ func melee_attack(unit: Unit) -> void:
 		if neighbor != null and neighbor.attack_power == 0:
 			damage += 2
 
+	unit.play_step_sound()
 	if unit.grid_position.y > 2:
 		unit.position = RED_CASTLE_DOOR
 		await wait_for_timer(Global.animation_speed)
@@ -423,6 +461,7 @@ func melee_attack(unit: Unit) -> void:
 		return
 	unit.health -= unit.recoil
 	unit.update_health_bar()
+	unit.play_damage_sound()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
 		$Units/Melee.remove_child(unit)
@@ -453,6 +492,7 @@ func ranged_attack_order(a, b) -> bool:
 
 func check_for_end_condition() -> void:
 	if blue_castle_health_bar.current_health <= 0:
+		win_sound.play()
 		if Global.curr_stage >= 5:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true

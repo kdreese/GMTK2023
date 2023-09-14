@@ -21,6 +21,7 @@ var drop_lane := -1 ## In which lane the card will be dropped, 0-5. -1 means not
 @onready var attack_icon: TextureRect = $AttackIcon
 @onready var defense_icon: TextureRect = $DefenseIcon
 @onready var defense_label: Label = $DefenseLabel
+@onready var hover_sound: AudioStreamPlayer = $HoverSound
 
 
 # For debugging only
@@ -78,6 +79,7 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 
 func _on_mouse_enter() -> void:
 	if draggable and not dragging:
+		hover_sound.play()
 		get_tree().create_tween().tween_property(self, "position", self.hand_position + MOUSEOVER_OFFSET, 0.1)
 		get_tree().create_tween().tween_property(self, "size", self.original_size - MOUSEOVER_OFFSET, 0.1)
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsvd5f6vvydfg"]
+[gd_scene load_steps=5 format=3 uid="uid://bsvd5f6vvydfg"]
 
 [ext_resource type="Script" path="res://src/ui/text_box.gd" id="1_griop"]
+[ext_resource type="AudioStream" uid="uid://dyrohh4oxsnth" path="res://assets/sounds/dialog.wav" id="2_y1iwy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1ges"]
 bg_color = Color(0, 0, 0, 0.54902)
@@ -106,5 +107,9 @@ offset_top = 255.0
 offset_right = 462.0
 offset_bottom = 284.0
 text = ">>>"
+
+[node name="DialogSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_y1iwy")
+volume_db = -8.0
 
 [connection signal="pressed" from="ColorRect/NextButton" to="." method="next"]

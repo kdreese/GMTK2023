@@ -9,5 +9,9 @@ func perform_action(data: CardData, lane: int) -> void:
 		if unit.grid_position.y == lane:
 			ranged_units.remove_child(unit)
 			unit.queue_free()
+	if lane < 3:
+		game.get_node("RightPlaceSound").play()
+	else:
+		game.get_node("LeftPlaceSound").play()
 	ranged_units.add_child(new_unit)
 	new_unit.init(data, grid_position)

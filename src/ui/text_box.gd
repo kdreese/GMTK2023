@@ -10,6 +10,7 @@ signal text_finished
 @onready var speaker: PanelContainer = %Speaker
 @onready var speaker_text: Label = %SpeakerText
 @onready var next_button: Button = %NextButton
+@onready var dialog_sound: AudioStreamPlayer = $DialogSound
 
 
 var lines: Array[DialogLine]
@@ -30,6 +31,8 @@ func display_line() -> void:
 		speaker.show()
 	else:
 		speaker.hide()
+
+	dialog_sound.play()
 
 	dialog.text = lines[0].text
 	lines.pop_front()
