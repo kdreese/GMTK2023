@@ -9,9 +9,10 @@ const CONFIG_PATH := "user://config.cfg"
 const DEFAULT_CONFIG := {
 	"sound_volume": 1.0,
 	"music_volume": 1.0,
-	"anim_speed_idx": 1
+	"anim_speed_idx": 2
 }
 
+const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
 const MAX_VOLUME_DB = -6.0
 const FIRST_REPLAY_MOVES = {
 	0: [
@@ -171,6 +172,7 @@ func load_config() -> void:
 		# If we're in fullscreen, change the mode.
 		get_window().mode = Window.MODE_FULLSCREEN
 
+	animation_speed = ANIMATION_SPEEDS[int(config["anim_speed_idx"])]
 	update_sound_volume()
 	update_music_volume()
 

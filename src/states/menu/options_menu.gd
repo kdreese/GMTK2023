@@ -1,8 +1,7 @@
 extends Control
 
 
-const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
-const ANIMATION_SPEED_STRINGS = ["Slow", "Normal", "Fast", "Very Fast", "Hyperspeed"]
+const ANIMATION_SPEED_STRINGS = ["Very Slow", "Slow", "Normal", "Fast", "Hyperspeed"]
 
 
 @onready var sound_volume_slider: HSlider = %SoundVolumeSlider
@@ -45,7 +44,7 @@ func on_music_volume_slider_change(value: float) -> void:
 
 func on_anim_speed_slider_change(value: float):
 	Global.config["anim_speed_idx"] = value
-	Global.animation_speed = ANIMATION_SPEEDS[int(value)]
+	Global.animation_speed = Global.ANIMATION_SPEEDS[int(value)]
 	anim_speed_value.text = ANIMATION_SPEED_STRINGS[int(value)]
 
 
