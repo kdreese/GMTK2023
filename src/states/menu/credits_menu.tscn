@@ -70,7 +70,8 @@ horizontal_alignment = 1
 [node name="TerryDetails" type="Label" parent="MarginContainer/TabContainer/Credits/GridContainer"]
 layout_mode = 2
 text = "Design
-Programming"
+Programming
+Sound"
 horizontal_alignment = 1
 
 [node name="AndrewDetails" type="Label" parent="MarginContainer/TabContainer/Credits/GridContainer"]

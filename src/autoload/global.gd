@@ -7,10 +7,12 @@ signal fullscreen_changed
 const CONFIG_PATH := "user://config.cfg"
 
 const DEFAULT_CONFIG := {
-	"music_volume": 1.0,
-	"anim_speed_idx": 1
+	"sound_volume": 1.0,
+	"music_volume": 0.5,
+	"anim_speed_idx": 2
 }
 
+const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
 const MAX_VOLUME_DB = -6.0
 const FIRST_REPLAY_MOVES = {
 	0: [
@@ -146,6 +148,10 @@ func load_config() -> void:
 
 	config = new_config.duplicate()
 
+	for entry in DEFAULT_CONFIG:
+		if entry not in config:
+			config[entry] = DEFAULT_CONFIG[entry]
+
 	# Set the size of the window and center it.
 	if "window_size" in config:
 		var raw_size := config["window_size"] as Vector2i
@@ -166,6 +172,8 @@ func load_config() -> void:
 		# If we're in fullscreen, change the mode.
 		get_window().mode = Window.MODE_FULLSCREEN
 
+	animation_speed = ANIMATION_SPEEDS[int(config["anim_speed_idx"])]
+	update_sound_volume()
 	update_music_volume()
 
 
@@ -180,13 +188,27 @@ func set_fullscreen(fullscreen: bool) -> void:
 	fullscreen_changed.emit(fullscreen)
 
 
+func get_sound_volume() -> float:
+	return config["sound_volume"]
+
+
 func get_music_volume() -> float:
 	return config["music_volume"]
+
+
+func set_sound_volume(value: float):
+	config["sound_volume"] = value
+	update_sound_volume()
 
 
 func set_music_volume(value: float):
 	config["music_volume"] = value
 	update_music_volume()
+
+
+func update_sound_volume():
+	var sound_bus_index := AudioServer.get_bus_index("Sounds")
+	AudioServer.set_bus_volume_db(sound_bus_index, MAX_VOLUME_DB + (20 * log(config["sound_volume"]) / log(10)))
 
 
 func update_music_volume():

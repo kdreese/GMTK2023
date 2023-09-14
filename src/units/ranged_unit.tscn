@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bb1l7holjivv2"]
+[gd_scene load_steps=5 format=3 uid="uid://bb1l7holjivv2"]
 
 [ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_ego00"]
 [ext_resource type="Script" path="res://src/units/ranged_unit.gd" id="1_lkk86"]
 [ext_resource type="Texture2D" uid="uid://0fasvutovcm" path="res://assets/ranks/rank_1.png" id="2_1g8he"]
+[ext_resource type="AudioStream" uid="uid://b0a553nhiip8r" path="res://assets/sounds/arrowshoot.wav" id="4_ldec6"]
 
 [node name="RangedUnit" type="Node2D"]
 script = ExtResource("1_lkk86")
@@ -17,3 +18,8 @@ unique_name_in_owner = true
 position = Vector2(-10, -10)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_1g8he")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ldec6")
+volume_db = -4.0
+bus = &"Sounds"
