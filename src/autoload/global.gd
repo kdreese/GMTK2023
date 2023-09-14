@@ -8,7 +8,7 @@ const CONFIG_PATH := "user://config.cfg"
 
 const DEFAULT_CONFIG := {
 	"sound_volume": 1.0,
-	"music_volume": 1.0,
+	"music_volume": 0.5,
 	"anim_speed_idx": 2
 }
 
