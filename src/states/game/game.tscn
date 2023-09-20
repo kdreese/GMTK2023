@@ -154,27 +154,29 @@ show_percentage = false
 position = Vector2(50, 80)
 
 [node name="Lane0" parent="AttackDropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(0, -40)
+position = Vector2(16, -49)
 
 [node name="Lane1" parent="AttackDropPoints" instance=ExtResource("4_oe5te")]
+position = Vector2(5, -15)
 lane_index = 1
 
 [node name="Lane2" parent="AttackDropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(0, 40)
+position = Vector2(-8, 18)
 lane_index = 2
 
 [node name="DefenseDropPoints" type="Node2D" parent="."]
 position = Vector2(60, 240)
 
 [node name="Lane3" parent="DefenseDropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(0, -40)
+position = Vector2(77, -44)
 lane_index = 3
 
 [node name="Lane4" parent="DefenseDropPoints" instance=ExtResource("4_oe5te")]
+position = Vector2(65, -10)
 lane_index = 4
 
 [node name="Lane5" parent="DefenseDropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(0, 40)
+position = Vector2(53, 23)
 lane_index = 5
 
 [node name="InfoDropPoint" type="Node2D" parent="."]
