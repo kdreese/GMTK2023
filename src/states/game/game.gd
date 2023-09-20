@@ -20,8 +20,8 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var card_drafting: ColorRect = %CardDrafting
 @onready var options_menu: Control = %OptionsMenu
-@onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
+@onready var red_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar/RedCastleHealthBar
 @onready var card_nodes: CanvasLayer = $CardCanvasLayer
 @onready var end_round_button: Button = %EndRoundButton
 @onready var view_deck_button: Button = %ViewDeckButton
@@ -63,8 +63,8 @@ func _ready() -> void:
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
 	card_viewer.close_requested.connect(close_card_viewer)
-	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
-	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
+	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0])
+	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1])
 	info_display.hide()
 	curr_round = 0
 

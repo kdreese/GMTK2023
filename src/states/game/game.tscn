@@ -1,11 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=25 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
 [ext_resource type="Script" path="res://src/states/game/pause_menu.gd" id="3_3a4py"]
-[ext_resource type="PackedScene" uid="uid://cywupx4go4xko" path="res://src/states/game/castle_health_bar.tscn" id="3_a3and"]
+[ext_resource type="StyleBox" uid="uid://dotgj7n5t3k2g" path="res://src/ui/health_bar_fill_blue.tres" id="4_1n33w"]
+[ext_resource type="Script" path="res://src/states/game/castle_health_bar.gd" id="4_46ubl"]
 [ext_resource type="PackedScene" uid="uid://cqeuuh545y06g" path="res://src/states/game/lane_drop_point.tscn" id="4_oe5te"]
 [ext_resource type="Script" path="res://src/states/game/card_drafting.gd" id="4_ss1ks"]
+[ext_resource type="StyleBox" uid="uid://mvv732gy1ops" path="res://src/ui/health_bar_fill_red.tres" id="5_2xa0v"]
 [ext_resource type="Texture2D" uid="uid://coa7h12oinw5o" path="res://assets/help_card.png" id="5_j4lg2"]
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
@@ -21,23 +23,126 @@
 [ext_resource type="AudioStream" uid="uid://b32qtjvgyw23b" path="res://assets/sounds/place.wav" id="18_t7qqf"]
 [ext_resource type="AudioStream" uid="uid://5v0dcrgtdbnj" path="res://assets/sounds/draw.wav" id="19_mbpjm"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_biu44"]
+bg_color = Color(0, 0, 0, 0.537255)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kng7q"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
 
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2_bwdb4")
 
-[node name="RedCastleHealthBar" parent="." instance=ExtResource("3_a3and")]
-offset_left = -5.0
-offset_top = 202.0
-offset_right = -5.0
-offset_bottom = 202.0
-
-[node name="BlueCastleHealthBar" parent="." instance=ExtResource("3_a3and")]
+[node name="BlueCastleHealthBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_left = 595.0
 offset_top = 41.0
-offset_right = 595.0
-offset_bottom = 41.0
+offset_right = 635.0
+offset_bottom = 81.0
+script = ExtResource("4_46ubl")
+
+[node name="V" type="VBoxContainer" parent="BlueCastleHealthBar"]
+layout_mode = 0
+offset_left = -594.0
+offset_top = 241.0
+offset_right = -319.0
+offset_bottom = 292.0
+theme_override_constants/separation = 0
+metadata/_edit_group_ = true
+
+[node name="P" type="PanelContainer" parent="BlueCastleHealthBar/V"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_biu44")
+
+[node name="M" type="MarginContainer" parent="BlueCastleHealthBar/V/P"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="HealthText" type="Label" parent="BlueCastleHealthBar/V/P/M"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.305882, 0.533333, 0.85098, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 20
+text = "200/250 HP"
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="BlueCastleHealthBar/V"]
+custom_minimum_size = Vector2(2.08165e-12, 12)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_kng7q")
+theme_override_styles/fill = ExtResource("4_1n33w")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="RedCastleHealthBar" type="Control" parent="BlueCastleHealthBar"]
+anchors_preset = 0
+offset_left = 595.0
+offset_top = 41.0
+offset_right = 635.0
+offset_bottom = 81.0
+script = ExtResource("4_46ubl")
+
+[node name="V" type="VBoxContainer" parent="BlueCastleHealthBar/RedCastleHealthBar"]
+layout_mode = 0
+offset_left = -827.0
+offset_top = 59.0
+offset_right = -552.0
+offset_bottom = 110.0
+theme_override_constants/separation = 0
+metadata/_edit_group_ = true
+
+[node name="P" type="PanelContainer" parent="BlueCastleHealthBar/RedCastleHealthBar/V"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_biu44")
+
+[node name="M" type="MarginContainer" parent="BlueCastleHealthBar/RedCastleHealthBar/V/P"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="HealthText" type="Label" parent="BlueCastleHealthBar/RedCastleHealthBar/V/P/M"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.815686, 0.286275, 0.286275, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 20
+text = "200/250 HP"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="BlueCastleHealthBar/RedCastleHealthBar/V"]
+custom_minimum_size = Vector2(2.08165e-12, 12)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_kng7q")
+theme_override_styles/fill = ExtResource("5_2xa0v")
+max_value = 1.0
+value = 0.5
+fill_mode = 1
+show_percentage = false
 
 [node name="Units" type="Node" parent="."]
 
@@ -257,9 +362,9 @@ unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 125.0
-offset_top = 316.0
+offset_top = 332.0
 offset_right = 492.0
-offset_bottom = 464.0
+offset_bottom = 480.0
 
 [node name="LeftOilSound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(60, 240)
