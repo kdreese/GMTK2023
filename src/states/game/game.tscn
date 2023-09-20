@@ -41,21 +41,72 @@ script = ExtResource("1_xpc6h")
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2_bwdb4")
 
+[node name="RedCastleHealthBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 364.0
+offset_top = 142.0
+offset_right = 364.0
+offset_bottom = 142.0
+script = ExtResource("4_46ubl")
+metadata/_edit_group_ = true
+
+[node name="V" type="VBoxContainer" parent="RedCastleHealthBar"]
+layout_mode = 0
+offset_right = 275.0
+offset_bottom = 51.0
+theme_override_constants/separation = 0
+metadata/_edit_group_ = true
+
+[node name="P" type="PanelContainer" parent="RedCastleHealthBar/V"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_biu44")
+
+[node name="M" type="MarginContainer" parent="RedCastleHealthBar/V/P"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="HealthText" type="Label" parent="RedCastleHealthBar/V/P/M"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.815686, 0.286275, 0.286275, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 20
+text = "200/250 HP"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="RedCastleHealthBar/V"]
+custom_minimum_size = Vector2(2.08165e-12, 12)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_kng7q")
+theme_override_styles/fill = ExtResource("5_vb25m")
+max_value = 1.0
+value = 0.5
+fill_mode = 1
+show_percentage = false
+
 [node name="BlueCastleHealthBar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 595.0
-offset_top = 41.0
-offset_right = 635.0
-offset_bottom = 81.0
+offset_left = 1.0
+offset_top = 283.0
+offset_right = 1.0
+offset_bottom = 283.0
 script = ExtResource("4_46ubl")
+metadata/_edit_group_ = true
 
 [node name="V" type="VBoxContainer" parent="BlueCastleHealthBar"]
 layout_mode = 0
-offset_left = -594.0
-offset_top = 241.0
-offset_right = -319.0
-offset_bottom = 292.0
+offset_right = 275.0
+offset_bottom = 51.0
 theme_override_constants/separation = 0
 metadata/_edit_group_ = true
 
@@ -90,58 +141,6 @@ theme_override_styles/background = SubResource("StyleBoxFlat_kng7q")
 theme_override_styles/fill = ExtResource("4_ce63q")
 max_value = 1.0
 value = 0.5
-show_percentage = false
-
-[node name="RedCastleHealthBar" type="Control" parent="BlueCastleHealthBar"]
-anchors_preset = 0
-offset_left = 595.0
-offset_top = 41.0
-offset_right = 635.0
-offset_bottom = 81.0
-script = ExtResource("4_46ubl")
-
-[node name="V" type="VBoxContainer" parent="BlueCastleHealthBar/RedCastleHealthBar"]
-layout_mode = 0
-offset_left = -827.0
-offset_top = 59.0
-offset_right = -552.0
-offset_bottom = 110.0
-theme_override_constants/separation = 0
-metadata/_edit_group_ = true
-
-[node name="P" type="PanelContainer" parent="BlueCastleHealthBar/RedCastleHealthBar/V"]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_biu44")
-
-[node name="M" type="MarginContainer" parent="BlueCastleHealthBar/RedCastleHealthBar/V/P"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 0
-
-[node name="HealthText" type="Label" parent="BlueCastleHealthBar/RedCastleHealthBar/V/P/M"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.815686, 0.286275, 0.286275, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 20
-text = "200/250 HP"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="BlueCastleHealthBar/RedCastleHealthBar/V"]
-custom_minimum_size = Vector2(2.08165e-12, 12)
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_styles/background = SubResource("StyleBoxFlat_kng7q")
-theme_override_styles/fill = ExtResource("5_vb25m")
-max_value = 1.0
-value = 0.5
-fill_mode = 1
 show_percentage = false
 
 [node name="Units" type="Node" parent="."]
