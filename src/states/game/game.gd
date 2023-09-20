@@ -406,7 +406,7 @@ func offensive_action_sweep() -> void:
 				unit.update_position()
 				steps_left -= 1
 				await wait_for_timer(Global.animation_speed)
-		if unit.grid_position.x == 7 and steps_left:
+		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 	# for each offensive square, check if a unit is occupying that square
 	# if so, call that unit's offensive_action function
