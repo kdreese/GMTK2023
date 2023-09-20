@@ -19,12 +19,9 @@ func perform_action(data: CardData, lane: int) -> void:
 	var health_bonus := int(data.extra_data[0])
 	var health_bar
 	if lane < 3: # The enemy is using this
-		health_bar = game.blue_castle_health_bar
+		health_bar = game.red_castle_health_bar
 		game.get_node("RightHealSound").play()
 	else: # We're using this
-		health_bar = game.red_castle_health_bar
+		health_bar = game.blue_castle_health_bar
 		game.get_node("LeftHealSound").play()
-	health_bar.current_health += health_bonus
-	if health_bar.current_health > health_bar.max_health:
-		health_bar.current_health = health_bar.max_health
-	health_bar.update()
+	health_bar.modify_health(health_bonus)
