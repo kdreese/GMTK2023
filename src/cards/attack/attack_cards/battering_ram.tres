@@ -7,7 +7,7 @@
 script = ExtResource("2_fh6ks")
 attack_power = 0
 attack_recoil = 1
-health = 10
+health = 6
 speed = 1
 unit = null
 name = "Battering Ram"

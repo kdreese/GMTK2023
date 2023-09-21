@@ -31,7 +31,7 @@ text = "Yeah! Let's whoop some blue butts!"
 [sub_resource type="Resource" id="Resource_rss6l"]
 script = ExtResource("1_howxo")
 speaker = "Military Advisor"
-text = "Our swordsmen yearn for the battlefield! Drag your [b]swordsman[/b] card to the [b]middle lane[/b]."
+text = "Our soldiers yearn for the battlefield! Drag your [b]soldier[/b] card to the [b]middle lane[/b]."
 
 [resource]
 script = ExtResource("1_6jglx")
