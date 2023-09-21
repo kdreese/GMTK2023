@@ -4,8 +4,8 @@ extends Node2D
 signal turn_finished
 
 
-const RED_CASTLE_DOOR = Vector2(160, 240)
-const BLUE_CASTLE_DOOR = Vector2(480, 80)
+const BLUE_CASTLE_DOOR = Vector2(160, 240)
+const RED_CASTLE_DOOR = Vector2(480, 80)
 const MAX_CARDS_IN_HAND = 7
 const ROUND_HEALTHS = [
 	[20, 30],
@@ -20,14 +20,14 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var card_drafting: ColorRect = %CardDrafting
 @onready var options_menu: Control = %OptionsMenu
-@onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
+@onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var card_nodes: CanvasLayer = $CardCanvasLayer
 @onready var end_round_button: Button = %EndRoundButton
 @onready var view_deck_button: Button = %ViewDeckButton
 @onready var view_discard_button: Button = %ViewDiscardButton
 @onready var text_box: TextBox = %TextBox
-@onready var info_display: CenterContainer = %InfoDisplay
+@onready var card_info_viewer: Panel = %CardInfoViewer
 @onready var enemy_attack_card: Control = $EnemyAttackCard
 @onready var enemy_defense_card: Control = $EnemyDefenseCard
 @onready var card_viewer: Control = %CardViewer
@@ -61,9 +61,9 @@ func _ready() -> void:
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
 	card_viewer.close_requested.connect(close_card_viewer)
-	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0], true)
-	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1], false)
-	info_display.hide()
+	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1])
+	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0])
+	card_info_viewer.hide()
 	curr_round = 0
 
 	deck = Global.deck.duplicate()
@@ -232,23 +232,10 @@ func _on_card_dropped(card: Control) -> void:
 	if grid_pos.y < 0 or grid_pos.x < 0 or grid_pos.x > 10 or grid_pos.y > 6:
 		return
 	if grid_pos.y == 6:		# Help box
-		var info_container := VBoxContainer.new()
-		var card_container := HBoxContainer.new()
 		var attack_card := card.card_data.attack as CardData
-		var attack_card_node := preload("res://src/cards/attack/attack_card_info.tscn").instantiate()
 		var defense_card := card.card_data.defense as CardData
-		var defense_card_node := preload("res://src/cards/defense/defense_card_info.tscn").instantiate()
-		var close_button := Button.new()
-		close_button.pressed.connect(self.remove_info.bind(info_container))
-		close_button.text = "Close"
-		card_container.add_child(attack_card_node)
-		card_container.add_child(defense_card_node)
-		info_container.add_child(card_container)
-		info_container.add_child(close_button)
-		info_display.add_child(info_container)
-		attack_card_node.initialize(attack_card)
-		defense_card_node.initialize(defense_card)
-		info_display.show()
+		card_info_viewer.update(attack_card, defense_card)
+		card_info_viewer.show()
 		return
 	if grid_pos.y < 3 and get_unit(grid_pos):
 		return # Don't want to waste an attacking unit by overriding it before it can go
@@ -277,7 +264,7 @@ func _on_card_dropped(card: Control) -> void:
 
 
 func remove_info(card_container: Node) -> void:
-	info_display.hide()
+	card_info_viewer.hide()
 	card_container.queue_free()
 
 
@@ -443,15 +430,13 @@ func melee_attack(unit: Unit) -> void:
 
 	unit.play_step_sound()
 	if unit.grid_position.y > 2:
-		unit.position = RED_CASTLE_DOOR
-		await wait_for_timer(Global.animation_speed)
-		red_castle_health_bar.current_health -= damage
-		red_castle_health_bar.update()
-	else:
 		unit.position = BLUE_CASTLE_DOOR
 		await wait_for_timer(Global.animation_speed)
-		blue_castle_health_bar.current_health -= damage
-		blue_castle_health_bar.update()
+		blue_castle_health_bar.modify_health(-damage)
+	else:
+		unit.position = RED_CASTLE_DOOR
+		await wait_for_timer(Global.animation_speed)
+		red_castle_health_bar.modify_health(-damage)
 	check_for_end_condition()
 	if game_over:
 		return
@@ -487,7 +472,7 @@ func ranged_attack_order(a, b) -> bool:
 
 
 func check_for_end_condition() -> void:
-	if blue_castle_health_bar.current_health <= 0:
+	if red_castle_health_bar.current_health <= 0:
 		win_sound.play()
 		if Global.curr_stage >= 5:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
@@ -501,7 +486,7 @@ func check_for_end_condition() -> void:
 		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
 				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
 		card_drafting.show()
-	elif red_castle_health_bar.current_health <= 0:
+	elif blue_castle_health_bar.current_health <= 0:
 		game_over = true
 		get_tree().change_scene_to_file("res://src/states/menu/lose_screen.tscn")	# Game over screen
 

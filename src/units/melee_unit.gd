@@ -25,8 +25,10 @@ func init(data: MeleeUnitData, grid_pos: Vector2i) -> void:
 	health = data.health
 	max_health = health
 	speed = data.speed
-	if grid_position.y > 2:
+	if grid_position.y < 3:
 		health_bar.add_theme_stylebox_override("fill", preload("res://src/ui/health_bar_fill_blue.tres"))
+	else:
+		health_bar.add_theme_stylebox_override("fill", preload("res://src/ui/health_bar_fill_red.tres"))
 	update_health_bar()
 	sprite.texture = data.icon
 	rank_icon.texture = Util.rank_to_texture(data.rank)
