@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=26 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
 [ext_resource type="Texture2D" uid="uid://dlbhstwqe15et" path="res://assets/masks/unit_deploy.png" id="9_is28s"]
+[ext_resource type="PackedScene" uid="uid://dpufvlfgtfiqx" path="res://src/ui/card_info_viewer.tscn" id="10_mwn7i"]
 [ext_resource type="Texture2D" uid="uid://dx0jwoqavojxx" path="res://assets/masks/castle.png" id="10_o06tk"]
 [ext_resource type="PackedScene" uid="uid://dimjfi53hnnof" path="res://src/ui/card_viewer.tscn" id="12_tdele"]
 [ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="13_3jc40"]
@@ -236,14 +237,9 @@ text = "View Discard"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="InfoDisplay" type="CenterContainer" parent="CanvasLayer"]
+[node name="CardInfoViewer" parent="CanvasLayer" instance=ExtResource("10_mwn7i")]
 unique_name_in_owner = true
 visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
 unique_name_in_owner = true
