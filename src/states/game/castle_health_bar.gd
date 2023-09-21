@@ -10,7 +10,7 @@ var max_health: int
 var current_health: int
 
 
-func initialize(init_health: int, red: bool = true) -> void:
+func initialize(init_health: int) -> void:
 	max_health = init_health
 	current_health = init_health
 	update()
