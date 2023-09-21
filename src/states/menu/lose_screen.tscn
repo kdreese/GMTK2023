@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bb0awu3nwb806"]
+[gd_scene load_steps=5 format=3 uid="uid://bb0awu3nwb806"]
 
 [ext_resource type="Script" path="res://src/states/menu/end_screen.gd" id="1_chrcx"]
 [ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="2_31qdh"]
 [ext_resource type="AudioStream" uid="uid://p2gjpjfgasal" path="res://assets/sounds/lose.wav" id="3_48ix8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rtuwb"]
+font_size = 32
 
 [node name="LoseScreen" type="Control"]
 layout_mode = 3
@@ -41,6 +44,13 @@ theme_override_font_sizes/font_size = 108
 text = "You Lose"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EndlessCountText" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "You survived to round 1!"
+label_settings = SubResource("LabelSettings_rtuwb")
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
