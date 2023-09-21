@@ -27,7 +27,7 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var view_deck_button: Button = %ViewDeckButton
 @onready var view_discard_button: Button = %ViewDiscardButton
 @onready var text_box: TextBox = %TextBox
-@onready var info_display: CenterContainer = %InfoDisplay
+@onready var card_info_viewer: Panel = $CanvasLayer/CardInfoViewer
 @onready var enemy_attack_card: Control = $EnemyAttackCard
 @onready var enemy_defense_card: Control = $EnemyDefenseCard
 @onready var card_viewer: Control = %CardViewer
@@ -65,7 +65,7 @@ func _ready() -> void:
 	card_viewer.close_requested.connect(close_card_viewer)
 	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1])
 	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0])
-	info_display.hide()
+	card_info_viewer.hide()
 	curr_round = 0
 
 	deck = Global.deck.duplicate()
@@ -235,23 +235,10 @@ func _on_card_dropped(card: Control) -> void:
 	if lane < 0:
 		return
 	if lane > 5:		# Help box
-		var info_container := VBoxContainer.new()
-		var card_container := HBoxContainer.new()
 		var attack_card := card.card_data.attack as CardData
-		var attack_card_node := preload("res://src/cards/attack/attack_card_info.tscn").instantiate()
 		var defense_card := card.card_data.defense as CardData
-		var defense_card_node := preload("res://src/cards/defense/defense_card_info.tscn").instantiate()
-		var close_button := Button.new()
-		close_button.pressed.connect(self.remove_info.bind(info_container))
-		close_button.text = "Close"
-		card_container.add_child(attack_card_node)
-		card_container.add_child(defense_card_node)
-		info_container.add_child(card_container)
-		info_container.add_child(close_button)
-		info_display.add_child(info_container)
-		attack_card_node.initialize(attack_card)
-		defense_card_node.initialize(defense_card)
-		info_display.show()
+		card_info_viewer.update(attack_card, defense_card)
+		card_info_viewer.show()
 		return
 	if lane < 3 and put_down_this_turn[lane]:
 		return # Don't want to waste an attacking unit by overriding it before it can go
@@ -281,7 +268,7 @@ func _on_card_dropped(card: Control) -> void:
 
 
 func remove_info(card_container: Node) -> void:
-	info_display.hide()
+	card_info_viewer.hide()
 	card_container.queue_free()
 
 
