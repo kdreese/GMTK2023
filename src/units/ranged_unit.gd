@@ -15,6 +15,7 @@ func init(data: RangedUnitData, starting_position: Vector2i) -> void:
 	attack_range = data.attack_range
 	attack_damage = data.attack_damage
 	grid_position = starting_position
+	special_effect = data.special_effect
 	sprite.texture = data.icon
 	rank_icon.texture = Util.rank_to_texture(data.rank)
 	update_position()

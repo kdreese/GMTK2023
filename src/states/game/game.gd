@@ -52,8 +52,6 @@ var curr_round: int = 0
 var red_max_health: int = 30
 var blue_max_health: int = 50
 
-var put_down_this_turn := [false, false, false] # In the attacking lanes, have we put something down this turn yet?
-
 var game_over := false
 
 
@@ -212,7 +210,6 @@ func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = false
 	view_deck_button.disabled = false
 	view_discard_button.disabled = false
-	put_down_this_turn = [false, false, false]
 	for card in card_nodes.get_children():
 		card.draggable = true
 	turn_finished.emit()
@@ -227,14 +224,14 @@ func _on_card_dragged(dragged_card: Control) -> void:
 func _on_card_dropped(card: Control) -> void:
 	for other_card in card_nodes.get_children() as Array[DualCard]:
 		other_card.draggable = true
-	var lane := -1
+	var grid_pos := Vector2i(-1, -1)
 	for drop in lane_drops:
 		if drop.is_mouse_inside:
-			lane = drop.lane_index
+			grid_pos = drop.grid_position
 			break
-	if lane < 0:
+	if grid_pos.y < 0 or grid_pos.x < 0 or grid_pos.x > 10 or grid_pos.y > 6:
 		return
-	if lane > 5:		# Help box
+	if grid_pos.y == 6:		# Help box
 		var info_container := VBoxContainer.new()
 		var card_container := HBoxContainer.new()
 		var attack_card := card.card_data.attack as CardData
@@ -253,22 +250,21 @@ func _on_card_dropped(card: Control) -> void:
 		defense_card_node.initialize(defense_card)
 		info_display.show()
 		return
-	if lane < 3 and put_down_this_turn[lane]:
+	if grid_pos.y < 3 and get_unit(grid_pos):
 		return # Don't want to waste an attacking unit by overriding it before it can go
-	if lane in [3, 4, 5] and get_unit(Vector2i(0, lane)):
-		var existing_unit := get_unit(Vector2i(0, lane))
+	if grid_pos.y in [3, 4, 5] and get_unit(grid_pos):
+		var existing_unit := get_unit(grid_pos)
 		var new_card := card.card_data.defense as CardData
 		if new_card is RangedUnitData:
 			if existing_unit.attack_damage >= new_card.attack_damage:
 				return	# Don't overwrite with a defensive unit of a lower or equal rank
 	# We have a thing to put down! Let's do it
 	var data: CardData
-	if lane < 3:
+	if grid_pos.y < 3:
 		data = card.card_data.attack
-		put_down_this_turn[lane] = true
 	else:
 		data = card.card_data.defense
-	var should_remove := can_perform_card(data, lane)
+	var should_remove := can_perform_card(data, grid_pos)
 	if should_remove:
 		card_nodes.remove_child(card)
 		arrange_cards()
@@ -276,7 +272,7 @@ func _on_card_dropped(card: Control) -> void:
 		discard.append(card.card_data)
 		hand.remove_at(hand.find(card.card_data))
 	end_round_button.disabled = true
-	await perform_card(data, lane)
+	await perform_card(data, grid_pos)
 	end_round_button.disabled = false
 
 
@@ -315,7 +311,7 @@ func draw_card() -> void:
 		card.draggable = true
 
 
-func card_script_setup(data: CardData, lane: int, is_enemy := false) -> Array:
+func card_script_setup(data: CardData, grid_pos: Vector2i, is_enemy := false) -> Array:
 	if data.effect_script == null:
 		push_error("CardData %s has no script!", data.name)
 		return [false]
@@ -329,39 +325,39 @@ func card_script_setup(data: CardData, lane: int, is_enemy := false) -> Array:
 	var script_node: CardAction = script_node_generic
 	script_node.set_game(self)
 	if is_enemy:
-		if lane < 3:
-			lane += 3
+		if grid_pos.y < 3:
+			grid_pos.y += 3
 		else:
-			lane -= 3
-	return [true, script_node, lane]
+			grid_pos.y -= 3
+	return [true, script_node, grid_pos]
 
 
-func can_perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
-	var setup := card_script_setup(data, lane, is_enemy)
+func can_perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> bool:
+	var setup := card_script_setup(data, grid_pos, is_enemy)
 	if not setup[0]:
 		return false
 	var script_node: CardAction = setup[1]
-	lane = setup[2]
-	var success := script_node.can_perform(data, lane)
+	grid_pos = setup[2]
+	var success := script_node.can_perform(data, grid_pos)
 	remove_child(script_node)
 	script_node.queue_free()
 	return success
 
 
-func perform_card(data: CardData, lane: int, is_enemy := false) -> bool:
-	var setup := card_script_setup(data, lane, is_enemy)
+func perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> bool:
+	var setup := card_script_setup(data, grid_pos, is_enemy)
 	if not setup[0]:
 		return false
 	var script_node: CardAction = setup[1]
-	lane = setup[2]
-	var success := script_node.can_perform(data, lane)
+	grid_pos = setup[2]
+	var success := script_node.can_perform(data, grid_pos)
 	if success:
 		@warning_ignore("redundant_await") # Not all need the await call
-		await script_node.perform_action(data, lane)
+		await script_node.perform_action(data, grid_pos)
 		if not is_enemy:
 			if not Global.card_current_moves.has(curr_round):
 				Global.card_current_moves[curr_round] = []
-			Global.card_current_moves[curr_round].append([data, lane])
+			Global.card_current_moves[curr_round].append([data, grid_pos])
 	remove_child(script_node)
 	script_node.queue_free()
 	return success

@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("2_y3yur")
 name = "Fix Walls"
-short_name = "Walls"
 description = "Repairs the walls of your castle by 30HP"
+special_effect = ""
 icon = ExtResource("1_r1sid")
 rank = 3
 card_role = "Defense"

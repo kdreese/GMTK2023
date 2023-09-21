@@ -4,8 +4,8 @@ extends Resource
 
 
 @export var name: String ## The name of the card.
-@export var short_name: String ## An abbreviated name.
 @export_multiline var description: String ## A detailed description
+@export_multiline var special_effect: String ## Tooltip effect description
 @export var icon: Texture2D ## The icon for this card.
 @export var rank: int ## The power rank of this card.
 @export_enum("Attack", "Defense") var card_role: String ## The role of this card.

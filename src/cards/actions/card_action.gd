@@ -15,10 +15,10 @@ func set_game(game_scene: Node) -> void:
 
 
 ## An optional function which can prevent an action from being run (and card consumed).
-func can_perform(_data: CardData, _lane: int) -> bool:
+func can_perform(_data: CardData, _grid_pos: Vector2i) -> bool:
 	return true
 
 
 ## The action which is performed when the card is dropped. Accepts the card data and lane
-func perform_action(_data: CardData, _lane: int) -> void:
+func perform_action(_data: CardData, _grid_pos: Vector2i) -> void:
 	push_warning("Unimplemented action")

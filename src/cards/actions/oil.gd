@@ -1,12 +1,12 @@
 extends CardAction
 
 
-func perform_action(data: CardData, lane: int) -> void:
+func perform_action(data: CardData, grid_pos: Vector2i) -> void:
 	if data.extra_data.size() != 1:
 		push_error("oil expects 1 argument of the damage to do.")
 		return
 
-	var sound := game.get_node("LeftOilSound" if lane >= 3 else "RightOilSound")
+	var sound := game.get_node("LeftOilSound" if grid_pos.y >= 3 else "RightOilSound")
 	sound.play()
 
 	await game.wait_for_timer(Global.animation_speed)
@@ -16,7 +16,7 @@ func perform_action(data: CardData, lane: int) -> void:
 		if unit.grid_position.x != 7:
 			continue
 
-		if (lane < 3 and unit.grid_position.y < 3) or (lane >= 3 and unit.grid_position.y >= 3):
+		if (grid_pos.y < 3 and unit.grid_position.y < 3) or (grid_pos.y >= 3 and unit.grid_position.y >= 3):
 			unit.health -= damage
 			unit.play_damage_sound()
 			unit.update_health_bar()

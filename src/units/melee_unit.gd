@@ -17,8 +17,9 @@ var max_health: int
 var speed: int
 
 
-func init(data: MeleeUnitData, lane: int) -> void:
-	grid_position = Vector2i(0, lane)
+func init(data: MeleeUnitData, grid_pos: Vector2i) -> void:
+	grid_position = grid_pos
+	special_effect = data.special_effect
 	attack_power = data.attack_power
 	recoil = data.attack_recoil
 	health = data.health
