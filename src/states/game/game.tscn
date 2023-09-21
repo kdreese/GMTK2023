@@ -238,6 +238,7 @@ text = "View Discard"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="CardInfoViewer" parent="CanvasLayer" instance=ExtResource("10_mwn7i")]
+unique_name_in_owner = true
 visible = false
 
 [node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
