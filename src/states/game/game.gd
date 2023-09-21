@@ -22,6 +22,8 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var options_menu: Control = %OptionsMenu
 @onready var blue_castle_health_bar: CastleHealthBar = $BlueCastleHealthBar
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
+@onready var endless_round_panel: PanelContainer = %EndlessRoundPanel
+@onready var endless_round_text: Label = %EndlessRoundText
 @onready var card_nodes: CanvasLayer = $CardCanvasLayer
 @onready var end_round_button: Button = %EndRoundButton
 @onready var view_deck_button: Button = %ViewDeckButton
@@ -63,8 +65,19 @@ func _ready() -> void:
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
 	card_viewer.close_requested.connect(close_card_viewer)
-	red_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][1])
-	blue_castle_health_bar.initialize(ROUND_HEALTHS[Global.curr_stage][0])
+	var blue_health: int
+	var red_health: int
+	var rh_size := ROUND_HEALTHS.size()
+	if Global.curr_stage >= rh_size:
+		var blue_diff: int = ROUND_HEALTHS[rh_size - 1][0] - ROUND_HEALTHS[rh_size - 2][0]
+		var red_diff: int = ROUND_HEALTHS[rh_size - 1][1] - ROUND_HEALTHS[rh_size - 2][1]
+		blue_health = ROUND_HEALTHS[rh_size - 1][0] + (Global.curr_stage + 1 - rh_size) * blue_diff
+		red_health = ROUND_HEALTHS[rh_size - 1][1] + (Global.curr_stage + 1 - rh_size) * red_diff
+	else:
+		blue_health = ROUND_HEALTHS[Global.curr_stage][0]
+		red_health = ROUND_HEALTHS[Global.curr_stage][1]
+	blue_castle_health_bar.initialize(blue_health)
+	red_castle_health_bar.initialize(red_health)
 	card_info_viewer.hide()
 	curr_round = 0
 
@@ -72,6 +85,12 @@ func _ready() -> void:
 
 	if Global.curr_stage == 0:
 		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES
+
+	if Global.endless_mode:
+		endless_round_panel.show()
+		endless_round_text.text = "Round %d" % (Global.curr_stage + 1) # +1 cuz that doesn't happen until after
+	else:
+		endless_round_panel.hide()
 
 	if not Global.endless_mode and Global.curr_stage == 0:
 		end_round_button.disabled = true
@@ -478,7 +497,7 @@ func ranged_attack_order(a, b) -> bool:
 func check_for_end_condition() -> void:
 	if red_castle_health_bar.current_health <= 0:
 		win_sound.play()
-		if Global.curr_stage >= 5:
+		if Global.curr_stage >= 5 and not Global.endless_mode:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true
 		end_round_button.hide()
@@ -487,8 +506,9 @@ func check_for_end_condition() -> void:
 		if Global.curr_stage == 1 and not Global.endless_mode:
 			text_box.play(preload("res://assets/dialog/dialog_6.tres"))
 			await text_box.text_finished
-		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[Global.curr_stage][0],\
-				Global.draft_card_ranks_per_stage[Global.curr_stage][1])
+		var card_draft_ranks_idx := mini(Global.curr_stage, Global.draft_card_ranks_per_stage.size() - 1)
+		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[card_draft_ranks_idx][0],
+				Global.draft_card_ranks_per_stage[card_draft_ranks_idx][1])
 		card_drafting.show()
 	elif blue_castle_health_bar.current_health <= 0:
 		game_over = true
