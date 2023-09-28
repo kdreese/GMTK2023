@@ -215,7 +215,7 @@ func _on_end_round_button_pressed() -> void:
 
 	await wait_for_timer(Global.animation_speed)
 
-	if hand.cards.size() < MAX_CARDS_IN_HAND:
+	if hand.cards.size() < MAX_CARDS_IN_HAND and not game_over:
 		await draw_cards(1)
 	curr_round += 1
 
