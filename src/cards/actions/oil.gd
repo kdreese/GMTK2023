@@ -5,12 +5,12 @@ func can_perform(_data: CardData, grid_pos: Vector2i, _is_enemy: bool) -> bool:
 	return grid_pos.x > 6
 
 
-func perform_action(data: CardData, grid_pos: Vector2i) -> void:
+func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
 	if data.extra_data.size() != 1:
 		push_error("oil expects 1 argument of the damage to do.")
 		return
 
-	var sound := game.get_node("LeftOilSound" if grid_pos.y >= 3 else "RightOilSound")
+	var sound := game.get_node("RightOilSound" if is_enemy else "LeftOilSound")
 	sound.play()
 
 	await game.wait_for_timer(Global.animation_speed)

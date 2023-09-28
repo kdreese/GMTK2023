@@ -10,7 +10,7 @@ extends Control
 @onready var move_icon: TextureRect = %MoveIcon
 
 
-func initialize(unit : Unit) -> void:
+func initialize(unit: Unit) -> void:
 	if unit is RangedUnit:
 		damage_amt.text = str(unit.attack_damage)
 		health_icon.hide()

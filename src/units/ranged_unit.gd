@@ -15,7 +15,7 @@ func init(data: RangedUnitData, starting_position: Vector2i, world_pos: Dictiona
 	attack_range = data.attack_range
 	attack_damage = data.attack_damage
 	grid_position = starting_position
-	world_position_dict = world_pos
+	grid_to_world_position = world_pos
 	special_effect = data.special_effect
 	sprite.texture = data.icon
 	rank_icon.texture = Util.rank_to_texture(data.rank)
@@ -23,7 +23,7 @@ func init(data: RangedUnitData, starting_position: Vector2i, world_pos: Dictiona
 
 
 func update_position() -> void:
-	position = world_position_dict[grid_position]
+	position = grid_to_world_position[grid_position]
 
 
 func play_shoot_sound() -> void:

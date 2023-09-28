@@ -19,7 +19,7 @@ var speed: int
 
 func init(data: MeleeUnitData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
 	grid_position = grid_pos
-	world_position_dict = world_pos
+	grid_to_world_position = world_pos
 	special_effect = data.special_effect
 	attack_power = data.attack_power
 	recoil = data.attack_recoil
@@ -42,7 +42,7 @@ func update_health_bar() -> void:
 
 
 func update_position() -> void:
-	position = world_position_dict[grid_position]
+	position = grid_to_world_position[grid_position]
 
 
 func play_step_sound() -> void:

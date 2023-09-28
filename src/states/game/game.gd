@@ -41,7 +41,7 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var draw_sound: AudioStreamPlayer = $DrawSound
 
 
-var drop_world_pos: Dictionary
+var grid_to_world_pos: Dictionary # Dictionary[Vector2i, Vector2]
 var enemy_moves: Array[Dictionary]
 var deck: Array[DualCardData]
 var hand: Array[DualCardData]
@@ -76,7 +76,7 @@ func _ready() -> void:
 	curr_round = 0
 
 	for point in drop_points.get_children():
-		drop_world_pos[point.grid_position] = point.global_position
+		grid_to_world_pos[point.grid_position] = point.global_position
 
 	deck = Global.deck.duplicate()
 
@@ -360,7 +360,7 @@ func perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> bool
 	var success := script_node.can_perform(data, grid_pos, is_enemy)
 	if success:
 		@warning_ignore("redundant_await") # Not all need the await call
-		await script_node.perform_action(data, grid_pos)
+		await script_node.perform_action(data, grid_pos, is_enemy)
 		if not is_enemy:
 			if not Global.card_current_moves.has(curr_round):
 				Global.card_current_moves[curr_round] = []
