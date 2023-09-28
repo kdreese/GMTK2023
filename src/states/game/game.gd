@@ -446,7 +446,7 @@ func melee_attack(unit: Unit) -> void:
 		unit.queue_free()
 	else:
 		unit.update_position()
-		await wait_for_timer(Global.animation_speed)
+	await wait_for_timer(Global.animation_speed)
 
 
 func melee_attack_order(a, b) -> bool:
