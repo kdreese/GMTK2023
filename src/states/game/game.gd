@@ -90,7 +90,7 @@ func _ready() -> void:
 
 	if not Global.endless_mode and Global.curr_stage == 0:
 		end_round_button.disabled = true
-		draw_cards(1)
+		await draw_cards(1)
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
 		%OffenseMask.show()
