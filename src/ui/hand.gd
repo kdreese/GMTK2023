@@ -1,11 +1,11 @@
 # @tool
 class_name Hand
 extends Control
-
 ## A node for displaying the user's hand.
 
 
 # Signals
+## A signal for when a card is dropped.
 signal dropped(DualCard)
 
 # Enums
@@ -18,37 +18,39 @@ signal dropped(DualCard)
 
 
 # Variables
+## The list of cards in the hand.
 var cards: Array[DualCard] = []
 
+
 # Onready Variables
+## A control defining the extent of the hand.
 @onready var bounds: Control = %Bounds
 
 
-# Built-in Functions
-func _ready() -> void:
-	pass
-
-
-func _process(delta: float) -> void:
-	pass
-
-
-func _physics_process(delta: float) -> void:
-	pass
-
-
+# Signal Handles
+## Called when a child of this node is clicked, initiating a drag.
+##
+## dragged_card is the card that was clicked on.
 func _on_card_dragged(dragged_card: Control) -> void:
 	for card in cards:
 		if card != dragged_card:
 			card.draggable = false
 
 
+## Called when a card is being dragged and the mouse button is released.
+##
+## card is the card that was dropped.
 func _on_card_dropped(card: DualCard) -> void:
 	for other_card in cards as Array[DualCard]:
 		other_card.draggable = true
 	dropped.emit(card)
 
 
+# Other Functions
+## Add a card to the hand.
+##
+## data is the data structure for the card. This function handles instantiating the scene, giving
+## it the right data, and arranging the cards afterwards.
 func add_card(data: DualCardData) -> void:
 	var new_card := preload("res://src/cards/dual_card.tscn").instantiate()
 	add_child(new_card)
@@ -60,6 +62,9 @@ func add_card(data: DualCardData) -> void:
 	arrange_cards()
 
 
+## Remove a card from the hand.
+##
+## card is the node to remove.
 func remove_card(card: DualCard) -> void:
 	remove_child(card)
 	arrange_cards()
@@ -67,11 +72,13 @@ func remove_card(card: DualCard) -> void:
 	cards.erase(card)
 
 
+## Set all cards to be either draggable or not, depending on the parameter passed in.
 func set_all_draggable(draggable: bool) -> void:
 	for card in cards:
 		card.draggable = draggable
 
 
+## Arrange the cards and display them.
 func arrange_cards() -> void:
 	if len(cards) == 0:
 		return
@@ -100,7 +107,3 @@ func arrange_cards() -> void:
 		card.position = first_card_position + i * card_spacing
 		card.hand_position = card.position
 		i += 1
-
-
-
-
