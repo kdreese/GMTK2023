@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=27 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -23,6 +23,7 @@
 [ext_resource type="AudioStream" uid="uid://b6r7j20jhb1ef" path="res://assets/sounds/win.wav" id="18_ncwqh"]
 [ext_resource type="AudioStream" uid="uid://b32qtjvgyw23b" path="res://assets/sounds/place.wav" id="18_t7qqf"]
 [ext_resource type="AudioStream" uid="uid://5v0dcrgtdbnj" path="res://assets/sounds/draw.wav" id="19_mbpjm"]
+[ext_resource type="PackedScene" uid="uid://f4lvl0bssylt" path="res://src/ui/hand.tscn" id="19_xix3b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_biu44"]
 bg_color = Color(0, 0, 0, 0.537255)
@@ -483,6 +484,9 @@ texture = ExtResource("10_o06tk")
 
 [node name="CardCanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Hand" parent="CardCanvasLayer" instance=ExtResource("19_xix3b")]
+unique_name_in_owner = true
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 513.0
 offset_top = 338.0
@@ -682,6 +686,7 @@ stream = ExtResource("19_mbpjm")
 volume_db = -3.0
 bus = &"Sounds"
 
+[connection signal="dropped" from="CardCanvasLayer/Hand" to="." method="_on_card_dropped"]
 [connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ViewDiscardButton" to="." method="_on_view_discard_button_pressed"]

@@ -2,8 +2,8 @@ class_name DualCard
 extends Control
 
 
-signal started_drag(Control)
-signal dropped_card(Control)
+signal started_drag(DualCard)
+signal dropped_card(DualCard)
 
 const DRAGGING_OFFSET := Vector2(-32, -18)
 const MOUSEOVER_OFFSET := Vector2(0, -50)
@@ -75,6 +75,11 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 	else:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()
+
+
+func raise_instant() -> void:
+	self.position = self.hand_position + MOUSEOVER_OFFSET
+	self.size = self.original_size - MOUSEOVER_OFFSET
 
 
 func _on_mouse_enter() -> void:
