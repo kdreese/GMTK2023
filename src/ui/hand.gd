@@ -43,6 +43,7 @@ func _on_card_dragged(dragged_card: Control) -> void:
 func _on_card_dropped(card: DualCard) -> void:
 	for other_card in cards as Array[DualCard]:
 		other_card.draggable = true
+	raise_if_mouse_inside(true, card)
 	dropped.emit(card)
 
 
@@ -76,6 +77,24 @@ func remove_card(card: DualCard) -> void:
 func set_all_draggable(draggable: bool) -> void:
 	for card in cards:
 		card.draggable = draggable
+
+	# If we are enabling dragging, check to see if the mouse is on a card, if so activate it.
+	if draggable:
+		raise_if_mouse_inside(false)
+
+
+## Raise a card if the mouse is inside it.
+##
+## If instant, and the mouse is inside the dropped card, no animation will be played.
+func raise_if_mouse_inside(instant: bool, dropped_card: DualCard = null) -> void:
+	for idx in range(len(cards) - 1, -1, -1):
+		var card := cards[idx]
+		if not card.dragging and card.get_global_rect().has_point(get_global_mouse_position()):
+			if instant and card == dropped_card:
+				card.raise_instant()
+			else:
+				card._on_mouse_enter()
+			break
 
 
 ## Arrange the cards and display them.

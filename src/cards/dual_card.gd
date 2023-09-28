@@ -77,6 +77,11 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 		grid.get_node("SpecialIcon").show()
 
 
+func raise_instant() -> void:
+	self.position = self.hand_position + MOUSEOVER_OFFSET
+	self.size = self.original_size - MOUSEOVER_OFFSET
+
+
 func _on_mouse_enter() -> void:
 	if draggable and not dragging:
 		hover_sound.play()

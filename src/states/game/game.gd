@@ -90,7 +90,7 @@ func _ready() -> void:
 
 	if not Global.endless_mode and Global.curr_stage == 0:
 		end_round_button.disabled = true
-		draw_card()
+		draw_cards(1)
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
 		%OffenseMask.show()
@@ -116,15 +116,13 @@ func _ready() -> void:
 		await text_box.text_finished
 		await turn_finished
 		end_round_button.disabled = true
-		await draw_card()
-		await draw_card()
+		await draw_cards(2)
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
 		await text_box.text_finished
 		end_round_button.disabled = false
 	else:
 		deck.shuffle()
-		for i in range(3):
-			await draw_card()
+		await draw_cards(3)
 
 	if not Global.endless_mode and Global.curr_stage == 1:
 		text_box.play(preload("res://assets/dialog/dialog_7.tres"))
@@ -218,7 +216,7 @@ func _on_end_round_button_pressed() -> void:
 	await wait_for_timer(Global.animation_speed)
 
 	if hand.cards.size() < MAX_CARDS_IN_HAND:
-		await draw_card()
+		await draw_cards(1)
 	curr_round += 1
 
 	end_round_button.disabled = false
@@ -271,7 +269,15 @@ func remove_info(card_container: Node) -> void:
 	card_container.queue_free()
 
 
-func draw_card() -> void:
+func draw_cards(num_cards: int) -> void:
+	hand.set_all_draggable(false)
+	for _idx in range(num_cards):
+		await draw_card_single()
+
+	hand.set_all_draggable(true)
+
+
+func draw_card_single() -> void:
 	# If the deck is empty, rearrange the cards from discard.
 	if deck.size() == 0:
 		deck = discard.duplicate()
@@ -280,16 +286,12 @@ func draw_card() -> void:
 		if deck.size() == 0:
 			return
 
-	hand.set_all_draggable(false)
-
 	var dual_card_data = deck.pop_front()
 	hand.add_card(dual_card_data)
 
 	draw_sound.play()
 
 	await wait_for_timer(Global.animation_speed)
-
-	hand.set_all_draggable(true)
 
 
 func card_script_setup(data: CardData, grid_pos: Vector2i, is_enemy := false) -> Array:
