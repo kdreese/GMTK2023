@@ -2,8 +2,8 @@ class_name DualCard
 extends Control
 
 
-signal started_drag(Control)
-signal dropped_card(Control)
+signal started_drag(DualCard)
+signal dropped_card(DualCard)
 
 const DRAGGING_OFFSET := Vector2(-32, -18)
 const MOUSEOVER_OFFSET := Vector2(0, -50)

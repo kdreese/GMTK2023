@@ -22,7 +22,6 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var red_castle_health_bar: CastleHealthBar = $RedCastleHealthBar
 @onready var endless_round_panel: PanelContainer = %EndlessRoundPanel
 @onready var endless_round_text: Label = %EndlessRoundText
-@onready var card_nodes: CanvasLayer = $CardCanvasLayer
 @onready var end_round_button: Button = %EndRoundButton
 @onready var view_deck_button: Button = %ViewDeckButton
 @onready var view_discard_button: Button = %ViewDiscardButton
@@ -32,6 +31,7 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var enemy_defense_card: Control = $EnemyDefenseCard
 @onready var card_viewer: Control = %CardViewer
 @onready var hand_bounds: Control = %HandBounds
+@onready var hand: Hand = %Hand
 
 @onready var drop_points: Node2D = %DropPoints
 @onready var blue_castle_door: Vector2 = $DefenseBridgePoint.position
@@ -44,7 +44,6 @@ const COPY_ROUND_DOWNTIME = 3
 var grid_to_world_pos: Dictionary # Dictionary[Vector2i, Vector2]
 var enemy_moves: Array[Dictionary]
 var deck: Array[DualCardData]
-var hand: Array[DualCardData]
 var discard: Array[DualCardData]
 var curr_round: int = 0
 var red_max_health: int = 30
@@ -95,8 +94,8 @@ func _ready() -> void:
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
 		await text_box.text_finished
 		%OffenseMask.show()
-		while card_nodes.get_child_count() > 0:
-			await card_nodes.get_children()[0].dropped_card
+		while len(hand.cards) > 0:
+			await hand.dropped_card
 		%OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
 		await text_box.text_finished
@@ -106,8 +105,8 @@ func _ready() -> void:
 		text_box.play(preload("res://assets/dialog/dialog_3.tres"))
 		await text_box.text_finished
 		%DefenseMask.show()
-		while card_nodes.get_child_count() > 0:
-			await card_nodes.get_children()[0].dropped_card
+		while len(hand.cards) > 0:
+			await hand.dropped_card
 		%DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
 		await text_box.text_finished
@@ -183,13 +182,11 @@ func hide_options() -> void:
 
 
 func on_text_start() -> void:
-	for card in card_nodes.get_children():
-		card.draggable = false
+	hand.set_all_draggable(false)
 
 
 func on_text_finish() -> void:
-	for card in card_nodes.get_children():
-		card.draggable = true
+	hand.set_all_draggable(true)
 
 
 func _on_end_round_button_pressed() -> void:
@@ -197,8 +194,7 @@ func _on_end_round_button_pressed() -> void:
 	view_deck_button.disabled = true
 	view_discard_button.disabled = true
 
-	for card in card_nodes.get_children():
-		card.draggable = false
+	hand.set_all_draggable(false)
 
 	# Make enemy moves
 	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
@@ -221,27 +217,18 @@ func _on_end_round_button_pressed() -> void:
 
 	await wait_for_timer(Global.animation_speed)
 
-	if hand.size() < MAX_CARDS_IN_HAND:
+	if hand.cards.size() < MAX_CARDS_IN_HAND:
 		await draw_card()
 	curr_round += 1
 
 	end_round_button.disabled = false
 	view_deck_button.disabled = false
 	view_discard_button.disabled = false
-	for card in card_nodes.get_children():
-		card.draggable = true
+	hand.set_all_draggable(true)
 	turn_finished.emit()
 
 
-func _on_card_dragged(dragged_card: Control) -> void:
-	for card in card_nodes.get_children() as Array[DualCard]:
-		if card != dragged_card:
-			card.draggable = false
-
-
 func _on_card_dropped(card: Control) -> void:
-	for other_card in card_nodes.get_children() as Array[DualCard]:
-		other_card.draggable = true
 	var grid_pos := Vector2i(-1, -1)
 	var points := drop_points.get_children()
 	points.append($InfoDropPoint/LaneInfo)
@@ -273,11 +260,7 @@ func _on_card_dropped(card: Control) -> void:
 		data = card.card_data.defense
 	var should_remove := can_perform_card(data, grid_pos)
 	if should_remove:
-		card_nodes.remove_child(card)
-		arrange_cards()
-		card.queue_free()
-		discard.append(card.card_data)
-		hand.remove_at(hand.find(card.card_data))
+		hand.remove_card(card)
 	end_round_button.disabled = true
 	await perform_card(data, grid_pos)
 	end_round_button.disabled = false
@@ -297,25 +280,16 @@ func draw_card() -> void:
 		if deck.size() == 0:
 			return
 
-	for card in card_nodes.get_children() as Array[DualCard]:
-		card.draggable = false
+	hand.set_all_draggable(false)
 
 	var dual_card_data = deck.pop_front()
-	hand.append(dual_card_data)
-	var new_card := preload("res://src/cards/dual_card.tscn").instantiate()
-	card_nodes.add_child(new_card)
-	new_card.initialize(dual_card_data)
-	new_card.draggable = false
-	new_card.started_drag.connect(_on_card_dragged)
-	new_card.dropped_card.connect(_on_card_dropped)
-	arrange_cards()
+	hand.add_card(dual_card_data)
 
 	draw_sound.play()
 
 	await wait_for_timer(Global.animation_speed)
 
-	for card in card_nodes.get_children() as Array[DualCard]:
-		card.draggable = true
+	hand.set_all_draggable(true)
 
 
 func card_script_setup(data: CardData, grid_pos: Vector2i, is_enemy := false) -> Array:
@@ -510,37 +484,6 @@ func check_for_end_condition() -> void:
 	elif blue_castle_health_bar.current_health <= 0:
 		game_over = true
 		get_tree().change_scene_to_file("res://src/states/menu/lose_screen.tscn")	# Game over screen
-
-
-func arrange_cards() -> void:
-	var num_cards := card_nodes.get_child_count()
-	if num_cards == 0:
-		return
-
-	var card := card_nodes.get_child(0) as DualCard
-	var card_width := card.size.x
-	var buffer := 10 # Pixels of space between cards.
-
-	var card_spacing: Vector2
-	var total_width: float
-
-	if num_cards * (card_width + buffer) < hand_bounds.size.x:
-		# We have enough space to display all cards without overlapping.
-		card_spacing = (card_width + buffer) * Vector2.RIGHT
-		total_width = num_cards * (card_width + buffer) - buffer
-	else:
-		# We must overlap. Set the overlap to a minimum value so that it looks okay.
-		var max_card_spacing := (hand_bounds.size.x - card_width) / num_cards
-		card_spacing = min(max_card_spacing, card_width - buffer) * Vector2.RIGHT
-		total_width = card_width + (num_cards - 1) * card_spacing.x
-
-	var center_of_hand := hand_bounds.position + Vector2(hand_bounds.size.x / 2.0, 0.0)
-	var first_card_position := center_of_hand - total_width / 2.0 * Vector2.RIGHT
-
-	for i in range(num_cards):
-		card = card_nodes.get_child(i)
-		card.position = first_card_position + i * card_spacing
-		card.hand_position = card.position
 
 
 func _on_view_deck_button_pressed() -> void:
