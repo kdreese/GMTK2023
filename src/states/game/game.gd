@@ -258,6 +258,7 @@ func _on_card_dropped(card: Control) -> void:
 		data = card.card_data.defense
 	var should_remove := can_perform_card(data, grid_pos)
 	if should_remove:
+		discard.append(card.card_data)
 		hand.remove_card(card)
 	end_round_button.disabled = true
 	await perform_card(data, grid_pos)
