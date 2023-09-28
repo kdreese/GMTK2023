@@ -1,13 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqeuuh545y06g"]
+[gd_scene load_steps=2 format=3 uid="uid://cqeuuh545y06g"]
 
 [ext_resource type="Script" path="res://src/states/game/lane_drop_point.gd" id="1_dpggr"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8yfdq"]
-size = Vector2(34, 34)
 
 [node name="LaneDropPoint" type="Area2D"]
 script = ExtResource("1_dpggr")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_8yfdq")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-8, -17, -22, 17, 11, 17, 25, -17)
+
+[node name="TooltipDelay" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="TooltipDelay" to="." method="_on_tooltip_delay_timeout"]

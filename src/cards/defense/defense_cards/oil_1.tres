@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("2_c8sm6")
 name = "Boiling Oil"
-short_name = "Oil"
 description = "Deal 3 damage to each unit next to your castle."
+special_effect = ""
 icon = ExtResource("1_eh4ul")
 rank = 1
 card_role = "Defense"
