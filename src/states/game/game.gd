@@ -95,7 +95,7 @@ func _ready() -> void:
 		await text_box.text_finished
 		%OffenseMask.show()
 		while len(hand.cards) > 0:
-			await hand.dropped_card
+			await hand.dropped
 		%OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
 		await text_box.text_finished
@@ -106,7 +106,7 @@ func _ready() -> void:
 		await text_box.text_finished
 		%DefenseMask.show()
 		while len(hand.cards) > 0:
-			await hand.dropped_card
+			await hand.dropped
 		%DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
 		await text_box.text_finished
