@@ -62,6 +62,8 @@ func display_cards(cards : Array[DualCardData]) -> void:
 func select_card(selection: DualCardData) -> void:
 	# add the dual card to the player's deck
 	Global.deck.append(selection)
+	var game: Node2D = find_parent("Game")
+	game.get_node("DrawSound").play()
 	for option in card_choices.get_children():
 		option.queue_free()
 	# display the next set of cards or go to next stage
@@ -72,4 +74,7 @@ func select_card(selection: DualCardData) -> void:
 		draft_round = 1
 		Global.card_replay_moves = Global.card_current_moves
 		Global.card_current_moves = {}
+		$CenterContainer.hide()
+		modulate = Color.TRANSPARENT # Look like we're hiding but prevent the mouse from passing through
+		await game.wait_for_timer(Global.animation_speed * 2) # Give time for the sound to play
 		get_tree().reload_current_scene()

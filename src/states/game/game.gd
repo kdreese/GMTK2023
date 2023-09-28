@@ -95,7 +95,7 @@ func _ready() -> void:
 		await text_box.text_finished
 		%OffenseMask.show()
 		while len(hand.cards) > 0:
-			await hand.dropped_card
+			await hand.dropped
 		%OffenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_2.tres"))
 		await text_box.text_finished
@@ -106,7 +106,7 @@ func _ready() -> void:
 		await text_box.text_finished
 		%DefenseMask.show()
 		while len(hand.cards) > 0:
-			await hand.dropped_card
+			await hand.dropped
 		%DefenseMask.hide()
 		text_box.play(preload("res://assets/dialog/dialog_3_5.tres"))
 		await text_box.text_finished
@@ -215,7 +215,7 @@ func _on_end_round_button_pressed() -> void:
 
 	await wait_for_timer(Global.animation_speed)
 
-	if hand.cards.size() < MAX_CARDS_IN_HAND:
+	if hand.cards.size() < MAX_CARDS_IN_HAND and not game_over:
 		await draw_cards(1)
 	curr_round += 1
 
@@ -446,7 +446,7 @@ func melee_attack(unit: Unit) -> void:
 		unit.queue_free()
 	else:
 		unit.update_position()
-		await wait_for_timer(Global.animation_speed)
+	await wait_for_timer(Global.animation_speed)
 
 
 func melee_attack_order(a, b) -> bool:

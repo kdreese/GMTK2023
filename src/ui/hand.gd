@@ -68,9 +68,9 @@ func add_card(data: DualCardData) -> void:
 ## card is the node to remove.
 func remove_card(card: DualCard) -> void:
 	remove_child(card)
+	cards.erase(card)
 	arrange_cards()
 	card.queue_free()
-	cards.erase(card)
 
 
 ## Set all cards to be either draggable or not, depending on the parameter passed in.
