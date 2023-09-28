@@ -1,13 +1,13 @@
 extends CardAction
 
 
-func can_perform(_data: CardData, grid_pos: Vector2i) -> bool:
+func can_perform(_data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Make sure the side isn't already at max health
 	var health_bar
-	if grid_pos.y < 3: # The enemy is using this
-		health_bar = game.blue_castle_health_bar
-	else: # We're using this
+	if is_enemy: # The enemy is using this
 		health_bar = game.red_castle_health_bar
+	else: # We're using this
+		health_bar = game.blue_castle_health_bar
 
 	return health_bar.current_health < health_bar.max_health
 

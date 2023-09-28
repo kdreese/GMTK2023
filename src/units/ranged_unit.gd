@@ -11,10 +11,11 @@ var attack_range: int = 1
 var attack_damage: int = 5
 
 
-func init(data: RangedUnitData, starting_position: Vector2i) -> void:
+func init(data: RangedUnitData, starting_position: Vector2i, world_pos: Dictionary) -> void:
 	attack_range = data.attack_range
 	attack_damage = data.attack_damage
 	grid_position = starting_position
+	world_position_dict = world_pos
 	special_effect = data.special_effect
 	sprite.texture = data.icon
 	rank_icon.texture = Util.rank_to_texture(data.rank)
@@ -22,10 +23,7 @@ func init(data: RangedUnitData, starting_position: Vector2i) -> void:
 
 
 func update_position() -> void:
-	if grid_position.y < 3:
-		position = Vector2(580, 40) + grid_position.y * Vector2(0, 40)
-	else:
-		position = Vector2(60, 200) + (grid_position.y - 3) * Vector2(0, 40)
+	position = world_position_dict[grid_position]
 
 
 func play_shoot_sound() -> void:

@@ -17,8 +17,9 @@ var max_health: int
 var speed: int
 
 
-func init(data: MeleeUnitData, grid_pos: Vector2i) -> void:
+func init(data: MeleeUnitData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
 	grid_position = grid_pos
+	world_position_dict = world_pos
 	special_effect = data.special_effect
 	attack_power = data.attack_power
 	recoil = data.attack_recoil
@@ -41,18 +42,7 @@ func update_health_bar() -> void:
 
 
 func update_position() -> void:
-	if grid_position.y < 3:
-		position.y = 40 + 40 * grid_position.y
-		if grid_position.x == 0:
-			position.x = 50
-		else:
-			position.x = 80 + 40 * grid_position.x
-	else:
-		position.y = 200 + 40 * (grid_position.y - 3)
-		if grid_position.x == 0:
-			position.x = 590
-		else:
-			position.x = 560 - 40 * grid_position.x
+	position = world_position_dict[grid_position]
 
 
 func play_step_sound() -> void:

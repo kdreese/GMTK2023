@@ -4,8 +4,6 @@ extends Node2D
 signal turn_finished
 
 
-const BLUE_CASTLE_DOOR = Vector2(160, 240)
-const RED_CASTLE_DOOR = Vector2(480, 80)
 const MAX_CARDS_IN_HAND = 7
 const ROUND_HEALTHS = [
 	[20, 30],
@@ -35,17 +33,15 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var card_viewer: Control = %CardViewer
 @onready var hand_bounds: Control = %HandBounds
 
-@onready var lane_drops: Array[Area2D] = [
-	$AttackDropPoints/Lane0, $AttackDropPoints/Lane1, $AttackDropPoints/Lane2,
-	$DefenseDropPoints/Lane3, $DefenseDropPoints/Lane4, $DefenseDropPoints/Lane5,
-	$InfoDropPoint/LaneInfo,
-]
+@onready var drop_points: Node2D = %DropPoints
+@onready var blue_castle_door: Vector2 = $DefenseBridgePoint.position
+@onready var red_castle_door: Vector2 = $AttackBridgePoint.position
 
 @onready var win_sound: AudioStreamPlayer = $WinSound
 @onready var draw_sound: AudioStreamPlayer = $DrawSound
 
 
-
+var drop_world_pos: Dictionary
 var enemy_moves: Array[Dictionary]
 var deck: Array[DualCardData]
 var hand: Array[DualCardData]
@@ -78,6 +74,9 @@ func _ready() -> void:
 	red_castle_health_bar.initialize(red_health)
 	card_info_viewer.hide()
 	curr_round = 0
+
+	for point in drop_points.get_children():
+		drop_world_pos[point.grid_position] = point.global_position
 
 	deck = Global.deck.duplicate()
 
@@ -244,7 +243,9 @@ func _on_card_dropped(card: Control) -> void:
 	for other_card in card_nodes.get_children() as Array[DualCard]:
 		other_card.draggable = true
 	var grid_pos := Vector2i(-1, -1)
-	for drop in lane_drops:
+	var points := drop_points.get_children()
+	points.append($InfoDropPoint/LaneInfo)
+	for drop in points:
 		if drop.is_mouse_inside:
 			grid_pos = drop.grid_position
 			break
@@ -344,7 +345,7 @@ func can_perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> 
 		return false
 	var script_node: CardAction = setup[1]
 	grid_pos = setup[2]
-	var success := script_node.can_perform(data, grid_pos)
+	var success := script_node.can_perform(data, grid_pos, is_enemy)
 	remove_child(script_node)
 	script_node.queue_free()
 	return success
@@ -356,7 +357,7 @@ func perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> bool
 		return false
 	var script_node: CardAction = setup[1]
 	grid_pos = setup[2]
-	var success := script_node.can_perform(data, grid_pos)
+	var success := script_node.can_perform(data, grid_pos, is_enemy)
 	if success:
 		@warning_ignore("redundant_await") # Not all need the await call
 		await script_node.perform_action(data, grid_pos)
@@ -449,11 +450,11 @@ func melee_attack(unit: Unit) -> void:
 
 	unit.play_step_sound()
 	if unit.grid_position.y > 2:
-		unit.position = BLUE_CASTLE_DOOR
+		unit.position = blue_castle_door
 		await wait_for_timer(Global.animation_speed)
 		blue_castle_health_bar.modify_health(-damage)
 	else:
-		unit.position = RED_CASTLE_DOOR
+		unit.position = red_castle_door
 		await wait_for_timer(Global.animation_speed)
 		red_castle_health_bar.modify_health(-damage)
 	check_for_end_condition()

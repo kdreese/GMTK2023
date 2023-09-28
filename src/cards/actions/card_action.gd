@@ -15,7 +15,7 @@ func set_game(game_scene: Node) -> void:
 
 
 ## An optional function which can prevent an action from being run (and card consumed).
-func can_perform(_data: CardData, _grid_pos: Vector2i) -> bool:
+func can_perform(_data: CardData, _grid_pos: Vector2i, _is_enemy: bool) -> bool:
 	return true
 
 

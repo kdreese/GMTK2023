@@ -1,6 +1,10 @@
 extends CardAction
 
 
+func can_perform(_data: CardData, grid_pos: Vector2i, _is_enemy: bool) -> bool:
+	return grid_pos.x > 6
+
+
 func perform_action(data: CardData, grid_pos: Vector2i) -> void:
 	if data.extra_data.size() != 1:
 		push_error("oil expects 1 argument of the damage to do.")
