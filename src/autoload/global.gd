@@ -5,11 +5,14 @@ signal fullscreen_changed
 
 
 const CONFIG_PATH := "user://config.cfg"
+const CONFIG_SECTION = "Settings"
 
 const DEFAULT_CONFIG := {
 	"sound_volume": 1.0,
 	"music_volume": 0.5,
-	"anim_speed_idx": 2
+	"anim_speed_idx": 2,
+	"window_size": Vector2i(640, 480),
+	"fullscreen": false,
 }
 
 const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
@@ -66,8 +69,6 @@ var card_current_moves := {} # The moves currently played this round. The lanes 
 
 var endless_mode := false
 
-var current_music_volume := 0.5
-
 # When the user quits the game, save the game before the engine fully quits
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -86,6 +87,10 @@ func _ready() -> void:
 	#var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
 	#var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
 	load_config()
+	animation_speed = ANIMATION_SPEEDS[config["anim_speed_idx"]]
+	update_sound_volume()
+	update_music_volume()
+
 	attack_cards = {
 		1: [preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/attack/attack_cards/swordsman_1.tres")],
 		2: [preload("res://src/cards/attack/attack_cards/cavalier_2.tres"), preload("res://src/cards/attack/attack_cards/swordsman_2.tres"), preload("res://src/cards/attack/attack_cards/battering_ram.tres")],
@@ -113,10 +118,7 @@ func _ready() -> void:
 
 
 func save_config() -> void:
-	var config_file := FileAccess.open(CONFIG_PATH, FileAccess.WRITE)
-	if not config_file:
-		push_error("Could not open config file for writing!")
-		return
+	var config_file := ConfigFile.new()
 
 	if get_window().mode == Window.MODE_FULLSCREEN:
 		config["fullscreen"] = true
@@ -124,13 +126,17 @@ func save_config() -> void:
 		config["fullscreen"] = false
 		config["window_size"] = get_window().size
 
-	config_file.store_var(config)
-	config_file.close()
+	for key in config:
+		config_file.set_value(CONFIG_SECTION, key, config[key])
+
+	var err := config_file.save(CONFIG_PATH)
+	if err != OK:
+		push_error("Could not write to config file!")
 
 
 func load_config() -> void:
-	var config_file := FileAccess.open(CONFIG_PATH, FileAccess.READ)
-	var open_error := FileAccess.get_open_error()
+	var config_file := ConfigFile.new()
+	var open_error := config_file.load(CONFIG_PATH)
 	if open_error == ERR_FILE_NOT_FOUND:
 		print("No config file found, using default settings")
 		return
@@ -138,19 +144,19 @@ func load_config() -> void:
 		push_warning("Could not open config file for reading! Using default settings")
 		return
 
-	var new_config_variant = config_file.get_var()
-	config_file.close()
-
-	if typeof(new_config_variant) != TYPE_DICTIONARY:
-		push_warning("Config file was corrupted! Using default settings")
+	if not config_file.has_section(CONFIG_SECTION):
+		push_warning("Config missing section %s, using default settings" % CONFIG_SECTION)
 		return
-	var new_config := new_config_variant as Dictionary
 
-	config = new_config.duplicate()
-
-	for entry in DEFAULT_CONFIG:
-		if entry not in config:
-			config[entry] = DEFAULT_CONFIG[entry]
+	for key in config:
+		if config_file.has_section_key(CONFIG_SECTION, key):
+			var value_variant = config_file.get_value(CONFIG_SECTION, key)
+			if typeof(value_variant) == typeof(DEFAULT_CONFIG[key]):
+				if key in ["music_volume", "sound_volume"]:
+					value_variant = clampf(value_variant, 0.0, 1.0)
+				elif key == "anim_key_idx":
+					value_variant = clampi(value_variant, 0, ANIMATION_SPEEDS.size() - 1)
+				config[key] = value_variant
 
 	# Do we already have a custom window size? Via --resolution, having an "override", etc
 	var intended_window_size := Vector2i(
@@ -161,28 +167,26 @@ func load_config() -> void:
 	var already_custom_size := current_window_size != intended_window_size
 
 	# Set the size of the window and center it.
-	if "window_size" in config and not already_custom_size:
-		var raw_size := config["window_size"] as Vector2i
-		var fixed_size: Vector2i
-		if 4 * raw_size.x > 3 * raw_size.y:
-			# Wider than it is supposed to be, use the height as the guide.
-			fixed_size = Vector2i(snapped(raw_size.y, 3) * 4 / 3, snapped(raw_size.y, 3))
-		else:
-			# Taller than it is supposed to be, use the width as the guide.
-			fixed_size = Vector2i(snapped(raw_size.x, 4), snapped(raw_size.x, 4) * 3 / 4)
-		get_window().size = fixed_size
-		var screen_id := get_window().current_screen
-		var screen_center := DisplayServer.screen_get_position(screen_id) \
-				+ DisplayServer.screen_get_size(screen_id) / 2
-		get_window().position = screen_center - fixed_size / 2
+	if (not already_custom_size):
+		var raw_size_variant = config["window_size"]
+		if typeof(raw_size_variant) == TYPE_VECTOR2I and raw_size_variant != intended_window_size:
+			var raw_size: Vector2i = raw_size_variant
+			var fixed_size: Vector2i
+			if 4 * raw_size.x > 3 * raw_size.y:
+				# Wider than it is supposed to be, use the height as the guide.
+				fixed_size = Vector2i(snapped(raw_size.y, 3) * 4 / 3, snapped(raw_size.y, 3))
+			else:
+				# Taller than it is supposed to be, use the width as the guide.
+				fixed_size = Vector2i(snapped(raw_size.x, 4), snapped(raw_size.x, 4) * 3 / 4)
+			get_window().size = fixed_size
+			var screen_id := get_window().current_screen
+			var screen_center := DisplayServer.screen_get_position(screen_id) \
+					+ DisplayServer.screen_get_size(screen_id) / 2
+			get_window().position = screen_center - fixed_size / 2
 
-	if config.get("fullscreen", false):
+	if config["fullscreen"]:
 		# If we're in fullscreen, change the mode.
 		get_window().mode = Window.MODE_FULLSCREEN
-
-	animation_speed = ANIMATION_SPEEDS[int(config["anim_speed_idx"])]
-	update_sound_volume()
-	update_music_volume()
 
 
 func set_fullscreen(fullscreen: bool) -> void:
