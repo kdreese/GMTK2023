@@ -33,8 +33,8 @@ var data: CardData
 
 
 # Other Functions
-func initialize(data: CardData) -> void:
-	self.data = data
+func initialize(_data: CardData) -> void:
+	self.data = _data
 	card_name.text = data.name
 	Util.fit_text(card_name, MAX_FONT_SIZE)
 
@@ -46,10 +46,10 @@ func initialize(data: CardData) -> void:
 	else:
 		background.texture = preload("res://assets/defense_card.png")
 
-	update_icons(data, $Stats)
+	update_icons($Stats)
 
 
-func update_icons(data: CardData, grid: GridContainer) -> void:
+func update_icons(grid: GridContainer) -> void:
 	for node in grid.get_children():
 		node.hide()
 	if data is MeleeUnitData:
