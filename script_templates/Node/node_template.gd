@@ -2,7 +2,7 @@
 # meta-default: true
 
 # @tool
-class_name
+class_name TemplateClass
 extends Node
 
 ## Docstring
@@ -35,11 +35,11 @@ func _ready() -> void:
 	pass
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	pass
 
 
