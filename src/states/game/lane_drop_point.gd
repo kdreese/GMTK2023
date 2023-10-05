@@ -13,12 +13,20 @@ var open_tooltip: Control = null
 
 func _mouse_enter() -> void:
 	is_mouse_inside = true
-	if open_tooltip == null and game.get_unit(grid_position):
-		tooltip_delay.start()
+	check_for_start_tooltip()
 
 
 func _mouse_exit() -> void:
 	is_mouse_inside = false
+	close_tooltip()
+
+
+func check_for_start_tooltip() -> void:
+	if open_tooltip == null and game.get_unit(grid_position) and game.can_display_tooltip:
+		tooltip_delay.start()
+
+
+func close_tooltip() -> void:
 	if open_tooltip:
 		open_tooltip.queue_free()
 		game.find_child("CanvasLayer").remove_child(open_tooltip)

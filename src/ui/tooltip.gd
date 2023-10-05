@@ -1,5 +1,6 @@
-extends Control
+extends CenterContainer
 
+const vert_offset = 42.0
 
 @onready var info_text: Label = %InfoText
 @onready var damage_amt: Label = %DamageAmt
@@ -8,6 +9,8 @@ extends Control
 @onready var damage_icon: TextureRect = %DamageIcon
 @onready var health_icon: TextureRect = %HealthIcon
 @onready var move_icon: TextureRect = %MoveIcon
+
+var vert_pos_mod := 0.0
 
 
 func initialize(unit: Unit) -> void:
@@ -27,3 +30,14 @@ func initialize(unit: Unit) -> void:
 		info_text.text = unit.special_effect
 	else:
 		info_text.hide()
+
+	call_deferred("set_pos", unit)
+
+
+func set_pos(unit: Unit) -> void:
+	if unit.grid_position.y < 3:
+		vert_pos_mod += vert_offset
+	else:
+		vert_pos_mod -= vert_offset - 5
+	position = unit.position + Vector2(-100, -100) + Vector2(0, vert_pos_mod)
+	position.x = position.clamp(Vector2(-30, -30), Vector2(670, 510)).x
