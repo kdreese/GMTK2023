@@ -35,9 +35,10 @@ func initialize(unit: Unit) -> void:
 
 
 func set_pos(unit: Unit) -> void:
+	Vector2 position_offset = Vector2(-100, -100)
 	if unit.grid_position.y < 3:
-		vert_pos_mod += vert_offset
+		position_offset.y += vert_offset
 	else:
-		vert_pos_mod -= vert_offset - 5
-	position = unit.position + Vector2(-100, -100) + Vector2(0, vert_pos_mod)
+		position_offset.y -= vert_offset - 5
+	position = unit.position + position_offset
 	position.x = position.clamp(Vector2(-30, -30), Vector2(670, 510)).x
