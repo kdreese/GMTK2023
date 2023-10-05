@@ -16,10 +16,10 @@ const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
 const MAX_VOLUME_DB = -6.0
 const FIRST_REPLAY_MOVES = {
 	0: [
-		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), Vector2i(0, 1)],
+		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 1)],
 	],
 	2: [
-		[preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), Vector2i(0, 2)],
+		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 2)],
 	],
 	4: [
 		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 4)],
@@ -51,13 +51,13 @@ var draft_card_ranks_per_stage := {
 	5 : [3, 3],
 }
 var INITIAL_DECK: Array[DualCardData] = [
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/oil_1.tres")),
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/swordsman_1.tres"), preload("res://src/cards/defense/defense_cards/oil_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/oil_1.tres")),
 ]
 var deck: Array[DualCardData]
 # The next two variables are in the format: Dictionary[turn_number: int, moves: Array[Array[data: CardData, lane: int]]]
@@ -87,9 +87,9 @@ func _ready() -> void:
 	#var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
 	load_config()
 	attack_cards = {
-		1: [preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/attack/attack_cards/swordsman_1.tres")],
-		2: [preload("res://src/cards/attack/attack_cards/cavalier_2.tres"), preload("res://src/cards/attack/attack_cards/swordsman_2.tres"), preload("res://src/cards/attack/attack_cards/battering_ram.tres")],
-		3: [preload("res://src/cards/attack/attack_cards/cavalier_3.tres"), preload("res://src/cards/attack/attack_cards/swordsman_3.tres")]
+		1: [preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/attack/attack_cards/soldier_1.tres")],
+		2: [preload("res://src/cards/attack/attack_cards/cavalier_2.tres"), preload("res://src/cards/attack/attack_cards/soldier_2.tres"), preload("res://src/cards/attack/attack_cards/battering_ram.tres")],
+		3: [preload("res://src/cards/attack/attack_cards/cavalier_3.tres"), preload("res://src/cards/attack/attack_cards/soldier_3.tres")]
 	}
 
 	defense_cards = {

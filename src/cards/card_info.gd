@@ -19,6 +19,7 @@ const MAX_FONT_SIZE = 10
 
 
 # Variables
+var data: CardData
 
 
 # Onready Variables
@@ -33,6 +34,7 @@ const MAX_FONT_SIZE = 10
 
 # Other Functions
 func initialize(data: CardData) -> void:
+	self.data = data
 	card_name.text = data.name
 	Util.fit_text(card_name, MAX_FONT_SIZE)
 
