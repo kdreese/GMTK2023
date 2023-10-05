@@ -6,7 +6,7 @@ signal turn_finished
 
 const MAX_CARDS_IN_HAND = 7
 const ROUND_HEALTHS = [
-	[20, 1],
+	[20, 30],
 	[25, 40],
 	[30, 50],
 	[40, 60],
