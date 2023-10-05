@@ -35,11 +35,6 @@ const MAX_FONT_SIZE = 10
 func initialize(data: CardData) -> void:
 	card_name.text = data.name
 	Util.fit_text(card_name, MAX_FONT_SIZE)
-	var font_size = MAX_FONT_SIZE
-	var label_font = card_name.get_theme_font("font_size")
-	while label_font.get_string_size(data.name, 0, -1, font_size).x > card_name.size.x:
-		font_size -= 1
-	card_name.add_theme_font_size_override("font_size", font_size)
 
 	icon.texture = data.icon
 	description.text = data.description
