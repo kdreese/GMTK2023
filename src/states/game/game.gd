@@ -27,8 +27,7 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var view_discard_button: Button = %ViewDiscardButton
 @onready var text_box: TextBox = %TextBox
 @onready var card_info_viewer: Panel = %CardInfoViewer
-@onready var enemy_attack_card: Control = $EnemyAttackCard
-@onready var enemy_defense_card: Control = $EnemyDefenseCard
+@onready var enemy_card: Control = $EnemyCard
 @onready var card_viewer: Control = %CardViewer
 @onready var hand_bounds: Control = %HandBounds
 @onready var hand: Hand = %Hand
@@ -204,17 +203,12 @@ func _on_end_round_button_pressed() -> void:
 	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
 	if Global.card_replay_moves.has(looping_index):
 		for move in Global.card_replay_moves[looping_index]:
-			if move[0].card_role == "Attack":
-				enemy_attack_card.initialize(move[0])
-				enemy_attack_card.show()
-			else:
-				enemy_defense_card.initialize(move[0])
-				enemy_defense_card.show()
+			enemy_card.initialize(move[0])
+			enemy_card.show()
 
 			await perform_card(move[0], move[1], true)
 			await wait_for_timer(Global.animation_speed * 2)
-			enemy_attack_card.hide()
-			enemy_defense_card.hide()
+			enemy_card.hide()
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
