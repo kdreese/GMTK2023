@@ -152,8 +152,16 @@ func load_config() -> void:
 		if entry not in config:
 			config[entry] = DEFAULT_CONFIG[entry]
 
+	# Do we already have a custom window size? Via --resolution, having an "override", etc
+	var intended_window_size := Vector2i(
+			ProjectSettings.get_setting("display/window/size/viewport_width"),
+			ProjectSettings.get_setting("display/window/size/viewport_height")
+	)
+	var current_window_size := get_window().size
+	var already_custom_size := current_window_size != intended_window_size
+
 	# Set the size of the window and center it.
-	if "window_size" in config:
+	if "window_size" in config and not already_custom_size:
 		var raw_size := config["window_size"] as Vector2i
 		var fixed_size: Vector2i
 		if 4 * raw_size.x > 3 * raw_size.y:
