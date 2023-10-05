@@ -1,21 +1,55 @@
-extends Control
+# @tool
+class_name CardInfo
+extends Node
+
+## Docstring
 
 
+# Signals
+
+
+# Enums
+
+
+# Constants
+const MAX_FONT_SIZE = 10
+
+
+# Exported Variables
+
+
+# Variables
+var data: CardData
+
+
+# Onready Variables
+@onready var background: TextureRect = $Background
 @onready var card_name: Label = %Name
 @onready var icon: TextureRect = %Icon
 @onready var description: Label = %Description
 @onready var rank_icon: TextureRect = %RankIcon
 
+# Built-in Functions
 
-func initialize(data: CardData) -> void:
+
+# Other Functions
+func initialize(_data: CardData) -> void:
+	self.data = _data
 	card_name.text = data.name
+	Util.fit_text(card_name, MAX_FONT_SIZE)
+
 	icon.texture = data.icon
 	description.text = data.description
 	rank_icon.texture = Util.rank_to_texture(data.rank)
-	update_icons(data, $Stats)
+	if data.card_role == "Attack":
+		background.texture = preload("res://assets/attack_card.png")
+	else:
+		background.texture = preload("res://assets/defense_card.png")
+
+	update_icons($Stats)
 
 
-func update_icons(data: CardData, grid: GridContainer) -> void:
+func update_icons(grid: GridContainer) -> void:
 	for node in grid.get_children():
 		node.hide()
 	if data is MeleeUnitData:
@@ -38,3 +72,7 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 	else:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()
+
+
+# Subclass Definitions
+

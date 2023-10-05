@@ -7,6 +7,7 @@ signal dropped_card(DualCard)
 
 const DRAGGING_OFFSET := Vector2(-32, -18)
 const MOUSEOVER_OFFSET := Vector2(0, -50)
+const MAX_FONT_SIZE = 11
 
 var card_data: DualCardData
 
@@ -45,8 +46,10 @@ func initialize(data: DualCardData) -> void:
 	card_data = data
 	rank_icon.texture = Util.rank_to_texture(data.rank)
 	attack_label.text = data.attack.name
+	Util.fit_text(attack_label, MAX_FONT_SIZE)
 	attack_icon.texture = data.attack.icon
 	defense_label.text = data.defense.name
+	Util.fit_text(defense_label, MAX_FONT_SIZE)
 	defense_icon.texture = data.defense.icon
 	update_icons(data.attack, $AttackStats)
 	update_icons(data.defense, $DefenseStats)
