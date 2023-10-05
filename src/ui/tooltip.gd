@@ -1,5 +1,6 @@
-extends Control
+extends CenterContainer
 
+const vert_offset = 42.0
 
 @onready var info_text: Label = %InfoText
 @onready var damage_amt: Label = %DamageAmt
@@ -27,3 +28,15 @@ func initialize(unit: Unit) -> void:
 		info_text.text = unit.special_effect
 	else:
 		info_text.hide()
+
+	call_deferred("set_pos", unit)
+
+
+func set_pos(unit: Unit) -> void:
+	var position_offset := Vector2(-100, -100)
+	if unit.grid_position.y < 3:
+		position_offset.y += vert_offset
+	else:
+		position_offset.y -= vert_offset - 5
+	position = unit.position + position_offset
+	position.x = clampf(position.x, -30, 670)

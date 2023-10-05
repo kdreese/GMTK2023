@@ -47,6 +47,7 @@ var discard: Array[DualCardData]
 var curr_round: int = 0
 var red_max_health: int = 30
 var blue_max_health: int = 50
+var can_display_tooltip := true
 
 var game_over := false
 
@@ -193,6 +194,11 @@ func _on_end_round_button_pressed() -> void:
 
 	hand.set_all_draggable(false)
 
+	can_display_tooltip = false
+	for point in drop_points.get_children():
+		if point.open_tooltip != null:
+			point.close_tooltip()
+
 	# Make enemy moves
 	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
 	if Global.card_replay_moves.has(looping_index):
@@ -217,6 +223,9 @@ func _on_end_round_button_pressed() -> void:
 	view_deck_button.disabled = false
 	view_discard_button.disabled = false
 	hand.set_all_draggable(true)
+	can_display_tooltip = true
+	for point in drop_points.get_children():
+		point.check_for_start_tooltip()
 	turn_finished.emit()
 
 
