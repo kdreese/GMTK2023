@@ -41,9 +41,9 @@ func display_cards(cards : Array[DualCardData]) -> void:
 		var dual_card_node := preload("res://src/cards/dual_card.tscn").instantiate()
 		var full_cards := HBoxContainer.new()
 		var attack_card := card.attack
-		var attack_card_node := preload("res://src/cards/attack/attack_card_info.tscn").instantiate()
+		var attack_card_node := preload("res://src/cards/card_info.tscn").instantiate()
 		var defense_card := card.defense
-		var defense_card_node := preload("res://src/cards/defense/defense_card_info.tscn").instantiate()
+		var defense_card_node := preload("res://src/cards/card_info.tscn").instantiate()
 		var select_button := Button.new()
 		select_button.pressed.connect(self.select_card.bind(dual_card))
 		select_button.text = "Take Card"

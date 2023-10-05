@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpufvlfgtfiqx"]
+[gd_scene load_steps=3 format=3 uid="uid://dpufvlfgtfiqx"]
 
-[ext_resource type="PackedScene" uid="uid://chfpilf8yymda" path="res://src/cards/attack/attack_card_info.tscn" id="1_0vkav"]
 [ext_resource type="Script" path="res://src/ui/card_info_viewer.gd" id="1_t8r3k"]
-[ext_resource type="PackedScene" uid="uid://dhr87ej3qtdyg" path="res://src/cards/defense/defense_card_info.tscn" id="2_56aw6"]
+[ext_resource type="PackedScene" uid="uid://daqsr3qrtyk3v" path="res://src/cards/card_info.tscn" id="2_iw6rn"]
 
 [node name="CardInfoViewer" type="Panel"]
 anchors_preset = 15
@@ -12,17 +11,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_t8r3k")
 
-[node name="AttackCard" parent="." instance=ExtResource("1_0vkav")]
-layout_mode = 0
+[node name="AttackCard" parent="." instance=ExtResource("2_iw6rn")]
 offset_left = 200.0
 offset_top = 90.0
 offset_right = 278.0
 offset_bottom = 210.0
 scale = Vector2(1.5, 1.5)
-size_flags_horizontal = 3
 
-[node name="DefenseCard" parent="." instance=ExtResource("2_56aw6")]
-layout_mode = 0
+[node name="DefenseCard" parent="." instance=ExtResource("2_iw6rn")]
 offset_left = 323.0
 offset_top = 90.0
 offset_right = 401.0

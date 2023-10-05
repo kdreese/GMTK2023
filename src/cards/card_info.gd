@@ -1,17 +1,46 @@
-extends Control
+# @tool
+class_name CardInfo
+extends Node
+
+## Docstring
 
 
+# Signals
+
+
+# Enums
+
+
+# Constants
+
+
+# Exported Variables
+
+
+# Variables
+
+
+# Onready Variables
+@onready var background: TextureRect = $Background
 @onready var card_name: Label = %Name
 @onready var icon: TextureRect = %Icon
 @onready var description: Label = %Description
 @onready var rank_icon: TextureRect = %RankIcon
 
+# Built-in Functions
 
+
+# Other Functions
 func initialize(data: CardData) -> void:
 	card_name.text = data.name
 	icon.texture = data.icon
 	description.text = data.description
 	rank_icon.texture = Util.rank_to_texture(data.rank)
+	if data.card_role == "Attack":
+		background.texture = preload("res://assets/attack_card.png")
+	else:
+		background.texture = preload("res://assets/defense_card.png")
+
 	update_icons(data, $Stats)
 
 
@@ -38,3 +67,7 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 	else:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()
+
+
+# Subclass Definitions
+
