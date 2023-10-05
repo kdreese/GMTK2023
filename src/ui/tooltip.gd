@@ -10,8 +10,6 @@ const vert_offset = 42.0
 @onready var health_icon: TextureRect = %HealthIcon
 @onready var move_icon: TextureRect = %MoveIcon
 
-var vert_pos_mod := 0.0
-
 
 func initialize(unit: Unit) -> void:
 	if unit is RangedUnit:
@@ -35,10 +33,10 @@ func initialize(unit: Unit) -> void:
 
 
 func set_pos(unit: Unit) -> void:
-	Vector2 position_offset = Vector2(-100, -100)
+	var position_offset := Vector2(-100, -100)
 	if unit.grid_position.y < 3:
 		position_offset.y += vert_offset
 	else:
 		position_offset.y -= vert_offset - 5
 	position = unit.position + position_offset
-	position.x = position.clamp(Vector2(-30, -30), Vector2(670, 510)).x
+	position.x = clampf(position.x, -30, 670)
