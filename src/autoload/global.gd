@@ -152,24 +152,23 @@ func load_config() -> void:
 		if config_file.has_section_key(CONFIG_SECTION, key):
 			var value_variant = config_file.get_value(CONFIG_SECTION, key)
 			if typeof(value_variant) == typeof(DEFAULT_CONFIG[key]):
-				if key in ["music_volume", "sound_volume"]:
-					value_variant = clampf(value_variant, 0.0, 1.0)
-				elif key == "anim_key_idx":
-					value_variant = clampi(value_variant, 0, ANIMATION_SPEEDS.size() - 1)
 				config[key] = value_variant
 
+	config["music_volume"] = clampf(config["music_volume"], 0.0, 1.0)
+	config["sound_volume"] = clampf(config["sound_volume"], 0.0, 1.0)
+	config["anim_key_idx"] = clampi(config["anim_key_idx"], 0, ANIMATION_SPEEDS.size() - 1)
+
 	# Do we already have a custom window size? Via --resolution, having an "override", etc
-	var intended_window_size := Vector2i(
+	# We can test this by getting the default window size and checking if the window doesn't match that.
+	var default_window_size := Vector2i(
 			ProjectSettings.get_setting("display/window/size/viewport_width"),
 			ProjectSettings.get_setting("display/window/size/viewport_height")
 	)
-	var current_window_size := get_window().size
-	var already_custom_size := current_window_size != intended_window_size
 
-	# Set the size of the window and center it.
-	if (not already_custom_size):
+	if get_window().size == default_window_size:
+		# Set the size of the window and center it.
 		var raw_size_variant = config["window_size"]
-		if typeof(raw_size_variant) == TYPE_VECTOR2I and raw_size_variant != intended_window_size:
+		if typeof(raw_size_variant) == TYPE_VECTOR2I and raw_size_variant != default_window_size:
 			var raw_size: Vector2i = raw_size_variant
 			var fixed_size: Vector2i
 			if 4 * raw_size.x > 3 * raw_size.y:
@@ -183,6 +182,8 @@ func load_config() -> void:
 			var screen_center := DisplayServer.screen_get_position(screen_id) \
 					+ DisplayServer.screen_get_size(screen_id) / 2
 			get_window().position = screen_center - fixed_size / 2
+	else:
+		config["fullscreen"] = false
 
 	if config["fullscreen"]:
 		# If we're in fullscreen, change the mode.
