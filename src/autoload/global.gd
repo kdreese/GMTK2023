@@ -156,7 +156,7 @@ func load_config() -> void:
 
 	config["music_volume"] = clampf(config["music_volume"], 0.0, 1.0)
 	config["sound_volume"] = clampf(config["sound_volume"], 0.0, 1.0)
-	config["anim_key_idx"] = clampi(config["anim_key_idx"], 0, ANIMATION_SPEEDS.size() - 1)
+	config["anim_speed_idx"] = clampi(config["anim_speed_idx"], 0, ANIMATION_SPEEDS.size() - 1)
 
 	# Do we already have a custom window size? Via --resolution, having an "override", etc
 	# We can test this by getting the default window size and checking if the window doesn't match that.
@@ -165,23 +165,21 @@ func load_config() -> void:
 			ProjectSettings.get_setting("display/window/size/viewport_height")
 	)
 
-	if get_window().size == default_window_size:
+	var raw_size: Vector2i = config["window_size"]
+	if get_window().size == default_window_size and raw_size != default_window_size:
 		# Set the size of the window and center it.
-		var raw_size_variant = config["window_size"]
-		if typeof(raw_size_variant) == TYPE_VECTOR2I and raw_size_variant != default_window_size:
-			var raw_size: Vector2i = raw_size_variant
-			var fixed_size: Vector2i
-			if 4 * raw_size.x > 3 * raw_size.y:
-				# Wider than it is supposed to be, use the height as the guide.
-				fixed_size = Vector2i(snapped(raw_size.y, 3) * 4 / 3, snapped(raw_size.y, 3))
-			else:
-				# Taller than it is supposed to be, use the width as the guide.
-				fixed_size = Vector2i(snapped(raw_size.x, 4), snapped(raw_size.x, 4) * 3 / 4)
-			get_window().size = fixed_size
-			var screen_id := get_window().current_screen
-			var screen_center := DisplayServer.screen_get_position(screen_id) \
-					+ DisplayServer.screen_get_size(screen_id) / 2
-			get_window().position = screen_center - fixed_size / 2
+		var fixed_size: Vector2i
+		if 4 * raw_size.x > 3 * raw_size.y:
+			# Wider than it is supposed to be, use the height as the guide.
+			fixed_size = Vector2i(snapped(raw_size.y, 3) * 4 / 3, snapped(raw_size.y, 3))
+		else:
+			# Taller than it is supposed to be, use the width as the guide.
+			fixed_size = Vector2i(snapped(raw_size.x, 4), snapped(raw_size.x, 4) * 3 / 4)
+		get_window().size = fixed_size
+		var screen_id := get_window().current_screen
+		var screen_center := DisplayServer.screen_get_position(screen_id) \
+				+ DisplayServer.screen_get_size(screen_id) / 2
+		get_window().position = screen_center - fixed_size / 2
 	else:
 		config["fullscreen"] = false
 
