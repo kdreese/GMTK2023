@@ -180,6 +180,8 @@ unique_name_in_owner = true
 
 [node name="Ranged" type="Node" parent="Units"]
 
+[node name="Barricade" type="Node" parent="Units"]
+
 [node name="DropPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
 metadata/_edit_lock_ = true
