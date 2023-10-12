@@ -26,7 +26,7 @@ func can_perform(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> bool:
 	if not (grid_pos.x >= 8 and (grid_pos.y <= 2 if is_enemy else grid_pos.y > 2)):
 		return false
 
-	# Don't let them use this unless they have at least one unit on the field that can move.
+	# Don't let them use this unless they have at least one ranged unit.
 	var filter_func = enemy_filter_func if is_enemy else ally_filter_func
 	return len(ranged_units.get_children().filter(filter_func)) > 0
 

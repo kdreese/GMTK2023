@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_aj10c")
 name = "Mobilize"
-description = "Destroy one of your archers, and draw a number of cards equal to that archer's rank  + 1 (max 4 cards)."
+description = "Destroy one of your archers, and draw a number of cards equal to that archer's rank  + 1 (max rank 3)."
 special_effect = ""
 icon = ExtResource("1_rymuq")
 rank = 2
