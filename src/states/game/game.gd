@@ -354,9 +354,12 @@ func instant_defensive_damage() -> void:
 	var units := $Units/Ranged.get_children()
 	units.sort_custom(ranged_attack_order)
 	for unit in units:
+		var attack_range := unit.attack_range as int
+		attack_range += unit.extra_stats.get("attack_range", 0)
+		unit.extra_stats.erase("attack_range")
 		# Search for the closest non-empty square within the range.
 		var target: Node = null
-		for x_pos in range(7, 7 - unit.attack_range, -1):
+		for x_pos in range(7, 7 - attack_range, -1):
 			target = get_unit(Vector2i(x_pos, unit.grid_position.y))
 			if target != null:
 				break
