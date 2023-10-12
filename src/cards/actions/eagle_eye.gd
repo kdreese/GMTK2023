@@ -9,13 +9,16 @@ extends CardAction
 # Variables
 # Onready Variables
 # Built-in Functions
-# Other Functions
+
+
 # Other Functions
 func enemy_filter_func(unit: Unit) -> bool:
 	return unit.grid_position.y <= 2 and unit.grid_position.x >= 8
 
+
 func ally_filter_func(unit: Unit) -> bool:
 	return unit.grid_position.y > 2 and unit.grid_position.x >= 8
+
 
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> bool:
@@ -41,6 +44,3 @@ func perform_action(data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> void
 	var units = ranged_units.get_children().filter(filter_func)
 	for unit in units as Array[RangedUnit]:
 		unit.extra_stats["attack_range"] = extra_range
-
-# Subclass Definitions
-

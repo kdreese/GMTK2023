@@ -15,8 +15,10 @@ extends CardAction
 func enemy_filter_func(unit: Unit) -> bool:
 	return unit.grid_position.y > 2 and unit.grid_position.x < 8
 
+
 func ally_filter_func(unit: Unit) -> bool:
 	return unit.grid_position.y <= 2 and unit.grid_position.x < 8
+
 
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> bool:

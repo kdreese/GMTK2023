@@ -356,6 +356,7 @@ func instant_defensive_damage() -> void:
 	for unit in units:
 		var attack_range := unit.attack_range as int
 		attack_range += unit.extra_stats.get("attack_range", 0)
+		# Clear temporary status effects.
 		unit.extra_stats.erase("attack_range")
 		# Search for the closest non-empty square within the range.
 		var target: Node = null
@@ -398,6 +399,7 @@ func offensive_action_sweep() -> void:
 		if unit == null or unit.is_queued_for_deletion():
 			continue
 		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
+		# Clear temporary status effects.
 		unit.extra_stats.erase("speed")
 		for _idx in range(steps_left):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
@@ -408,7 +410,6 @@ func offensive_action_sweep() -> void:
 				await wait_for_timer(Global.animation_speed)
 		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
-		# Clear temporary status effects.
 
 
 func melee_attack(unit: Unit) -> void:
