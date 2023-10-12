@@ -96,18 +96,21 @@ func _ready() -> void:
 		[
 			preload("res://src/cards/attack/attack_cards/cavalier_1.tres"),
 			preload("res://src/cards/attack/attack_cards/soldier_1.tres"),
+			preload("res://src/cards/attack/attack_cards/lightning_1.tres"),
 		],
 		2:
 		[
 			preload("res://src/cards/attack/attack_cards/cavalier_2.tres"),
 			preload("res://src/cards/attack/attack_cards/soldier_2.tres"),
 			preload("res://src/cards/attack/attack_cards/battering_ram.tres"),
+			preload("res://src/cards/attack/attack_cards/lightning_2.tres"),
 
 		],
 		3:
 		[
 			preload("res://src/cards/attack/attack_cards/cavalier_3.tres"),
 			preload("res://src/cards/attack/attack_cards/soldier_3.tres"),
+			preload("res://src/cards/attack/attack_cards/lightning_3.tres"),
 		]
 	}
 
