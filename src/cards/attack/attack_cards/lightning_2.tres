@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://c56cimwew1306"]
+
+[ext_resource type="Texture2D" uid="uid://cvo5epdnxh5pn" path="res://assets/icons/lightning.png" id="1_fjyvm"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_hk54f"]
+
+[resource]
+script = ExtResource("1_hk54f")
+name = "Lightning"
+description = "Deal 10 damage to the opposing castle but 5 damage to each unit next to the castle"
+special_effect = ""
+icon = ExtResource("1_fjyvm")
+rank = 2
+card_role = "Attack"
+effect_script = "res://src/cards/actions/lightning.gd"
+extra_data = Array[String](["10", "5"])
