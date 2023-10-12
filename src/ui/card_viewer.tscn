@@ -20,25 +20,40 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="CenterContainer" type="CenterContainer" parent="ColorRect"]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(560, 400)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -220.0
+offset_right = 280.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/CenterContainer"]
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="CardContainer" type="VBoxContainer" parent="ColorRect/CenterContainer/VBoxContainer"]
+[node name="CardContainer" type="VBoxContainer" parent="ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CloseButton" type="Button" parent="ColorRect/CenterContainer/VBoxContainer"]
-layout_mode = 2
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -50.0
+offset_right = 26.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_horizontal = 4
 text = "Close"
 
-[connection signal="pressed" from="ColorRect/CenterContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
