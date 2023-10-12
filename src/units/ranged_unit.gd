@@ -9,6 +9,7 @@ extends Unit
 
 var attack_range: int = 1
 var attack_damage: int = 5
+var rank: int = 1
 
 
 func init(data: RangedUnitData, starting_position: Vector2i, world_pos: Dictionary) -> void:
@@ -19,6 +20,7 @@ func init(data: RangedUnitData, starting_position: Vector2i, world_pos: Dictiona
 	special_effect = data.special_effect
 	sprite.texture = data.icon
 	rank_icon.texture = Util.rank_to_texture(data.rank)
+	rank = data.rank
 	update_position()
 
 

@@ -19,6 +19,6 @@ func can_perform(_data: CardData, _grid_pos: Vector2i, _is_enemy: bool) -> bool:
 	return true
 
 
-## The action which is performed when the card is dropped. Accepts the card data and lane
+## The action which is performed when the card is dropped. Accepts the card data and position.
 func perform_action(_data: CardData, _grid_pos: Vector2i, _is_enemy: bool) -> void:
 	push_warning("Unimplemented action")
