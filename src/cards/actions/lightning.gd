@@ -12,9 +12,6 @@ func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
 		push_error("lightning expects 2 argument of the damage to do.")
 		return
 
-	#var sound := game.get_node("RightOilSound" if is_enemy else "LeftOilSound")
-	#sound.play()
-
 	await game.wait_for_timer(Global.animation_speed)
 
 	var castle_damage := int(data.extra_data[0])
