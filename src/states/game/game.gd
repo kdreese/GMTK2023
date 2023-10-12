@@ -245,7 +245,7 @@ func _on_card_dropped(card: Control) -> void:
 		card_info_viewer.update(attack_card, defense_card)
 		card_info_viewer.show()
 		return
-	if grid_pos.y < 3 and get_unit(grid_pos):
+	if grid_pos.y < 3 and grid_pos.x == 0 and get_unit(grid_pos):
 		return # Don't want to waste an attacking unit by overriding it before it can go
 	if grid_pos.y in [3, 4, 5] and get_unit(grid_pos):
 		var existing_unit := get_unit(grid_pos)
