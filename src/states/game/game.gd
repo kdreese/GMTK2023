@@ -389,13 +389,14 @@ func instant_defensive_damage() -> void:
 func offensive_action_sweep() -> void:
 	var units := $Units/Melee.get_children()
 	units.sort_custom(melee_attack_order)
-	for unit in units:
+	for unit in units as Array[MeleeUnit]:
 		if game_over:
 			break
 		if unit == null or unit.is_queued_for_deletion():
 			continue
-		var steps_left = unit.speed
-		for _idx in range(unit.speed):
+		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
+		unit.extra_stats.erase("speed")
+		for _idx in range(steps_left):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
 				unit.play_step_sound()
 				unit.grid_position += Vector2i.RIGHT
@@ -404,8 +405,7 @@ func offensive_action_sweep() -> void:
 				await wait_for_timer(Global.animation_speed)
 		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
-	# for each offensive square, check if a unit is occupying that square
-	# if so, call that unit's offensive_action function
+		# Clear temporary status effects.
 
 
 func melee_attack(unit: Unit) -> void:

@@ -60,7 +60,7 @@ var INITIAL_DECK: Array[DualCardData] = [
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/oil_1.tres")),
 	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/mobilize_1.tres")),
+	DualCardData.new(preload("res://src/cards/attack/attack_cards/charge_1.tres"), preload("res://src/cards/defense/defense_cards/mobilize_1.tres")),
 ]
 var deck: Array[DualCardData]
 # The next two variables are in the format: Dictionary[turn_number: int, moves: Array[Array[data: CardData, lane: int]]]
@@ -97,6 +97,7 @@ func _ready() -> void:
 			preload("res://src/cards/attack/attack_cards/cavalier_1.tres"),
 			preload("res://src/cards/attack/attack_cards/soldier_1.tres"),
 			preload("res://src/cards/attack/attack_cards/lightning_1.tres"),
+			preload("res://src/cards/attack/attack_cards/charge_1.tres"),
 		],
 		2:
 		[
@@ -104,13 +105,14 @@ func _ready() -> void:
 			preload("res://src/cards/attack/attack_cards/soldier_2.tres"),
 			preload("res://src/cards/attack/attack_cards/battering_ram.tres"),
 			preload("res://src/cards/attack/attack_cards/lightning_2.tres"),
-
+			preload("res://src/cards/attack/attack_cards/charge_2.tres"),
 		],
 		3:
 		[
 			preload("res://src/cards/attack/attack_cards/cavalier_3.tres"),
 			preload("res://src/cards/attack/attack_cards/soldier_3.tres"),
 			preload("res://src/cards/attack/attack_cards/lightning_3.tres"),
+			preload("res://src/cards/attack/attack_cards/charge_3.tres"),
 		]
 	}
 
