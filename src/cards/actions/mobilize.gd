@@ -55,6 +55,9 @@ func perform_action(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void
 	ranged_units.remove_child(archer)
 	archer.queue_free()
 
+	for drop_point in game.get_node("DropPoints").get_children():
+		drop_point.close_tooltip()
+
 	if not is_enemy:
 		game.draw_cards(rank)
 
