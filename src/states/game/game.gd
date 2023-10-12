@@ -354,9 +354,13 @@ func instant_defensive_damage() -> void:
 	var units := $Units/Ranged.get_children()
 	units.sort_custom(ranged_attack_order)
 	for unit in units:
+		var attack_range := unit.attack_range as int
+		attack_range += unit.extra_stats.get("attack_range", 0)
+		# Clear temporary status effects.
+		unit.extra_stats.erase("attack_range")
 		# Search for the closest non-empty square within the range.
 		var target: Node = null
-		for x_pos in range(7, 7 - unit.attack_range, -1):
+		for x_pos in range(7, 7 - attack_range, -1):
 			target = get_unit(Vector2i(x_pos, unit.grid_position.y))
 			if target != null:
 				break
@@ -389,13 +393,15 @@ func instant_defensive_damage() -> void:
 func offensive_action_sweep() -> void:
 	var units := $Units/Melee.get_children()
 	units.sort_custom(melee_attack_order)
-	for unit in units:
+	for unit in units as Array[MeleeUnit]:
 		if game_over:
 			break
 		if unit == null or unit.is_queued_for_deletion():
 			continue
-		var steps_left = unit.speed
-		for _idx in range(unit.speed):
+		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
+		# Clear temporary status effects.
+		unit.extra_stats.erase("speed")
+		for _idx in range(steps_left):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
 				unit.play_step_sound()
 				unit.grid_position += Vector2i.RIGHT
@@ -404,8 +410,6 @@ func offensive_action_sweep() -> void:
 				await wait_for_timer(Global.animation_speed)
 		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
-	# for each offensive square, check if a unit is occupying that square
-	# if so, call that unit's offensive_action function
 
 
 func melee_attack(unit: Unit) -> void:

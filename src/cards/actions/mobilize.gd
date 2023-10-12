@@ -59,7 +59,7 @@ func perform_action(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void
 		drop_point.close_tooltip()
 
 	if not is_enemy:
-		game.draw_cards(rank)
+		game.draw_cards(rank + 1)
 
 # Subclass Definitions
 
