@@ -470,8 +470,6 @@ position = Vector2(423, 117)
 [node name="DefenseBridgePoint" type="Marker2D" parent="."]
 position = Vector2(211, 293)
 
-[node name="Monsters" type="Node" parent="."]
-
 [node name="MaskCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="OffenseMask" type="TextureRect" parent="MaskCanvasLayer"]

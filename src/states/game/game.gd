@@ -233,46 +233,56 @@ func _on_end_round_button_pressed() -> void:
 
 func on_card_dragged(card: DualCard) -> void:
 	load_scripts(card.card_data)
+	for drop_point in drop_points.get_children():
+		var script_node: Node
+		if drop_point.grid_position.y < 3:
+			script_node = attack_script_node
+		else:
+			script_node = defense_script_node
+		if script_node.can_perform(drop_point.grid_position, false):
+			drop_point.set_enabled(true)
+		else:
+			drop_point.set_enabled(false)
 
 
 func _on_card_dropped(card: Control) -> void:
-	var grid_pos := Vector2i(-1, -1)
-	var points := drop_points.get_children()
-	points.append($InfoDropPoint/LaneInfo)
-	for drop in points:
-		if drop.is_mouse_inside:
-			grid_pos = drop.grid_position
-			break
-	if grid_pos.y < 0 or grid_pos.x < 0 or grid_pos.x > 10 or grid_pos.y > 6:
-		return
-	if grid_pos.y == 6:		# Help box
+	# Help box.
+	if $InfoDropPoint/LaneInfo.is_mouse_inside:
 		var attack_card := card.card_data.attack as CardData
 		var defense_card := card.card_data.defense as CardData
 		card_info_viewer.update(attack_card, defense_card)
 		card_info_viewer.show()
 		return
+	var grid_pos := Vector2i(-1, -1)
+	var points := drop_points.get_children()
+	for drop in points:
+		drop.set_enabled(true)
+		if drop.is_mouse_inside:
+			grid_pos = drop.grid_position
+	if grid_pos.y < 0 or grid_pos.x < 0 or grid_pos.x > 10 or grid_pos.y > 6:
+		return
+
 	# We have a thing to put down! Let's do it
 	var script_node: Node
 	if grid_pos.y < 3:
 		script_node = attack_script_node
 	else:
 		script_node = defense_script_node
-	var should_remove := script_node.can_perform(grid_pos, false) as bool
-	if should_remove:
+	if script_node.can_perform(grid_pos, false):
 		discard.append(card.card_data)
 		hand.remove_card(card)
-	end_round_button.disabled = true
-	@warning_ignore("redundant_await") # Not all need the await call
-	await script_node.perform_action(grid_pos, false)
-	if not Global.card_current_moves.has(curr_round):
-		Global.card_current_moves[curr_round] = []
-		# Flip the lanes around here so that enemy cards get put in the right spot.
-		var modified_grid_pos: = grid_pos
-		if modified_grid_pos.y < 3:
-			modified_grid_pos.y += 3
-		else:
-			modified_grid_pos.y -= 3
-		Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
+		end_round_button.disabled = true
+		@warning_ignore("redundant_await") # Not all need the await call
+		await script_node.perform_action(grid_pos, false)
+		if not Global.card_current_moves.has(curr_round):
+			Global.card_current_moves[curr_round] = []
+			# Flip the lanes around here so that enemy cards get put in the right spot.
+			var modified_grid_pos: = grid_pos
+			if modified_grid_pos.y < 3:
+				modified_grid_pos.y += 3
+			else:
+				modified_grid_pos.y -= 3
+			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
 	end_round_button.disabled = false
 
 
