@@ -620,60 +620,53 @@ offset_top = 97.0
 offset_right = 578.0
 offset_bottom = 217.0
 
-[node name="HandBounds" type="Control" parent="."]
-unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 0
-offset_left = 125.0
-offset_top = 332.0
-offset_right = 492.0
-offset_bottom = 480.0
+[node name="Sounds" type="Node2D" parent="."]
 
-[node name="LeftOilSound" type="AudioStreamPlayer2D" parent="."]
+[node name="LeftOilSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(60, 240)
 stream = ExtResource("16_urxts")
 volume_db = -2.0
 max_polyphony = 3
 bus = &"Sounds"
 
-[node name="LeftHealSound" type="AudioStreamPlayer2D" parent="."]
+[node name="LeftHealSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(60, 240)
 stream = ExtResource("17_argrt")
 volume_db = -4.0
 max_polyphony = 3
 bus = &"Sounds"
 
-[node name="LeftPlaceSound" type="AudioStreamPlayer2D" parent="."]
+[node name="LeftPlaceSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(60, 240)
 stream = ExtResource("18_t7qqf")
 max_polyphony = 3
 bus = &"Sounds"
 
-[node name="RightOilSound" type="AudioStreamPlayer2D" parent="."]
+[node name="RightOilSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(580, 80)
 stream = ExtResource("16_urxts")
 volume_db = -2.0
 max_polyphony = 3
 bus = &"Sounds"
 
-[node name="RightHealSound" type="AudioStreamPlayer2D" parent="."]
+[node name="RightHealSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(580, 80)
 stream = ExtResource("17_argrt")
 volume_db = -4.0
 max_polyphony = 3
 bus = &"Sounds"
 
-[node name="RightPlaceSound" type="AudioStreamPlayer2D" parent="."]
+[node name="RightPlaceSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(580, 80)
 stream = ExtResource("18_t7qqf")
 max_polyphony = 3
 bus = &"Sounds"
 
-[node name="WinSound" type="AudioStreamPlayer" parent="."]
+[node name="WinSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("18_ncwqh")
 bus = &"Sounds"
 
-[node name="DrawSound" type="AudioStreamPlayer" parent="."]
+[node name="DrawSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("19_mbpjm")
 volume_db = -3.0
 bus = &"Sounds"

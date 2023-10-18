@@ -13,8 +13,8 @@ func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
 			ranged_units.remove_child(unit)
 			unit.queue_free()
 	if is_enemy:
-		game.get_node("LeftPlaceSound").play()
+		game.get_node("Sounds/LeftPlaceSound").play()
 	else:
-		game.get_node("RightPlaceSound").play()
+		game.get_node("Sounds/RightPlaceSound").play()
 	ranged_units.add_child(new_unit)
 	new_unit.init(data, grid_pos, game.grid_to_world_pos)

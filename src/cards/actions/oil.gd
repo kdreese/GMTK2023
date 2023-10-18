@@ -10,7 +10,7 @@ func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
 		push_error("oil expects 1 argument of the damage to do.")
 		return
 
-	var sound := game.get_node("RightOilSound" if is_enemy else "LeftOilSound")
+	var sound := game.get_node("Sounds/RightOilSound" if is_enemy else "Sounds/LeftOilSound")
 	sound.play()
 
 	await game.wait_for_timer(Global.animation_speed)

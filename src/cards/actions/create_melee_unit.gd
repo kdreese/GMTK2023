@@ -9,8 +9,8 @@ func can_perform(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> bool:
 func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
 	var unit: MeleeUnit = preload("res://src/units/melee_unit.tscn").instantiate()
 	if is_enemy:
-		game.get_node("RightPlaceSound").play()
+		game.get_node("Sounds/RightPlaceSound").play()
 	else:
-		game.get_node("LeftPlaceSound").play()
+		game.get_node("Sounds/LeftPlaceSound").play()
 	melee_units.add_child(unit)
 	unit.init(data, grid_pos, game.grid_to_world_pos)

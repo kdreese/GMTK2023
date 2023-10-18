@@ -29,15 +29,14 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var card_info_viewer: Panel = %CardInfoViewer
 @onready var enemy_card: Control = $EnemyCard
 @onready var card_viewer: Control = %CardViewer
-@onready var hand_bounds: Control = %HandBounds
 @onready var hand: Hand = %Hand
 
 @onready var drop_points: Node2D = %DropPoints
 @onready var blue_castle_door: Vector2 = $DefenseBridgePoint.position
 @onready var red_castle_door: Vector2 = $AttackBridgePoint.position
 
-@onready var win_sound: AudioStreamPlayer = $WinSound
-@onready var draw_sound: AudioStreamPlayer = $DrawSound
+@onready var win_sound: AudioStreamPlayer = $Sounds/WinSound
+@onready var draw_sound: AudioStreamPlayer = $Sounds/DrawSound
 
 
 var grid_to_world_pos: Dictionary # Dictionary[Vector2i, Vector2]
