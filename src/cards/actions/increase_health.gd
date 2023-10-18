@@ -1,7 +1,7 @@
 extends CardAction
 
 
-func can_perform(_data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> bool:
+func can_perform(_grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Make sure the side isn't already at max health
 	var health_bar
 	if is_enemy: # The enemy is using this
@@ -12,7 +12,7 @@ func can_perform(_data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> bool:
 	return health_bar.current_health < health_bar.max_health
 
 
-func perform_action(data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> void:
+func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	if data.extra_data.size() != 1:
 		push_error("increase_health expects 1 argument of the health to increase")
 		return

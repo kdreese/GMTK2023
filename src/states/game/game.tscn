@@ -165,6 +165,15 @@ text = "Round 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="AttackScriptNode" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="DefenseScriptNode" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="EnemyScriptNode" type="Node" parent="."]
+unique_name_in_owner = true
+
 [node name="Units" type="Node" parent="."]
 
 [node name="Melee" type="Node" parent="Units"]
@@ -607,7 +616,7 @@ unique_name_in_owner = true
 process_mode = 3
 visible = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("5_r6md7")
 autoplay = true
@@ -671,6 +680,7 @@ stream = ExtResource("19_mbpjm")
 volume_db = -3.0
 bus = &"Sounds"
 
+[connection signal="dragged" from="CardCanvasLayer/Hand" to="." method="on_card_dragged"]
 [connection signal="dropped" from="CardCanvasLayer/Hand" to="." method="_on_card_dropped"]
 [connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]

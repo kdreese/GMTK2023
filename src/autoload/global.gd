@@ -19,23 +19,23 @@ const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
 const MAX_VOLUME_DB = -6.0
 const FIRST_REPLAY_MOVES = {
 	0: [
-		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 1)],
+		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 4)],
 	],
 	2: [
-		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 2)],
+		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 5)],
 	],
 	4: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 4)],
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 1)],
 	],
 	6: [
-		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), Vector2i(8, 3)],
+		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), Vector2i(8, 0)],
 	],
 	8: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 3)],
-		[preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), Vector2i(0, 0)]
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 0)],
+		[preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), Vector2i(0, 3)]
 	],
 	10: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 5)]
+		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 2)]
 	]
 }
 

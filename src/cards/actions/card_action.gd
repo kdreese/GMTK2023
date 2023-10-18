@@ -4,6 +4,7 @@ extends Node
 
 
 var game: Node
+var data: CardData
 var melee_units: Node
 var ranged_units: Node
 
@@ -15,10 +16,10 @@ func set_game(game_scene: Node) -> void:
 
 
 ## An optional function which can prevent an action from being run (and card consumed).
-func can_perform(_data: CardData, _grid_pos: Vector2i, _is_enemy: bool) -> bool:
+func can_perform(_grid_pos: Vector2i, _is_enemy: bool) -> bool:
 	return true
 
 
 ## The action which is performed when the card is dropped. Accepts the card data and position.
-func perform_action(_data: CardData, _grid_pos: Vector2i, _is_enemy: bool) -> void:
+func perform_action(_grid_pos: Vector2i, _is_enemy: bool) -> void:
 	push_warning("Unimplemented action")

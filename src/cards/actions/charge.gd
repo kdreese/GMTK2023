@@ -21,7 +21,7 @@ func ally_filter_func(unit: Unit) -> bool:
 
 
 ## An optional function which can prevent an action from being run (and card consumed).
-func can_perform(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> bool:
+func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Only allow placing on the attacking unit field.
 	if not (grid_pos.y > 2 if is_enemy else grid_pos.y < 3):
 		return false
@@ -32,7 +32,7 @@ func can_perform(_data: CardData, grid_pos: Vector2i, is_enemy: bool) -> bool:
 
 
 ## The action which is performed when the card is dropped. Accepts the card data and position.
-func perform_action(data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> void:
+func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	var filter_func = enemy_filter_func if is_enemy else ally_filter_func
 
 	if len(data.extra_data) < 1:

@@ -30,6 +30,9 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var enemy_card: Control = $EnemyCard
 @onready var card_viewer: Control = %CardViewer
 @onready var hand: Hand = %Hand
+@onready var attack_script_node: Node = %AttackScriptNode
+@onready var defense_script_node: Node = %DefenseScriptNode
+@onready var enemy_script_node: Node = %EnemyScriptNode
 
 @onready var drop_points: Node2D = %DropPoints
 @onready var blue_castle_door: Vector2 = $DefenseBridgePoint.position
@@ -204,8 +207,8 @@ func _on_end_round_button_pressed() -> void:
 		for move in Global.card_replay_moves[looping_index]:
 			enemy_card.initialize(move[0])
 			enemy_card.show()
-
-			await perform_card(move[0], move[1], true)
+			load_enemy_script(move[0])
+			await enemy_script_node.perform_action(move[1], true)
 			await wait_for_timer(Global.animation_speed * 2)
 			enemy_card.hide()
 
@@ -228,6 +231,10 @@ func _on_end_round_button_pressed() -> void:
 	turn_finished.emit()
 
 
+func on_card_dragged(card: DualCard) -> void:
+	load_scripts(card.card_data)
+
+
 func _on_card_dropped(card: Control) -> void:
 	var grid_pos := Vector2i(-1, -1)
 	var points := drop_points.get_children()
@@ -244,26 +251,28 @@ func _on_card_dropped(card: Control) -> void:
 		card_info_viewer.update(attack_card, defense_card)
 		card_info_viewer.show()
 		return
-	if grid_pos.y < 3 and grid_pos.x == 0 and get_unit(grid_pos):
-		return # Don't want to waste an attacking unit by overriding it before it can go
-	if grid_pos.y in [3, 4, 5] and get_unit(grid_pos):
-		var existing_unit := get_unit(grid_pos)
-		var new_card := card.card_data.defense as CardData
-		if new_card is RangedUnitData:
-			if existing_unit.attack_damage >= new_card.attack_damage:
-				return	# Don't overwrite with a defensive unit of a lower or equal rank
 	# We have a thing to put down! Let's do it
-	var data: CardData
+	var script_node: Node
 	if grid_pos.y < 3:
-		data = card.card_data.attack
+		script_node = attack_script_node
 	else:
-		data = card.card_data.defense
-	var should_remove := can_perform_card(data, grid_pos)
+		script_node = defense_script_node
+	var should_remove := script_node.can_perform(grid_pos, false) as bool
 	if should_remove:
 		discard.append(card.card_data)
 		hand.remove_card(card)
 	end_round_button.disabled = true
-	await perform_card(data, grid_pos)
+	@warning_ignore("redundant_await") # Not all need the await call
+	await script_node.perform_action(grid_pos, false)
+	if not Global.card_current_moves.has(curr_round):
+		Global.card_current_moves[curr_round] = []
+		# Flip the lanes around here so that enemy cards get put in the right spot.
+		var modified_grid_pos: = grid_pos
+		if modified_grid_pos.y < 3:
+			modified_grid_pos.y += 3
+		else:
+			modified_grid_pos.y -= 3
+		Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
 	end_round_button.disabled = false
 
 
@@ -297,56 +306,33 @@ func draw_card_single() -> void:
 	await wait_for_timer(Global.animation_speed)
 
 
-func card_script_setup(data: CardData, grid_pos: Vector2i, is_enemy := false) -> Array:
+## Load a script from a CardData and set it to be the script for the given node.
+func load_script(data: CardData, node: Node) -> bool:
 	if data.effect_script == null:
 		push_error("CardData %s has no script!", data.name)
-		return [false]
+		return false
 	var card_script := load(data.effect_script)
 	if card_script == null or not (card_script is Script):
 		push_error("CardData %s has invalid script!", data.name)
-		return [false]
-	var script_node_generic = Node.new() # Is this the right way to do it?
-	add_child(script_node_generic)
-	script_node_generic.set_script(card_script)
-	var script_node: CardAction = script_node_generic
-	script_node.set_game(self)
-	if is_enemy:
-		if grid_pos.y < 3:
-			grid_pos.y += 3
-		else:
-			grid_pos.y -= 3
-	return [true, script_node, grid_pos]
-
-
-func can_perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> bool:
-	var setup := card_script_setup(data, grid_pos, is_enemy)
-	if not setup[0]:
 		return false
-	var script_node: CardAction = setup[1]
-	grid_pos = setup[2]
-	var success := script_node.can_perform(data, grid_pos, is_enemy)
-	remove_child(script_node)
-	script_node.queue_free()
-	return success
+	node.set_script(card_script)
+	node.data = data
+	node.set_game(self)
+	return true
 
 
-func perform_card(data: CardData, grid_pos: Vector2i, is_enemy := false) -> bool:
-	var setup := card_script_setup(data, grid_pos, is_enemy)
-	if not setup[0]:
+## Loads both scripts for a dual card.
+func load_scripts(data: DualCardData) -> bool:
+	if not load_script(data.attack, attack_script_node):
 		return false
-	var script_node: CardAction = setup[1]
-	grid_pos = setup[2]
-	var success := script_node.can_perform(data, grid_pos, is_enemy)
-	if success:
-		@warning_ignore("redundant_await") # Not all need the await call
-		await script_node.perform_action(data, grid_pos, is_enemy)
-		if not is_enemy:
-			if not Global.card_current_moves.has(curr_round):
-				Global.card_current_moves[curr_round] = []
-			Global.card_current_moves[curr_round].append([data, grid_pos])
-	remove_child(script_node)
-	script_node.queue_free()
-	return success
+	if not load_script(data.defense, defense_script_node):
+		return false
+	return true
+
+
+## Loads the script for the enemy action.
+func load_enemy_script(data: CardData) -> bool:
+	return load_script(data, enemy_script_node)
 
 
 func instant_defensive_damage() -> void:

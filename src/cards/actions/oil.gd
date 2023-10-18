@@ -1,11 +1,11 @@
 extends CardAction
 
 
-func can_perform(_data: CardData, grid_pos: Vector2i, _is_enemy: bool) -> bool:
+func can_perform(grid_pos: Vector2i, _is_enemy: bool) -> bool:
 	return grid_pos.x > 6
 
 
-func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
+func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	if data.extra_data.size() != 1:
 		push_error("oil expects 1 argument of the damage to do.")
 		return

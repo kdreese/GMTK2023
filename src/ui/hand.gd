@@ -5,6 +5,9 @@ extends Control
 
 
 # Signals
+## A signal for when a card drag is started.
+signal dragged(DualCard)
+
 ## A signal for when a card is dropped.
 signal dropped(DualCard)
 
@@ -35,6 +38,7 @@ func _on_card_dragged(dragged_card: Control) -> void:
 	for card in cards:
 		if card != dragged_card:
 			card.draggable = false
+	dragged.emit(dragged_card)
 
 
 ## Called when a card is being dragged and the mouse button is released.
