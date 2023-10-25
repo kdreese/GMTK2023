@@ -245,6 +245,36 @@ func on_card_dragged(card: DualCard) -> void:
 			drop_point.set_enabled(false)
 
 
+func clear_effects() -> void:
+	for drop_point in drop_points.get_children():
+		drop_point.reset()
+
+
+func on_card_enter(drop_point: Node) -> void:
+	if not drop_point.enabled or drop_point.grid_position.y == 6:
+		return
+	if not hand.cards.any(func dragging(x): return x.dragging):
+		return
+	clear_effects()
+	var script_node: Node
+	if drop_point.grid_position.y < 3:
+		script_node = attack_script_node
+	else:
+		script_node = defense_script_node
+	var negative_tiles := script_node.negative_effects(drop_point.grid_position) as Array[Vector2i]
+	var positive_tiles := script_node.positive_effects(drop_point.grid_position) as Array[Vector2i]
+	for other_drop_point in drop_points.get_children():
+		if other_drop_point.grid_position in negative_tiles:
+			other_drop_point.set_negative()
+		elif other_drop_point.grid_position in positive_tiles:
+			other_drop_point.set_positive()
+
+
+func on_card_exit() -> void:
+	if not drop_points.get_children().any(func is_inside(x): return x.is_mouse_inside):
+		clear_effects()
+
+
 func _on_card_dropped(card: Control) -> void:
 	# Help box.
 	if $InfoDropPoint/LaneInfo.is_mouse_inside:

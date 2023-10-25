@@ -23,3 +23,13 @@ func can_perform(_grid_pos: Vector2i, _is_enemy: bool) -> bool:
 ## The action which is performed when the card is dropped. Accepts the card data and position.
 func perform_action(_grid_pos: Vector2i, _is_enemy: bool) -> void:
 	push_warning("Unimplemented action")
+
+
+## A list of squares positively affected if the card were to be placed here.
+func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return []
+
+
+## A list of squares negatively affected if the card were to be placed here.
+func negative_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return []

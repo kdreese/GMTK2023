@@ -44,3 +44,11 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	var units = melee_units.get_children().filter(filter_func)
 	for unit in units as Array[MeleeUnit]:
 		unit.extra_stats["speed"] = extra_speed
+
+
+func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	var units := melee_units.get_children().filter(ally_filter_func)
+	var positions: Array[Vector2i] = []
+	for unit in units:
+		positions.append(unit.grid_position)
+	return positions

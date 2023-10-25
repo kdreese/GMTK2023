@@ -30,3 +30,7 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	for unit in melee_units.get_children():
 		if unit.health <= 0:
 			unit.queue_free()
+
+
+func negative_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return [Vector2i(7, 3), Vector2i(7, 4), Vector2i(7, 5)]

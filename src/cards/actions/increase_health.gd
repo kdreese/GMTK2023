@@ -25,3 +25,11 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 		health_bar = game.blue_castle_health_bar
 		game.get_node("Sounds/LeftHealSound").play()
 	health_bar.modify_health(health_bonus)
+
+
+func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return [
+		Vector2i(8, 3), Vector2i(9, 3), Vector2i(10, 3),
+		Vector2i(8, 4), Vector2i(9, 4), Vector2i(10, 4),
+		Vector2i(8, 5), Vector2i(9, 5), Vector2i(10, 5),
+	]

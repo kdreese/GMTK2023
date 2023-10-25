@@ -24,3 +24,10 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 		game.get_node("Sounds/RightPlaceSound").play()
 	ranged_units.add_child(new_unit)
 	new_unit.init(data, grid_pos, game.grid_to_world_pos)
+
+
+func negative_effects(grid_pos: Vector2i) -> Array[Vector2i]:
+	var output : Array[Vector2i] = []
+	for x in range(8 - data.attack_range, 8):
+		output.append(Vector2i(x, grid_pos.y))
+	return output

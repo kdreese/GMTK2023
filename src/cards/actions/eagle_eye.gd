@@ -44,3 +44,11 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	var units = ranged_units.get_children().filter(filter_func)
 	for unit in units as Array[RangedUnit]:
 		unit.extra_stats["attack_range"] = extra_range
+
+
+func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	var units := ranged_units.get_children().filter(ally_filter_func)
+	var positions: Array[Vector2i] = []
+	for unit in units:
+		positions.append(unit.grid_position)
+	return positions

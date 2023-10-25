@@ -61,5 +61,9 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	if not is_enemy:
 		game.draw_cards(rank + 1)
 
+
+func negative_effects(grid_pos: Vector2i) -> Array[Vector2i]:
+	return [grid_pos]
+
 # Subclass Definitions
 
