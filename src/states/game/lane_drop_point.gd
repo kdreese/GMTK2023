@@ -16,6 +16,11 @@ var open_tooltip: Control = null
 @onready var overlay: Polygon2D = %Overlay
 
 
+func _ready() -> void:
+	# Set the overlay equal to the hitbox.
+	overlay.set_polygon($CollisionPolygon2D.get_polygon())
+
+
 func _mouse_enter() -> void:
 	is_mouse_inside = true
 	check_for_start_tooltip()

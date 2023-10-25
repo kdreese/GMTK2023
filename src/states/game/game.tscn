@@ -182,272 +182,496 @@ unique_name_in_owner = true
 
 [node name="DropPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(50, 80)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="0-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(17, -49)
+position = Vector2(67, 31)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/0-0" index="0"]
+polygon = PackedVector2Array(-10, -18, -24, 17, 14, 17, 27, -18)
 
 [node name="0-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(3, -15)
+position = Vector2(53, 65)
 grid_position = Vector2i(0, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/0-1" index="0"]
+polygon = PackedVector2Array(-10, -17, -24, 17, 15, 17, 28, -17)
 
 [node name="0-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(-11, 19)
+position = Vector2(39, 99)
 grid_position = Vector2i(0, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/0-2" index="0"]
+polygon = PackedVector2Array(-10, -17, -24, 17, 15, 17, 29, -17)
 
 [node name="1-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(84, -49)
+position = Vector2(134, 31)
 grid_position = Vector2i(1, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/1-0" index="0"]
+polygon = PackedVector2Array(-10, -18, -24, 17, 11, 17, 25, -18)
 
 [node name="1-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(70, -15)
+position = Vector2(120, 65)
 grid_position = Vector2i(1, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/1-1" index="0"]
+polygon = PackedVector2Array(-10, -17, -24, 17, 11, 17, 25, -17)
 
 [node name="1-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(56, 19)
+position = Vector2(106, 99)
 grid_position = Vector2i(1, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/1-2" index="0"]
+polygon = PackedVector2Array(-10, -17, -24, 17, 11, 17, 25, -17)
 
 [node name="2-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(117, -49)
+position = Vector2(167, 31)
 grid_position = Vector2i(2, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/2-0" index="0"]
+polygon = PackedVector2Array(-8, -18, -22, 17, 11, 17, 25, -18)
 
 [node name="2-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(103, -15)
+position = Vector2(153, 65)
 grid_position = Vector2i(2, 1)
+metadata/_edit_lock_ = true
 
 [node name="2-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(89, 19)
+position = Vector2(139, 99)
 grid_position = Vector2i(2, 2)
+metadata/_edit_lock_ = true
 
 [node name="3-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(151, -49)
+position = Vector2(201, 31)
 grid_position = Vector2i(3, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/3-0" index="0"]
+polygon = PackedVector2Array(-9, -18, -23, 17, 11, 17, 25, -18)
+
+[node name="Overlay" parent="DropPoints/3-0" index="2"]
+polygon = PackedVector2Array(-9, -17, -22, 17, 11, 17, 25, -17)
 
 [node name="3-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(137, -15)
+position = Vector2(187, 65)
 grid_position = Vector2i(3, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/3-1" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
+
+[node name="Overlay" parent="DropPoints/3-1" index="2"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="3-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(123, 19)
+position = Vector2(173, 99)
 grid_position = Vector2i(3, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/3-2" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
+
+[node name="Overlay" parent="DropPoints/3-2" index="2"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="4-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(184, -49)
+position = Vector2(234, 31)
 grid_position = Vector2i(4, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/4-0" index="0"]
+polygon = PackedVector2Array(-8, -18, -22, 17, 11, 17, 25, -18)
 
 [node name="4-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(170, -15)
+position = Vector2(220, 65)
 grid_position = Vector2i(4, 1)
+metadata/_edit_lock_ = true
 
 [node name="4-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(156, 19)
+position = Vector2(206, 99)
 grid_position = Vector2i(4, 2)
+metadata/_edit_lock_ = true
 
 [node name="5-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(217, -49)
+position = Vector2(267, 31)
 grid_position = Vector2i(5, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/5-0" index="0"]
+polygon = PackedVector2Array(-8, -18, -22, 17, 11, 17, 25, -18)
 
 [node name="5-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(203, -15)
+position = Vector2(253, 65)
 grid_position = Vector2i(5, 1)
+metadata/_edit_lock_ = true
 
 [node name="5-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(189, 19)
+position = Vector2(239, 99)
 grid_position = Vector2i(5, 2)
+metadata/_edit_lock_ = true
 
 [node name="6-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(251, -49)
+position = Vector2(301, 31)
 grid_position = Vector2i(6, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/6-0" index="0"]
+polygon = PackedVector2Array(-9, -18, -23, 17, 11, 17, 25, -18)
 
 [node name="6-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(237, -15)
+position = Vector2(287, 65)
 grid_position = Vector2i(6, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/6-1" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="6-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(223, 19)
+position = Vector2(273, 99)
 grid_position = Vector2i(6, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/6-2" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="7-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(284, -49)
+position = Vector2(334, 31)
 grid_position = Vector2i(7, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/7-0" index="0"]
+polygon = PackedVector2Array(-8, -18, -22, 17, 13, 17, 27, -18)
 
 [node name="7-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(270, -15)
+position = Vector2(320, 65)
 grid_position = Vector2i(7, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/7-1" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 13, 17, 27, -17)
 
 [node name="7-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(256, 19)
+position = Vector2(306, 99)
 grid_position = Vector2i(7, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/7-2" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 13, 17, 27, -17)
 
 [node name="8-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(481, -27)
+position = Vector2(531, 53)
 grid_position = Vector2i(8, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/8-0" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 17, 11, 17, 25, -17)
 
 [node name="8-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(467, 7)
+position = Vector2(517, 87)
 grid_position = Vector2i(8, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/8-1" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 17, 11, 17, 25, -17)
 
 [node name="8-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(453, 41)
+position = Vector2(503, 121)
 grid_position = Vector2i(8, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/8-2" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 18, 11, 18, 25, -17)
 
 [node name="9-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(514, -27)
+position = Vector2(564, 53)
 grid_position = Vector2i(9, 0)
+metadata/_edit_lock_ = true
 
 [node name="9-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(500, 7)
+position = Vector2(550, 87)
 grid_position = Vector2i(9, 1)
+metadata/_edit_lock_ = true
 
 [node name="9-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(486, 41)
+position = Vector2(536, 121)
 grid_position = Vector2i(9, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/9-2" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 11, 18, 25, -17)
 
 [node name="10-0" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(547, -27)
+position = Vector2(597, 53)
 grid_position = Vector2i(10, 0)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/10-0" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 14, 17, 27, -17)
 
 [node name="10-1" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(533, 7)
+position = Vector2(583, 87)
 grid_position = Vector2i(10, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/10-1" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 14, 17, 28, -17)
 
 [node name="10-2" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(519, 41)
+position = Vector2(569, 121)
 grid_position = Vector2i(10, 2)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/10-2" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 14, 18, 28, -17)
 
 [node name="0-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(547, 143)
+position = Vector2(597, 223)
 grid_position = Vector2i(0, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/0-3" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 17, 14, 17, 27, -17)
 
 [node name="0-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(533, 177)
+position = Vector2(583, 257)
 grid_position = Vector2i(0, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/0-4" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 17, 15, 17, 28, -17)
 
 [node name="0-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(519, 211)
+position = Vector2(569, 291)
 grid_position = Vector2i(0, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/0-5" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 18, 15, 18, 29, -17)
 
 [node name="1-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(481, 143)
+position = Vector2(531, 223)
 grid_position = Vector2i(1, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/1-3" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 12, 17, 26, -17)
 
 [node name="1-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(467, 177)
+position = Vector2(517, 257)
 grid_position = Vector2i(1, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/1-4" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 13, 17, 26, -17)
 
 [node name="1-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(453, 211)
+position = Vector2(503, 291)
 grid_position = Vector2i(1, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/1-5" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 18, 13, 18, 27, -17)
 
 [node name="2-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(447, 143)
+position = Vector2(497, 223)
 grid_position = Vector2i(2, 3)
+metadata/_edit_lock_ = true
 
 [node name="2-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(433, 177)
+position = Vector2(483, 257)
 grid_position = Vector2i(2, 4)
+metadata/_edit_lock_ = true
 
 [node name="2-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(419, 211)
+position = Vector2(469, 291)
 grid_position = Vector2i(2, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/2-5" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 11, 18, 25, -17)
 
 [node name="3-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(413, 143)
+position = Vector2(463, 223)
 grid_position = Vector2i(3, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/3-3" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 12, 17, 26, -17)
 
 [node name="3-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(399, 177)
+position = Vector2(449, 257)
 grid_position = Vector2i(3, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/3-4" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 12, 17, 26, -17)
 
 [node name="3-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(385, 211)
+position = Vector2(435, 291)
 grid_position = Vector2i(3, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/3-5" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 12, 18, 26, -17)
 
 [node name="4-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(380, 143)
+position = Vector2(430, 223)
 grid_position = Vector2i(4, 3)
+metadata/_edit_lock_ = true
 
 [node name="4-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(366, 177)
+position = Vector2(416, 257)
 grid_position = Vector2i(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="4-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(352, 211)
+position = Vector2(402, 291)
 grid_position = Vector2i(4, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/4-5" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 11, 18, 25, -17)
 
 [node name="5-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(347, 143)
+position = Vector2(397, 223)
 grid_position = Vector2i(5, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/5-3" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="5-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(333, 177)
+position = Vector2(383, 257)
 grid_position = Vector2i(5, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/5-4" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="5-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(319, 211)
+position = Vector2(369, 291)
 grid_position = Vector2i(5, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/5-5" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 18, 11, 18, 25, -17)
 
 [node name="6-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(313, 143)
+position = Vector2(363, 223)
 grid_position = Vector2i(6, 3)
+metadata/_edit_lock_ = true
 
 [node name="6-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(299, 177)
+position = Vector2(349, 257)
 grid_position = Vector2i(6, 4)
+metadata/_edit_lock_ = true
 
 [node name="6-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(285, 211)
+position = Vector2(335, 291)
 grid_position = Vector2i(6, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/6-5" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 11, 18, 25, -17)
 
 [node name="7-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(280, 143)
+position = Vector2(330, 223)
 grid_position = Vector2i(7, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/7-3" index="0"]
+polygon = PackedVector2Array(-10, -17, -24, 17, 11, 17, 25, -17)
 
 [node name="7-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(266, 177)
+position = Vector2(316, 257)
 grid_position = Vector2i(7, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/7-4" index="0"]
+polygon = PackedVector2Array(-10, -17, -23, 17, 11, 17, 25, -17)
 
 [node name="7-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(252, 211)
+position = Vector2(302, 291)
 grid_position = Vector2i(7, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/7-5" index="0"]
+polygon = PackedVector2Array(-9, -17, -23, 18, 11, 18, 25, -17)
 
 [node name="8-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(87, 114)
+position = Vector2(137, 194)
 grid_position = Vector2i(8, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/8-3" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 13, 17, 27, -17)
 
 [node name="8-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(73, 148)
+position = Vector2(123, 228)
 grid_position = Vector2i(8, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/8-4" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 17, 13, 17, 27, -17)
 
 [node name="8-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(59, 182)
+position = Vector2(109, 262)
 grid_position = Vector2i(8, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/8-5" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 14, 18, 27, -17)
 
 [node name="9-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(54, 114)
+position = Vector2(104, 194)
 grid_position = Vector2i(9, 3)
+metadata/_edit_lock_ = true
 
 [node name="9-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(40, 148)
+position = Vector2(90, 228)
 grid_position = Vector2i(9, 4)
+metadata/_edit_lock_ = true
 
 [node name="9-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(26, 182)
+position = Vector2(76, 262)
 grid_position = Vector2i(9, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/9-5" index="0"]
+polygon = PackedVector2Array(-8, -17, -22, 18, 11, 18, 25, -17)
 
 [node name="10-3" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(21, 114)
+position = Vector2(71, 194)
 grid_position = Vector2i(10, 3)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/10-3" index="0"]
+polygon = PackedVector2Array(-11, -17, -25, 17, 11, 17, 25, -17)
 
 [node name="10-4" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(7, 148)
+position = Vector2(57, 228)
 grid_position = Vector2i(10, 4)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/10-4" index="0"]
+polygon = PackedVector2Array(-11, -17, -24, 17, 11, 17, 25, -17)
 
 [node name="10-5" parent="DropPoints" instance=ExtResource("4_oe5te")]
-position = Vector2(-7, 182)
+position = Vector2(43, 262)
 grid_position = Vector2i(10, 5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" parent="DropPoints/10-5" index="0"]
+polygon = PackedVector2Array(-10, -17, -24, 18, 11, 18, 25, -17)
 
 [node name="InfoDropPoint" type="Node2D" parent="."]
 
@@ -688,4 +912,54 @@ bus = &"Sounds"
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="show_options"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="CanvasLayer/PauseMenu" method="_on_to_menu_button_pressed"]
 
+[editable path="DropPoints/0-0"]
+[editable path="DropPoints/0-1"]
+[editable path="DropPoints/0-2"]
+[editable path="DropPoints/1-0"]
+[editable path="DropPoints/1-1"]
+[editable path="DropPoints/1-2"]
+[editable path="DropPoints/2-0"]
+[editable path="DropPoints/3-0"]
+[editable path="DropPoints/3-1"]
+[editable path="DropPoints/3-2"]
+[editable path="DropPoints/4-0"]
+[editable path="DropPoints/5-0"]
+[editable path="DropPoints/6-0"]
+[editable path="DropPoints/6-1"]
+[editable path="DropPoints/6-2"]
+[editable path="DropPoints/7-0"]
+[editable path="DropPoints/7-1"]
+[editable path="DropPoints/7-2"]
+[editable path="DropPoints/8-0"]
+[editable path="DropPoints/8-1"]
+[editable path="DropPoints/8-2"]
+[editable path="DropPoints/9-2"]
+[editable path="DropPoints/10-0"]
+[editable path="DropPoints/10-1"]
+[editable path="DropPoints/10-2"]
+[editable path="DropPoints/0-3"]
+[editable path="DropPoints/0-4"]
+[editable path="DropPoints/0-5"]
+[editable path="DropPoints/1-3"]
+[editable path="DropPoints/1-4"]
+[editable path="DropPoints/1-5"]
+[editable path="DropPoints/2-5"]
+[editable path="DropPoints/3-3"]
+[editable path="DropPoints/3-4"]
+[editable path="DropPoints/3-5"]
+[editable path="DropPoints/4-5"]
+[editable path="DropPoints/5-3"]
+[editable path="DropPoints/5-4"]
+[editable path="DropPoints/5-5"]
+[editable path="DropPoints/6-5"]
+[editable path="DropPoints/7-3"]
+[editable path="DropPoints/7-4"]
+[editable path="DropPoints/7-5"]
+[editable path="DropPoints/8-3"]
+[editable path="DropPoints/8-4"]
+[editable path="DropPoints/8-5"]
+[editable path="DropPoints/9-5"]
+[editable path="DropPoints/10-3"]
+[editable path="DropPoints/10-4"]
+[editable path="DropPoints/10-5"]
 [editable path="InfoDropPoint/LaneInfo"]
