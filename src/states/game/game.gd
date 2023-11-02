@@ -11,6 +11,7 @@ enum SoundEffect {
 	HEAL,
 	OIL,
 	WIN,
+	CHARGE,
 }
 
 
@@ -171,6 +172,11 @@ func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
 				$Sounds/RightOilSound.play()
 		SoundEffect.WIN:
 			$Sounds/WinSound.play()
+		SoundEffect.CHARGE:
+			if is_left:
+				$Sounds/LeftCharge.play()
+			else:
+				$Sounds/RightCharge.play()
 		_:
 			# $Sounds/ExtremelyLoudIncorrectBuzzer.play()
 			push_error("Invalid sound effect.")
