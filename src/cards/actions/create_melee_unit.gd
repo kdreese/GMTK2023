@@ -12,8 +12,8 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	var unit: MeleeUnit = preload("res://src/units/melee_unit.tscn").instantiate()
 	if is_enemy:
-		game.get_node("Sounds/RightPlaceSound").play()
+		game.play_sound(game.SoundEffect.PLACE, true)
 	else:
-		game.get_node("Sounds/LeftPlaceSound").play()
+		game.play_sound(game.SoundEffect.PLACE, false)
 	melee_units.add_child(unit)
 	unit.init(data, grid_pos, game.grid_to_world_pos)

@@ -1,7 +1,17 @@
+class_name GameScene
 extends Node2D
 
 
 signal turn_finished
+
+
+enum SoundEffect {
+	DRAW,
+	PLACE,
+	HEAL,
+	OIL,
+	WIN
+}
 
 
 const MAX_CARDS_IN_HAND = 7
@@ -37,9 +47,6 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var drop_points: Node2D = %DropPoints
 @onready var blue_castle_door: Vector2 = $DefenseBridgePoint.position
 @onready var red_castle_door: Vector2 = $AttackBridgePoint.position
-
-@onready var win_sound: AudioStreamPlayer = $Sounds/WinSound
-@onready var draw_sound: AudioStreamPlayer = $Sounds/DrawSound
 
 
 var grid_to_world_pos: Dictionary # Dictionary[Vector2i, Vector2]
@@ -141,6 +148,32 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func wait_for_timer(time: float) -> void:
 	await get_tree().create_timer(time, false).timeout
+
+
+func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
+	match sound:
+		SoundEffect.DRAW:
+			$Sounds/DrawSound.play()
+		SoundEffect.PLACE:
+			if is_left:
+				$Sounds/LeftPlaceSound.play()
+			else:
+				$Sounds/RightPlaceSound.play()
+		SoundEffect.HEAL:
+			if is_left:
+				$Sounds/LeftHealSound.play()
+			else:
+				$Sounds/RightHealSound.play()
+		SoundEffect.OIL:
+			if is_left:
+				$Sounds/LeftOilSound.play()
+			else:
+				$Sounds/RightOilSound.play()
+		SoundEffect.WIN:
+			$Sounds/WinSound.play()
+		_:
+			# $Sounds/ExtremelyLoudIncorrectBuzzer.play()
+			push_error("Invalid sound effect.")
 
 
 func is_spot_open(grid_position: Vector2i):
@@ -341,7 +374,7 @@ func draw_card_single() -> void:
 	var dual_card_data = deck.pop_front()
 	hand.add_card(dual_card_data)
 
-	draw_sound.play()
+	play_sound(SoundEffect.DRAW)
 
 	await wait_for_timer(Global.animation_speed)
 
@@ -356,8 +389,7 @@ func load_script(data: CardData, node: Node) -> bool:
 		push_error("CardData %s has invalid script!", data.name)
 		return false
 	node.set_script(card_script)
-	node.data = data
-	node.set_game(self)
+	node.initialize(self, data)
 	return true
 
 
@@ -502,7 +534,7 @@ func ranged_attack_order(a, b) -> bool:
 
 func check_for_end_condition() -> void:
 	if red_castle_health_bar.current_health <= 0:
-		win_sound.play()
+		play_sound(SoundEffect.WIN)
 		if Global.curr_stage >= 5 and not Global.endless_mode:
 			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
 		game_over = true

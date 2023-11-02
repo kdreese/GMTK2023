@@ -20,10 +20,10 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	var health_bar
 	if is_enemy: # The enemy is using this
 		health_bar = game.red_castle_health_bar
-		game.get_node("Sounds/RightHealSound").play()
+		game.play_sound(game.SoundEffect.HEAL, false)
 	else: # We're using this
 		health_bar = game.blue_castle_health_bar
-		game.get_node("Sounds/LeftHealSound").play()
+		game.play_sound(game.SoundEffect.HEAL, true)
 	health_bar.modify_health(health_bonus)
 
 

@@ -3,13 +3,14 @@ class_name CardAction
 extends Node
 
 
-var game: Node
+var game: GameScene
 var data: CardData
 var melee_units: Node
 var ranged_units: Node
 
 
-func set_game(game_scene: Node) -> void:
+func initialize(game_scene: Node, card_data: CardData) -> void:
+	data = card_data
 	game = game_scene
 	melee_units = game.get_node("Units/Melee")
 	ranged_units = game.get_node("Units/Ranged")

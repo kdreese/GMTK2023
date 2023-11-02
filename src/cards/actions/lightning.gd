@@ -43,7 +43,7 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 func negative_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 	return [
-		Vector2i(8, 0), Vector2i(9, 0), Vector2i(10, 0),
-		Vector2i(8, 1), Vector2i(9, 1), Vector2i(10, 1),
-		Vector2i(8, 2), Vector2i(9, 2), Vector2i(10, 2),
+		Vector2i(7, 0), Vector2i(8, 0), Vector2i(9, 0), Vector2i(10, 0),
+		Vector2i(7, 1), Vector2i(8, 1), Vector2i(9, 1), Vector2i(10, 1),
+		Vector2i(7, 2), Vector2i(8, 2), Vector2i(9, 2), Vector2i(10, 2),
 	]
