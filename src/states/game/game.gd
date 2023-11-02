@@ -245,6 +245,8 @@ func _on_end_round_button_pressed() -> void:
 			await wait_for_timer(Global.animation_speed * 2)
 			enemy_card.hide()
 
+	clear_attacking_effects()
+
 	await instant_defensive_damage()
 	await offensive_action_sweep()
 
@@ -253,6 +255,16 @@ func _on_end_round_button_pressed() -> void:
 	if hand.cards.size() < MAX_CARDS_IN_HAND and not game_over:
 		await draw_cards(1)
 	curr_round += 1
+
+	clear_attacking_effects()
+
+	for point in drop_points.get_children():
+		var unit := get_unit(point.grid_position)
+		if unit != null and unit.card_data.name == "Battering Ram":
+			battering_ram_aura(unit.grid_position + Vector2i.UP, unit)
+			battering_ram_aura(unit.grid_position + Vector2i.DOWN, unit)
+
+	clear_speed_effects()
 
 	end_round_button.disabled = false
 	view_deck_button.disabled = false
@@ -265,6 +277,7 @@ func _on_end_round_button_pressed() -> void:
 
 
 func on_card_dragged(card: DualCard) -> void:
+	can_display_tooltip = false
 	load_scripts(card.card_data)
 	for drop_point in drop_points.get_children():
 		var script_node: Node
@@ -281,6 +294,18 @@ func on_card_dragged(card: DualCard) -> void:
 func clear_effects() -> void:
 	for drop_point in drop_points.get_children():
 		drop_point.reset()
+
+
+func clear_attacking_effects() -> void:
+	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() as Array[Unit]:
+		for stat in unit.extra_stats:
+			if stat != "speed":
+				unit.extra_stats.erase(stat)
+
+
+func clear_speed_effects() -> void:
+	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() as Array[Unit]:
+		unit.extra_stats.erase("speed")
 
 
 func on_card_enter(drop_point: Node) -> void:
@@ -309,6 +334,10 @@ func on_card_exit() -> void:
 
 
 func _on_card_dropped(card: Control) -> void:
+	var points := drop_points.get_children()
+	for drop in points:
+		drop.set_enabled(true)
+	can_display_tooltip = true
 	# Help box.
 	if $InfoDropPoint/LaneInfo.is_mouse_inside:
 		var attack_card := card.card_data.attack as CardData
@@ -317,9 +346,7 @@ func _on_card_dropped(card: Control) -> void:
 		card_info_viewer.show()
 		return
 	var grid_pos := Vector2i(-1, -1)
-	var points := drop_points.get_children()
 	for drop in points:
-		drop.set_enabled(true)
 		if drop.is_mouse_inside:
 			grid_pos = drop.grid_position
 	if grid_pos.y < 0 or grid_pos.x < 0 or grid_pos.x > 10 or grid_pos.y > 6:
@@ -346,6 +373,19 @@ func _on_card_dropped(card: Control) -> void:
 			else:
 				modified_grid_pos.y -= 3
 			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
+		var this_unit := get_unit(grid_pos)
+		var upper_neighbor := get_unit(grid_pos + Vector2i.UP)
+		if upper_neighbor:
+			if this_unit.card_data.name == "Battering Ram":
+				battering_ram_aura(grid_pos + Vector2i.UP, this_unit)
+			if upper_neighbor.card_data.name == "Battering Ram":
+				battering_ram_aura(grid_pos, upper_neighbor)
+		var lower_neighbor := get_unit(grid_pos + Vector2i.DOWN)
+		if lower_neighbor:
+			if this_unit.card_data.name == "Battering Ram":
+				battering_ram_aura(grid_pos + Vector2i.DOWN, this_unit)
+			if lower_neighbor.card_data.name == "Battering Ram":
+				battering_ram_aura(grid_pos, lower_neighbor)
 	end_round_button.disabled = false
 
 
@@ -413,8 +453,6 @@ func instant_defensive_damage() -> void:
 	for unit in units:
 		var attack_range := unit.attack_range as int
 		attack_range += unit.extra_stats.get("attack_range", 0)
-		# Clear temporary status effects.
-		unit.extra_stats.erase("attack_range")
 		# Search for the closest non-empty square within the range.
 		var target: Node = null
 		for x_pos in range(7, 7 - attack_range, -1):
@@ -447,6 +485,15 @@ func instant_defensive_damage() -> void:
 		await wait_for_timer(Global.animation_speed)
 
 
+func battering_ram_aura(square: Vector2i, battering_ram: MeleeUnit) -> void:
+	var unit := get_unit(square)
+	if unit is MeleeUnit and unit.attack_power != 0:
+		if "attack_power" in unit.extra_stats:
+			unit.extra_stats["attack_power"] += int(battering_ram.card_data.extra_data[0])
+		else:
+			unit.extra_stats["attack_power"] = int(battering_ram.card_data.extra_data[0])
+
+
 func offensive_action_sweep() -> void:
 	var units := $Units/Melee.get_children()
 	units.sort_custom(melee_attack_order)
@@ -456,8 +503,6 @@ func offensive_action_sweep() -> void:
 		if unit == null or unit.is_queued_for_deletion():
 			continue
 		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
-		# Clear temporary status effects.
-		unit.extra_stats.erase("speed")
 		for _idx in range(steps_left):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
 				unit.play_step_sound()
@@ -470,24 +515,15 @@ func offensive_action_sweep() -> void:
 
 
 func melee_attack(unit: Unit) -> void:
-	var damage = unit.attack_power
-	# Handle battering rams (ugly, but it should work).
-	if unit.grid_position.y in [1, 2]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor != null and neighbor.attack_power == 0:
-			damage += 2
-	if unit.grid_position.y in [0, 1]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor != null and neighbor.attack_power == 0:
-			damage += 2
-	if unit.grid_position.y in [3, 4]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor != null and neighbor.attack_power == 0:
-			damage += 2
-	if unit.grid_position.y in [4, 5]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor != null and neighbor.attack_power == 0:
-			damage += 2
+	# apply battering ram on attack
+	var upper_neighbor := get_unit(unit.grid_position + Vector2i.UP)
+	if upper_neighbor and upper_neighbor.card_data.name == "Battering Ram":
+		battering_ram_aura(unit.grid_position, upper_neighbor)
+	var lower_neighbor := get_unit(unit.grid_position + Vector2i.DOWN)
+	if lower_neighbor and lower_neighbor.card_data.name == "Battering Ram":
+		battering_ram_aura(unit.grid_position, lower_neighbor)
+
+	var damage = unit.attack_power + unit.extra_stats.get("attack_power", 0)
 
 	unit.play_step_sound()
 	if unit.grid_position.y > 2:
