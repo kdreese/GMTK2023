@@ -7,7 +7,7 @@
 script = ExtResource("2_cllte")
 health = 12
 name = "Barricade"
-description = "A wall that must be knocked down to progress past"
+description = "A modest wall that must be knocked down to progress past."
 special_effect = ""
 icon = ExtResource("1_3up0x")
 rank = 2
