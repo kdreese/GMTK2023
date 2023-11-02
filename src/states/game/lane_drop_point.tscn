@@ -14,4 +14,9 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
+[node name="Overlay" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-8, -17, -22, 17, 11, 17, 25, -17)
+
 [connection signal="timeout" from="TooltipDelay" to="." method="_on_tooltip_delay_timeout"]

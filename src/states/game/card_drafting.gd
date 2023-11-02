@@ -62,8 +62,8 @@ func display_cards(cards : Array[DualCardData]) -> void:
 func select_card(selection: DualCardData) -> void:
 	# add the dual card to the player's deck
 	Global.deck.append(selection)
-	var game: Node2D = find_parent("Game")
-	game.get_node("DrawSound").play()
+	var game: GameScene = find_parent("Game")
+	game.play_sound(game.SoundEffect.DRAW)
 	for option in card_choices.get_children():
 		option.queue_free()
 	# display the next set of cards or go to next stage

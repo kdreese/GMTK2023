@@ -1,7 +1,7 @@
 extends CardAction
 
 
-func can_perform(_data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> bool:
+func can_perform(_grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Make sure the side isn't already at max health
 	var health_bar
 	if is_enemy: # The enemy is using this
@@ -12,7 +12,7 @@ func can_perform(_data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> bool:
 	return health_bar.current_health < health_bar.max_health
 
 
-func perform_action(data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> void:
+func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	if data.extra_data.size() != 1:
 		push_error("increase_health expects 1 argument of the health to increase")
 		return
@@ -20,8 +20,16 @@ func perform_action(data: CardData, _grid_pos: Vector2i, is_enemy: bool) -> void
 	var health_bar
 	if is_enemy: # The enemy is using this
 		health_bar = game.red_castle_health_bar
-		game.get_node("RightHealSound").play()
+		game.play_sound(game.SoundEffect.HEAL, false)
 	else: # We're using this
 		health_bar = game.blue_castle_health_bar
-		game.get_node("LeftHealSound").play()
+		game.play_sound(game.SoundEffect.HEAL, true)
 	health_bar.modify_health(health_bonus)
+
+
+func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return [
+		Vector2i(8, 3), Vector2i(9, 3), Vector2i(10, 3),
+		Vector2i(8, 4), Vector2i(9, 4), Vector2i(10, 4),
+		Vector2i(8, 5), Vector2i(9, 5), Vector2i(10, 5),
+	]

@@ -1,17 +1,16 @@
 extends CardAction
 
 
-func can_perform(_data: CardData, grid_pos: Vector2i, _is_enemy: bool) -> bool:
+func can_perform(grid_pos: Vector2i, _is_enemy: bool) -> bool:
 	return grid_pos.x > 6
 
 
-func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
+func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	if data.extra_data.size() != 1:
 		push_error("oil expects 1 argument of the damage to do.")
 		return
 
-	var sound := game.get_node("RightOilSound" if is_enemy else "LeftOilSound")
-	sound.play()
+	game.play_sound(game.SoundEffect.OIL, not is_enemy)
 
 	await game.wait_for_timer(Global.animation_speed)
 
@@ -30,3 +29,7 @@ func perform_action(data: CardData, grid_pos: Vector2i, is_enemy: bool) -> void:
 	for unit in melee_units.get_children():
 		if unit.health <= 0:
 			unit.queue_free()
+
+
+func negative_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return [Vector2i(7, 3), Vector2i(7, 4), Vector2i(7, 5)]
