@@ -45,19 +45,33 @@ func _process(_delta: float) -> void:
 func initialize(data: DualCardData) -> void:
 	card_data = data
 	rank_icon.texture = Util.rank_to_texture(data.rank)
-	attack_label.text = data.attack.name
-	Util.fit_text(attack_label, MAX_FONT_SIZE)
-	attack_icon.texture = data.attack.icon
-	defense_label.text = data.defense.name
-	Util.fit_text(defense_label, MAX_FONT_SIZE)
-	defense_icon.texture = data.defense.icon
-	update_icons(data.attack, $AttackStats)
-	update_icons(data.defense, $DefenseStats)
+	hide_all()
+	if data.attack != null:
+		attack_label.text = data.attack.name
+		Util.fit_text(attack_label, MAX_FONT_SIZE)
+		attack_icon.texture = data.attack.icon
+		attack_icon.show()
+		update_icons(data.attack, $AttackStats)
+	if data.defense != null:
+		defense_label.text = data.defense.name
+		Util.fit_text(defense_label, MAX_FONT_SIZE)
+		defense_icon.texture = data.defense.icon
+		defense_icon.show()
+		update_icons(data.defense, $DefenseStats)
+
+
+func hide_all() -> void:
+	for node in $AttackStats.get_children():
+		node.hide()
+	attack_label.text = ""
+	attack_icon.hide()
+	for node in $DefenseStats.get_children():
+		node.hide()
+	defense_label.text = ""
+	defense_icon.hide()
 
 
 func update_icons(data: CardData, grid: GridContainer) -> void:
-	for node in grid.get_children():
-		node.hide()
 	if data is MeleeUnitData:
 		grid.get_node("HealthLabel").show()
 		grid.get_node("HealthLabel").text = str(data.health)

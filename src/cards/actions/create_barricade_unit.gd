@@ -21,5 +21,3 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	game.play_sound(game.SoundEffect.PLACE, not is_enemy)
 	barricade_units.add_child(new_unit)
 	new_unit.init(data, grid_pos, game.grid_to_world_pos)
-	new_unit.max_health = int(data.extra_data[0])
-	new_unit.health = new_unit.max_health
