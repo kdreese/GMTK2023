@@ -10,7 +10,7 @@ enum SoundEffect {
 	PLACE,
 	HEAL,
 	OIL,
-	WIN
+	WIN,
 }
 
 
