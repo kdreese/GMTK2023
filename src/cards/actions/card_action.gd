@@ -7,6 +7,7 @@ var game: GameScene
 var data: CardData
 var melee_units: Node
 var ranged_units: Node
+var barricade_units: Node
 
 
 func initialize(game_scene: Node, card_data: CardData) -> void:
@@ -14,6 +15,7 @@ func initialize(game_scene: Node, card_data: CardData) -> void:
 	game = game_scene
 	melee_units = game.get_node("Units/Melee")
 	ranged_units = game.get_node("Units/Ranged")
+	barricade_units = game.get_node("Units/Barricade")
 
 
 ## An optional function which can prevent an action from being run (and card consumed).

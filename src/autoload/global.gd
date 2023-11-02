@@ -47,21 +47,13 @@ var attack_cards := {}		# Dictionary[int, Array[CardData]]
 var defense_cards := {}		# Dictionary[int, Array[CardData]]
 var curr_stage: int = 0
 var draft_card_ranks_per_stage := {
-	1 : [1, 2],
-	2 : [2, 2],
-	3 : [2, 3],
-	4 : [3, 3],
-	5 : [3, 3],
+	1 : [1, 2, 2],
+	2 : [2, 2, 2],
+	3 : [2, 2, 3],
+	4 : [2, 3, 3],
+	5 : [3, 3, 3],
 }
-var INITIAL_DECK: Array[DualCardData] = [
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), preload("res://src/cards/defense/defense_cards/walls_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/oil_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), preload("res://src/cards/defense/defense_cards/archer_1.tres")),
-	DualCardData.new(preload("res://src/cards/attack/attack_cards/charge_1.tres"), preload("res://src/cards/defense/defense_cards/mobilize_1.tres")),
-]
+
 var deck: Array[DualCardData]
 # The next two variables are in the format: Dictionary[turn_number: int, moves: Array[Array[data: CardData, lane: int]]]
 var card_replay_moves := FIRST_REPLAY_MOVES # The moves played last round, which will be replayed by the enemy this round
@@ -123,6 +115,7 @@ func _ready() -> void:
 			preload("res://src/cards/defense/defense_cards/oil_1.tres"),
 			preload("res://src/cards/defense/defense_cards/walls_1.tres"),
 			preload("res://src/cards/defense/defense_cards/mobilize_1.tres"),
+			preload("res://src/cards/defense/defense_cards/barricade_1.tres"),
 		],
 		2:
 		[
@@ -131,6 +124,7 @@ func _ready() -> void:
 			preload("res://src/cards/defense/defense_cards/walls_2.tres"),
 			preload("res://src/cards/defense/defense_cards/mobilize_2.tres"),
 			preload("res://src/cards/defense/defense_cards/eagle_eye_2.tres"),
+			preload("res://src/cards/defense/defense_cards/barricade_2.tres"),
 		],
 		3:
 		[
@@ -138,10 +132,12 @@ func _ready() -> void:
 			preload("res://src/cards/defense/defense_cards/oil_3.tres"),
 			preload("res://src/cards/defense/defense_cards/walls_3.tres"),
 			preload("res://src/cards/defense/defense_cards/eagle_eye_3.tres"),
+			preload("res://src/cards/defense/defense_cards/barricade_3.tres"),
 		],
 	}
 
-	deck = INITIAL_DECK.duplicate()
+	populate_deck()
+
 #	for attack_card_path in attack_card_strings:
 #		var attack_card := load("res://src/cards/attack/attack_cards/" + attack_card_path) as CardData
 #		if not attack_cards.has(attack_card.rank):
@@ -153,6 +149,26 @@ func _ready() -> void:
 #		if not defense_cards.has(defense_card.rank):
 #			defense_cards[defense_card.rank] = []
 #		defense_cards[defense_card.rank].append(defense_card)
+
+
+func populate_deck() -> void:
+	deck = []
+	# Allow up to 3 cards of the same type, can't use := due to array typing.
+	var usable_attack_cards = attack_cards[1].duplicate() + attack_cards[1].duplicate() + attack_cards[1].duplicate()
+	var usable_defense_cards = defense_cards[1].duplicate() + defense_cards[1].duplicate() + defense_cards[1].duplicate()
+	if not Global.endless_mode:
+		var single_soldier := DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), null)
+		single_soldier.single_use = true
+		deck.append(single_soldier)
+		var single_archer := DualCardData.new(null, preload("res://src/cards/defense/defense_cards/archer_1.tres"))
+		single_archer.single_use = true
+		deck.append(single_archer)
+	for _idx in range(7):
+		var attack_card = usable_attack_cards.pick_random()
+		usable_attack_cards.erase(attack_card)
+		var defense_card = usable_defense_cards.pick_random()
+		usable_defense_cards.erase(defense_card)
+		deck.append(DualCardData.new(attack_card, defense_card))
 
 
 func save_config() -> void:
