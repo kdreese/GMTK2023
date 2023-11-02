@@ -3,7 +3,7 @@ extends CardAction
 
 
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
-	if grid_pos.x < 1 or grid_pos.x > 7:
+	if grid_pos.x < 2 or grid_pos.x > 7:
 		return false
 	if is_enemy:
 		if grid_pos.y > 2:

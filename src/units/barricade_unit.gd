@@ -19,7 +19,7 @@ func init(data: BarricadeUnitData, grid_pos: Vector2i, world_pos: Dictionary) ->
 	special_effect = data.special_effect
 	health = data.health
 	max_health = health
-	if grid_position.y < 3:
+	if grid_position.y >= 3:
 		health_bar.add_theme_stylebox_override("fill", preload("res://src/ui/health_bar_fill_blue.tres"))
 	else:
 		health_bar.add_theme_stylebox_override("fill", preload("res://src/ui/health_bar_fill_red.tres"))

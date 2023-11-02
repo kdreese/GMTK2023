@@ -18,9 +18,11 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	for unit in melee_units.get_children():
 		if unit.grid_position.x != 7:
 			continue
+		if unit is BarricadeUnit:
+			continue
 
 		if (grid_pos.y < 3 and unit.grid_position.y < 3) or (grid_pos.y >= 3 and unit.grid_position.y >= 3):
-			unit.health -= damage
+			unit.health = maxi(unit.health - damage, 0)
 			unit.play_damage_sound()
 			unit.update_health_bar()
 
@@ -28,6 +30,7 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 	for unit in melee_units.get_children():
 		if unit.health <= 0:
+			melee_units.remove_child(unit)
 			unit.queue_free()
 
 

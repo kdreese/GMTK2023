@@ -427,6 +427,9 @@ func instant_defensive_damage() -> void:
 		if target == null:
 			continue
 
+		if target is BarricadeUnit:
+			continue
+
 		# Move the archer forward, slightly.
 		var position_offset := Vector2(10.0, 0.0)
 		if unit.grid_position.y < 3:
@@ -467,8 +470,9 @@ func offensive_action_sweep() -> void:
 				unit.update_position()
 				steps_left -= 1
 				await wait_for_timer(Global.animation_speed)
-			elif unit.grid_position.x <= 7: # We're not at the end, we got blocked
+			elif unit.grid_position.x < 7: # We're not at the end, we got blocked
 				var blocking_unit := get_unit(unit.grid_position + Vector2i.RIGHT)
+				assert(blocking_unit, "Blocking unit is null?")
 				if $Units/Barricade.is_ancestor_of(blocking_unit):
 					# This is an enemy unit! Attack!!
 					await melee_attack(unit, blocking_unit)
@@ -482,19 +486,19 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 	# Handle battering rams (ugly, but it should work).
 	if unit.grid_position.y in [1, 2]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 	if unit.grid_position.y in [0, 1]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 	if unit.grid_position.y in [3, 4]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 	if unit.grid_position.y in [4, 5]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 
 	unit.play_step_sound()
