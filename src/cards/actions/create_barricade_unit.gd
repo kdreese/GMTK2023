@@ -18,10 +18,6 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 
 func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	var new_unit: BarricadeUnit = preload("res://src/units/barricade_unit.tscn").instantiate()
-	for unit in barricade_units.get_children():
-		if unit.grid_position == grid_pos:
-			barricade_units.remove_child(unit)
-			unit.queue_free()
 	game.play_sound(game.SoundEffect.PLACE, not is_enemy)
 	barricade_units.add_child(new_unit)
 	new_unit.init(data, grid_pos, game.grid_to_world_pos)

@@ -479,7 +479,7 @@ func offensive_action_sweep() -> void:
 			elif unit.grid_position.x < 7: # We're not at the end, we got blocked
 				var blocking_unit := get_unit(unit.grid_position + Vector2i.RIGHT)
 				assert(blocking_unit, "Blocking unit is null?")
-				if $Units/Barricade.is_ancestor_of(blocking_unit):
+				if blocking_unit is BarricadeUnit:
 					# This is an enemy unit! Attack!!
 					await melee_attack(unit, blocking_unit)
 				break

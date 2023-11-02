@@ -13,4 +13,4 @@ icon = ExtResource("1_yy665")
 rank = 1
 card_role = "Defense"
 effect_script = "res://src/cards/actions/create_barricade_unit.gd"
-extra_data = Array[String](["10"])
+extra_data = Array[String]([])

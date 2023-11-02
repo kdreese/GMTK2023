@@ -134,6 +134,7 @@ func _ready() -> void:
 			preload("res://src/cards/defense/defense_cards/walls_2.tres"),
 			preload("res://src/cards/defense/defense_cards/mobilize_2.tres"),
 			preload("res://src/cards/defense/defense_cards/eagle_eye_2.tres"),
+			preload("res://src/cards/defense/defense_cards/barricade_2.tres"),
 		],
 		3:
 		[
@@ -141,6 +142,7 @@ func _ready() -> void:
 			preload("res://src/cards/defense/defense_cards/oil_3.tres"),
 			preload("res://src/cards/defense/defense_cards/walls_3.tres"),
 			preload("res://src/cards/defense/defense_cards/eagle_eye_3.tres"),
+			preload("res://src/cards/defense/defense_cards/barricade_3.tres"),
 		],
 	}
 
