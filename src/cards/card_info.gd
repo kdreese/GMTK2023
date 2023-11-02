@@ -69,6 +69,10 @@ func update_icons(grid: GridContainer) -> void:
 		grid.get_node("RangeLabel").show()
 		grid.get_node("RangeLabel").text = str(data.attack_range)
 		grid.get_node("RangeIcon").show()
+	elif data is BarricadeUnitData:
+		grid.get_node("HealthLabel").show()
+		grid.get_node("HealthLabel").text = str(data.health)
+		grid.get_node("HealthIcon").show()
 	else:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=27 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -23,6 +23,7 @@
 [ext_resource type="AudioStream" uid="uid://b32qtjvgyw23b" path="res://assets/sounds/place.wav" id="18_t7qqf"]
 [ext_resource type="AudioStream" uid="uid://5v0dcrgtdbnj" path="res://assets/sounds/draw.wav" id="19_mbpjm"]
 [ext_resource type="PackedScene" uid="uid://f4lvl0bssylt" path="res://src/ui/hand.tscn" id="19_xix3b"]
+[ext_resource type="AudioStream" uid="uid://dj15areqob2wt" path="res://assets/sounds/charge.wav" id="22_sa0ar"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_biu44"]
 bg_color = Color(0, 0, 0, 0.537255)
@@ -179,6 +180,8 @@ unique_name_in_owner = true
 [node name="Melee" type="Node" parent="Units"]
 
 [node name="Ranged" type="Node" parent="Units"]
+
+[node name="Barricade" type="Node" parent="Units"]
 
 [node name="DropPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -873,6 +876,13 @@ stream = ExtResource("18_t7qqf")
 max_polyphony = 3
 bus = &"Sounds"
 
+[node name="LeftCharge" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(60, 240)
+stream = ExtResource("22_sa0ar")
+volume_db = -4.0
+max_polyphony = 3
+bus = &"Sounds"
+
 [node name="RightOilSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(580, 80)
 stream = ExtResource("16_urxts")
@@ -890,6 +900,13 @@ bus = &"Sounds"
 [node name="RightPlaceSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(580, 80)
 stream = ExtResource("18_t7qqf")
+max_polyphony = 3
+bus = &"Sounds"
+
+[node name="RightCharge" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(580, 80)
+stream = ExtResource("22_sa0ar")
+volume_db = -4.0
 max_polyphony = 3
 bus = &"Sounds"
 

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BarricadeUnitData" load_steps=3 format=3 uid="uid://y5kpu5x4y5xh"]
+
+[ext_resource type="Texture2D" uid="uid://bcmughyc0xshu" path="res://assets/icons/barricade.png" id="1_3up0x"]
+[ext_resource type="Script" path="res://src/cards/defense/barricade_unit_data.gd" id="2_cllte"]
+
+[resource]
+script = ExtResource("2_cllte")
+health = 12
+name = "Barricade"
+description = "A modest wall that must be knocked down to progress past."
+special_effect = ""
+icon = ExtResource("1_3up0x")
+rank = 2
+card_role = "Defense"
+effect_script = "res://src/cards/actions/create_barricade_unit.gd"
+extra_data = Array[String]([])

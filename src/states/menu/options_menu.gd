@@ -43,9 +43,10 @@ func on_music_volume_slider_change(value: float) -> void:
 
 
 func on_anim_speed_slider_change(value: float):
-	Global.config["anim_speed_idx"] = value
-	Global.animation_speed = Global.ANIMATION_SPEEDS[int(value)]
-	anim_speed_value.text = ANIMATION_SPEED_STRINGS[int(value)]
+	var int_value := int(value)
+	Global.config["anim_speed_idx"] = int_value
+	Global.animation_speed = Global.ANIMATION_SPEEDS[int_value]
+	anim_speed_value.text = ANIMATION_SPEED_STRINGS[int_value]
 
 
 func on_fullscreen_button_toggle(pressed: bool) -> void:

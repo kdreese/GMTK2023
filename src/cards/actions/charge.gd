@@ -41,6 +41,8 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 
 	var extra_speed := int(data.extra_data[0])
 
+	game.play_sound(game.SoundEffect.CHARGE, not is_enemy)
+
 	var units = melee_units.get_children().filter(filter_func)
 	for unit in units as Array[MeleeUnit]:
 		unit.extra_stats["speed"] = extra_speed

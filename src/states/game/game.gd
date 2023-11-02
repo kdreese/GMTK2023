@@ -11,6 +11,7 @@ enum SoundEffect {
 	HEAL,
 	OIL,
 	WIN,
+	CHARGE,
 }
 
 
@@ -171,6 +172,11 @@ func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
 				$Sounds/RightOilSound.play()
 		SoundEffect.WIN:
 			$Sounds/WinSound.play()
+		SoundEffect.CHARGE:
+			if is_left:
+				$Sounds/LeftCharge.play()
+			else:
+				$Sounds/RightCharge.play()
 		_:
 			# $Sounds/ExtremelyLoudIncorrectBuzzer.play()
 			push_error("Invalid sound effect.")
@@ -179,14 +185,14 @@ func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
 func is_spot_open(grid_position: Vector2i):
 	if grid_position.x > 7:
 		return false
-	for unit in $Units/Melee.get_children():
+	for unit in $Units/Melee.get_children() + $Units/Barricade.get_children():
 		if unit.grid_position == grid_position:
 			return false
 	return true
 
 
 func get_unit(grid_position: Vector2i) -> Unit:
-	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children():
+	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() + $Units/Barricade.get_children():
 		if not unit.is_queued_for_deletion() and unit.grid_position == grid_position:
 			return unit
 	return null
@@ -382,11 +388,11 @@ func draw_card_single() -> void:
 ## Load a script from a CardData and set it to be the script for the given node.
 func load_script(data: CardData, node: Node) -> bool:
 	if data.effect_script == null:
-		push_error("CardData %s has no script!", data.name)
+		assert(false, "CardData %s has no script!" % data.name)
 		return false
 	var card_script := load(data.effect_script)
 	if card_script == null or not (card_script is Script):
-		push_error("CardData %s has invalid script!", data.name)
+		assert(false, "CardData %s has invalid script!" % data.name)
 		return false
 	node.set_script(card_script)
 	node.initialize(self, data)
@@ -411,6 +417,8 @@ func instant_defensive_damage() -> void:
 	var units := $Units/Ranged.get_children()
 	units.sort_custom(ranged_attack_order)
 	for unit in units:
+		if unit.attack_range == 0 or unit.attack_damage == 0:
+			continue
 		var attack_range := unit.attack_range as int
 		attack_range += unit.extra_stats.get("attack_range", 0)
 		# Clear temporary status effects.
@@ -423,6 +431,9 @@ func instant_defensive_damage() -> void:
 				break
 
 		if target == null:
+			continue
+
+		if target is BarricadeUnit:
 			continue
 
 		# Move the archer forward, slightly.
@@ -465,51 +476,73 @@ func offensive_action_sweep() -> void:
 				unit.update_position()
 				steps_left -= 1
 				await wait_for_timer(Global.animation_speed)
+			elif unit.grid_position.x < 7: # We're not at the end, we got blocked
+				var blocking_unit := get_unit(unit.grid_position + Vector2i.RIGHT)
+				assert(blocking_unit, "Blocking unit is null?")
+				if blocking_unit is BarricadeUnit:
+					# This is an enemy unit! Attack!!
+					await melee_attack(unit, blocking_unit)
+				break
 		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 
 
-func melee_attack(unit: Unit) -> void:
+func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 	var damage = unit.attack_power
 	# Handle battering rams (ugly, but it should work).
 	if unit.grid_position.y in [1, 2]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 	if unit.grid_position.y in [0, 1]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 	if unit.grid_position.y in [3, 4]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 	if unit.grid_position.y in [4, 5]:
 		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor != null and neighbor.attack_power == 0:
+		if neighbor is MeleeUnit and neighbor.attack_power == 0:
 			damage += 2
 
 	unit.play_step_sound()
-	if unit.grid_position.y > 2:
-		unit.position = blue_castle_door
-		await wait_for_timer(Global.animation_speed)
-		blue_castle_health_bar.modify_health(-damage)
+	if attack_target == null:
+		# We're attacking the castle
+		unit.play_damage_sound()
+		if unit.grid_position.y > 2:
+			unit.position = blue_castle_door
+			await wait_for_timer(Global.animation_speed)
+			blue_castle_health_bar.modify_health(-damage)
+		else:
+			unit.position = red_castle_door
+			await wait_for_timer(Global.animation_speed)
+			red_castle_health_bar.modify_health(-damage)
+		check_for_end_condition()
+		if game_over:
+			return
+		unit.health -= unit.recoil
+		unit.update_health_bar()
 	else:
-		unit.position = red_castle_door
+		attack_target.play_hit_barricade_sound()
+		if unit.grid_position.y > 2:
+			unit.position += Vector2.LEFT * 10
+		else:
+			unit.position += Vector2.RIGHT * 10
 		await wait_for_timer(Global.animation_speed)
-		red_castle_health_bar.modify_health(-damage)
-	check_for_end_condition()
-	if game_over:
-		return
-	unit.health -= unit.recoil
-	unit.update_health_bar()
-	unit.play_damage_sound()
+		attack_target.health -= damage
+		attack_target.update_health_bar()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
 		$Units/Melee.remove_child(unit)
 		unit.queue_free()
 	else:
 		unit.update_position()
+	if attack_target:
+		if attack_target.health <= 0:
+			$Units/Barricade.remove_child(attack_target)
+			attack_target.queue_free()
 	await wait_for_timer(Global.animation_speed)
 
 
