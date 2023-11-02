@@ -266,7 +266,7 @@ func _on_end_round_button_pressed() -> void:
 
 	for point in drop_points.get_children():
 		var unit := get_unit(point.grid_position)
-		if unit != null and unit.card_data.name == "Battering Ram":
+		if unit and unit.card_data.name == "Battering Ram":
 			battering_ram_aura(unit.grid_position + Vector2i.UP, unit)
 			battering_ram_aura(unit.grid_position + Vector2i.DOWN, unit)
 
