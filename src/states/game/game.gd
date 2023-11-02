@@ -314,7 +314,7 @@ func on_card_exit() -> void:
 		clear_effects()
 
 
-func _on_card_dropped(card: Control) -> void:
+func _on_card_dropped(card: DualCard) -> void:
 	# Help box.
 	if $InfoDropPoint/LaneInfo.is_mouse_inside:
 		var attack_card := card.card_data.attack as CardData
@@ -338,7 +338,8 @@ func _on_card_dropped(card: Control) -> void:
 	else:
 		script_node = defense_script_node
 	if script_node.can_perform(grid_pos, false):
-		discard.append(card.card_data)
+		if not card.card_data.single_use:
+			discard.append(card.card_data)
 		hand.remove_card(card)
 		end_round_button.disabled = true
 		@warning_ignore("redundant_await") # Not all need the await call
@@ -387,10 +388,14 @@ func draw_card_single() -> void:
 
 ## Load a script from a CardData and set it to be the script for the given node.
 func load_script(data: CardData, node: Node) -> bool:
-	if data.effect_script == null:
-		assert(false, "CardData %s has no script!" % data.name)
-		return false
-	var card_script := load(data.effect_script)
+	var card_script: Script
+	if data == null:
+		card_script = load("res://src/cards/actions/blank.gd")
+	else:
+		if data.effect_script == null:
+			assert(false, "CardData %s has no script!" % data.name)
+			return false
+		card_script = load(data.effect_script)
 	if card_script == null or not (card_script is Script):
 		assert(false, "CardData %s has invalid script!" % data.name)
 		return false
@@ -578,8 +583,8 @@ func check_for_end_condition() -> void:
 			text_box.play(preload("res://assets/dialog/dialog_6.tres"))
 			await text_box.text_finished
 		var card_draft_ranks_idx := mini(Global.curr_stage, Global.draft_card_ranks_per_stage.size() - 1)
-		card_drafting.select_card_set(Global.draft_card_ranks_per_stage[card_draft_ranks_idx][0],
-				Global.draft_card_ranks_per_stage[card_draft_ranks_idx][1])
+		card_drafting.set_ranks(Global.draft_card_ranks_per_stage[card_draft_ranks_idx])
+		card_drafting.select_card_set()
 		card_drafting.show()
 	elif blue_castle_health_bar.current_health <= 0:
 		game_over = true

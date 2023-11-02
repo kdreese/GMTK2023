@@ -4,12 +4,8 @@ extends ColorRect
 @onready var card_choices: HBoxContainer = %CardChoices
 
 
-var first_attack_set: Array[CardData]
-var first_ranged_set: Array[CardData]
-var first_set: Array[DualCardData]
-var second_attack_set: Array[CardData]
-var second_ranged_set: Array[CardData]
-var second_set: Array[DualCardData]
+var cards: Array[DualCardData]
+var ranks: Array
 
 var num_cards_offered := 3
 var draft_round := 1
@@ -19,22 +15,27 @@ func _ready() -> void:
 	hide()
 
 
-func select_card_set(first_rank: int, second_rank: int) -> void:
-	# Select three random attack/defense card pairs with the same rank as first_rank
-	# Select three random attack/defense card pairs with the same rank as second_rank
+func set_ranks(new_ranks: Array) -> void:
+	ranks = new_ranks.duplicate()
+
+
+func select_card_set() -> void:
+	cards.clear()
+	var rank = ranks.pop_front()
+	var attack_cards = Global.attack_cards[rank].duplicate() + Global.attack_cards[rank].duplicate()
+	var defense_cards = Global.defense_cards[rank].duplicate() + Global.defense_cards[rank].duplicate()
 	for i in range(num_cards_offered):
-		first_attack_set.append(Global.attack_cards[first_rank].pick_random())
-		first_ranged_set.append(Global.defense_cards[first_rank].pick_random())
-		first_set.append(DualCardData.new(first_attack_set[i], first_ranged_set[i]))
-		second_attack_set.append(Global.attack_cards[second_rank].pick_random())
-		second_ranged_set.append(Global.defense_cards[second_rank].pick_random())
-		second_set.append(DualCardData.new(second_attack_set[i], second_ranged_set[i]))
+		var attack_card = attack_cards.pick_random()
+		attack_cards.erase(attack_card)
+		var defense_card = defense_cards.pick_random()
+		defense_cards.erase(defense_card)
+		cards.append(DualCardData.new(attack_card, defense_card))
 
 	# Display first_set cards
-	display_cards(first_set)
+	display_cards()
 
 
-func display_cards(cards : Array[DualCardData]) -> void:
+func display_cards() -> void:
 	for card in cards:
 		var option := VBoxContainer.new()
 		var dual_card := card
@@ -67,11 +68,9 @@ func select_card(selection: DualCardData) -> void:
 	for option in card_choices.get_children():
 		option.queue_free()
 	# display the next set of cards or go to next stage
-	if draft_round == 1:
-		display_cards(second_set)
-		draft_round += 1
-	elif draft_round == 2:
-		draft_round = 1
+	if ranks:
+		select_card_set()
+	else:
 		Global.card_replay_moves = Global.card_current_moves
 		Global.card_current_moves = {}
 		$CenterContainer.hide()
