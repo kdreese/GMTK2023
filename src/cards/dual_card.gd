@@ -5,7 +5,6 @@ extends Control
 signal started_drag(DualCard)
 signal dropped_card(DualCard)
 
-const DRAGGING_OFFSET := Vector2(-32, -18)
 const MOUSEOVER_OFFSET := Vector2(0, -50)
 const MAX_FONT_SIZE = 11
 
@@ -39,7 +38,7 @@ func _process(_delta: float) -> void:
 			rotation = 0.0
 			scale = Vector2.ONE
 		else:
-			position = get_viewport().get_mouse_position() + DRAGGING_OFFSET
+			position = get_viewport().get_mouse_position()
 
 
 func initialize(data: DualCardData) -> void:

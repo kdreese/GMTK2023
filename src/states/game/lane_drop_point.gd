@@ -1,3 +1,4 @@
+class_name LaneDropPointScene
 extends Area2D
 
 
@@ -14,14 +15,26 @@ var enabled := true ## False if the selected card cannot be placed here.
 var is_mouse_inside := false # Is there a native variable for this?
 var open_tooltip: Control = null
 
+# "Left" and "Right" will be flipped in the player field/castle
+var ho_left: Line2D
+var ho_right: Line2D
+@onready var ho_bottom: Line2D = $HoverOutline/Bottom
+@onready var ho_top: Line2D = $HoverOutline/Top
+
 @onready var tooltip_delay: Timer = %TooltipDelay
-@onready var game: Node2D = find_parent("Game")
+@onready var game: GameScene = find_parent("Game")
 @onready var overlay: Polygon2D = %Overlay
 
 
 func _ready() -> void:
 	# Set the overlay equal to the hitbox.
 	overlay.set_polygon($CollisionPolygon2D.get_polygon())
+	if grid_position.y >= 3:
+		ho_left = $HoverOutline/Right
+		ho_right = $HoverOutline/Left
+	else:
+		ho_left = $HoverOutline/Left
+		ho_right = $HoverOutline/Right
 
 
 func _mouse_enter() -> void:
@@ -49,7 +62,20 @@ func set_negative() -> void:
 	overlay.color = NEGATIVE_COLOR
 
 
+func set_hovering(other_tiles: Array[Vector2i]) -> void:
+	if grid_position.x in [0, 1, 8] or (grid_position + Vector2i.LEFT) not in other_tiles:
+		ho_left.show()
+	if grid_position.x in [0, 7, 10] or (grid_position + Vector2i.RIGHT) not in other_tiles:
+		ho_right.show()
+	if grid_position.y in [0, 3] or (grid_position + Vector2i.UP) not in other_tiles:
+		ho_top.show()
+	if grid_position.y in [2, 5] or (grid_position + Vector2i.DOWN) not in other_tiles:
+		ho_bottom.show()
+
+
 func reset() -> void:
+	for ho_line in $HoverOutline.get_children():
+		ho_line.hide()
 	if enabled:
 		overlay.color = ENABLE_COLOR
 	else:

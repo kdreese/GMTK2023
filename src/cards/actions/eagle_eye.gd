@@ -52,3 +52,11 @@ func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 	for unit in units:
 		positions.append(unit.grid_position)
 	return positions
+
+
+func hovering_tiles(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return [
+		Vector2i(8, 3), Vector2i(9, 3), Vector2i(10, 3),
+		Vector2i(8, 4), Vector2i(9, 4), Vector2i(10, 4),
+		Vector2i(8, 5), Vector2i(9, 5), Vector2i(10, 5),
+	]

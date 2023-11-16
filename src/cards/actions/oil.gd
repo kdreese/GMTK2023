@@ -2,7 +2,7 @@ extends CardAction
 
 
 func can_perform(grid_pos: Vector2i, _is_enemy: bool) -> bool:
-	return grid_pos.x > 6
+	return grid_pos.x == 7
 
 
 func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
@@ -36,3 +36,7 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 func negative_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 	return [Vector2i(7, 3), Vector2i(7, 4), Vector2i(7, 5)]
+
+
+func hovering_tiles(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return negative_effects(_grid_pos)

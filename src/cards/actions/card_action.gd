@@ -36,3 +36,8 @@ func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 ## A list of squares negatively affected if the card were to be placed here.
 func negative_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 	return []
+
+
+## A list of squares which show up as "hovering" if a card were to be placed here.
+func hovering_tiles(grid_pos: Vector2i) -> Array[Vector2i]:
+	return [grid_pos]
