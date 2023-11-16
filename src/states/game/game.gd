@@ -304,7 +304,7 @@ func clear_effects() -> void:
 func on_card_enter(drop_point: Node) -> void:
 	if not drop_point.enabled or drop_point.grid_position.y == 6:
 		return
-	if not hand.cards.any(func dragging(x): return x.dragging):
+	if not hand.cards.any(func(x): return x.dragging):
 		return
 	clear_effects()
 	var script_node: Node
@@ -325,7 +325,7 @@ func on_card_enter(drop_point: Node) -> void:
 
 
 func on_card_exit() -> void:
-	if not drop_points.get_children().any(func is_inside_and_enabled(x): return x.is_mouse_inside and x.enabled):
+	if not drop_points.get_children().any(func(x): return x.is_mouse_inside and x.enabled):
 		clear_effects()
 
 
