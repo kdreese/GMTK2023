@@ -18,6 +18,7 @@ var speed: int
 
 
 func init(data: MeleeUnitData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
+	card_data = data
 	grid_position = grid_pos
 	grid_to_world_position = world_pos
 	special_effect = data.special_effect

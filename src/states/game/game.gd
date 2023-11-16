@@ -272,6 +272,8 @@ func _on_end_round_button_pressed() -> void:
 		await draw_cards(1)
 	curr_round += 1
 
+	clear_unit_effects()
+
 	end_round_button.disabled = false
 	view_deck_button.disabled = false
 	view_discard_button.disabled = false
@@ -283,6 +285,7 @@ func _on_end_round_button_pressed() -> void:
 
 
 func on_card_dragged(card: DualCard) -> void:
+	can_display_tooltip = false
 	load_scripts(card.card_data)
 	for drop_point in drop_points.get_children():
 		var script_node: Node
@@ -299,6 +302,11 @@ func on_card_dragged(card: DualCard) -> void:
 func clear_effects() -> void:
 	for drop_point in drop_points.get_children():
 		drop_point.reset()
+
+
+func clear_unit_effects() -> void:
+	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() as Array[Unit]:
+		unit.extra_stats = {}
 
 
 func on_card_enter(drop_point: Node) -> void:
@@ -330,6 +338,10 @@ func on_card_exit() -> void:
 
 
 func _on_card_dropped(card: DualCard) -> void:
+	var points := drop_points.get_children()
+	for drop in points:
+		drop.set_enabled(true)
+	can_display_tooltip = true
 	# Help box.
 	if $InfoDropPoint/LaneInfo.is_mouse_inside:
 		var attack_card := card.card_data.attack as CardData
@@ -338,9 +350,7 @@ func _on_card_dropped(card: DualCard) -> void:
 		card_info_viewer.show()
 		return
 	var grid_pos := Vector2i(-1, -1)
-	var points := drop_points.get_children()
 	for drop in points:
-		drop.set_enabled(true)
 		if drop.is_mouse_inside:
 			grid_pos = drop.grid_position
 	if grid_pos.y < 0 or grid_pos.x < 0 or grid_pos.x > 10 or grid_pos.y > 6:
@@ -369,8 +379,27 @@ func _on_card_dropped(card: DualCard) -> void:
 			else:
 				modified_grid_pos.y -= 3
 			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
+		var this_unit := get_unit(grid_pos)
+		if this_unit != null and this_unit.card_data.name == "Battering Ram":
+			apply_battering_ram_buff(this_unit)
 		hand.set_all_draggable(true)
 	end_round_button.disabled = false
+
+
+func apply_battering_ram_buff(unit: Unit) -> void:
+	for drop_point in drop_points.get_children():
+		if drop_point.grid_position == unit.grid_position + Vector2i.UP or drop_point.grid_position == unit.grid_position + Vector2i.DOWN:
+			if drop_point.extra_stats.has("attack_power"):
+				drop_point.extra_stats["attack_power"] += int(unit.card_data.extra_data[0])
+			else:
+				drop_point.extra_stats["attack_power"] = int(unit.card_data.extra_data[0])
+
+
+func remove_battering_ram_buff(unit: Unit) -> void:
+	for drop_point in drop_points.get_children():
+		if drop_point.grid_position == unit.grid_position + Vector2i.UP or drop_point.grid_position == unit.grid_position + Vector2i.DOWN:
+			if drop_point.extra_stats.has("attack_power"):
+				drop_point.extra_stats["attack_power"] -= int(unit.card_data.extra_data[0])
 
 
 func remove_info(card_container: Node) -> void:
@@ -443,8 +472,6 @@ func instant_defensive_damage() -> void:
 			continue
 		var attack_range := unit.attack_range as int
 		attack_range += unit.extra_stats.get("attack_range", 0)
-		# Clear temporary status effects.
-		unit.extra_stats.erase("attack_range")
 		# Search for the closest non-empty square within the range.
 		var target: Node = null
 		for x_pos in range(7, 7 - attack_range, -1):
@@ -472,8 +499,7 @@ func instant_defensive_damage() -> void:
 		await wait_for_timer(Global.animation_speed)
 		# Kill the target, if necessary.
 		if target.health <= 0:
-			target.queue_free()
-			$Units/Melee.remove_child(target)
+			target.commit_die()
 			await wait_for_timer(Global.animation_speed)
 		# Move the archer back.
 		unit.update_position()
@@ -489,8 +515,8 @@ func offensive_action_sweep() -> void:
 		if unit == null or unit.is_queued_for_deletion():
 			continue
 		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
-		# Clear temporary status effects.
-		unit.extra_stats.erase("speed")
+		if steps_left != 0 and unit.card_data.name == "Battering Ram":
+			remove_battering_ram_buff(unit)
 		for _idx in range(steps_left):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
 				unit.play_step_sound()
@@ -505,29 +531,19 @@ func offensive_action_sweep() -> void:
 					# This is an enemy unit! Attack!!
 					await melee_attack(unit, blocking_unit)
 				break
+		if unit.card_data.name == "Battering Ram":
+			apply_battering_ram_buff(unit)
 		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 
 
 func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
-	var damage = unit.attack_power
-	# Handle battering rams (ugly, but it should work).
-	if unit.grid_position.y in [1, 2]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor is MeleeUnit and neighbor.attack_power == 0:
-			damage += 2
-	if unit.grid_position.y in [0, 1]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor is MeleeUnit and neighbor.attack_power == 0:
-			damage += 2
-	if unit.grid_position.y in [3, 4]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.DOWN)
-		if neighbor is MeleeUnit and neighbor.attack_power == 0:
-			damage += 2
-	if unit.grid_position.y in [4, 5]:
-		var neighbor = get_unit(unit.grid_position + Vector2i.UP)
-		if neighbor is MeleeUnit and neighbor.attack_power == 0:
-			damage += 2
+	var damage = unit.attack_power + unit.extra_stats.get("attack_power", 0)
+
+	# Apply battering ram on attack
+	for drop_point in drop_points.get_children():
+		if unit.grid_position == drop_point.grid_position and drop_point.extra_stats.has("attack_power"):
+			damage += drop_point.extra_stats.get("attack_power", 0)
 
 	unit.play_step_sound()
 	if attack_target == null:
@@ -557,14 +573,12 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 		attack_target.update_health_bar()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
-		$Units/Melee.remove_child(unit)
-		unit.queue_free()
+		unit.commit_die()
 	else:
 		unit.update_position()
 	if attack_target:
 		if attack_target.health <= 0:
-			$Units/Barricade.remove_child(attack_target)
-			attack_target.queue_free()
+			attack_target.commit_die()
 	await wait_for_timer(Global.animation_speed)
 
 
