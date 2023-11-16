@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=33 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -24,6 +24,8 @@
 [ext_resource type="AudioStream" uid="uid://5v0dcrgtdbnj" path="res://assets/sounds/draw.wav" id="19_mbpjm"]
 [ext_resource type="PackedScene" uid="uid://f4lvl0bssylt" path="res://src/ui/hand.tscn" id="19_xix3b"]
 [ext_resource type="AudioStream" uid="uid://dj15areqob2wt" path="res://assets/sounds/charge.wav" id="22_sa0ar"]
+[ext_resource type="AudioStream" uid="uid://cndqxbq0nxo0h" path="res://assets/sounds/trebuchet.wav" id="25_nnpk7"]
+[ext_resource type="AudioStream" uid="uid://b2gb56mryjc84" path="res://assets/sounds/lightning.wav" id="26_f8oyd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_biu44"]
 bg_color = Color(0, 0, 0, 0.537255)
@@ -36,6 +38,88 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+
+[sub_resource type="Animation" id="Animation_e5qg2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Trebuchet/AudioStreamPlayer2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(91, 228)]
+}
+
+[sub_resource type="Animation" id="Animation_quwxf"]
+resource_name = "play_left"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Trebuchet/AudioStreamPlayer2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(91, 228), Vector2(449, 256)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Trebuchet/AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_xirnk"]
+resource_name = "play_right"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Trebuchet/AudioStreamPlayer2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(551, 88), Vector2(185, 66)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Trebuchet/AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qqpw2"]
+_data = {
+"RESET": SubResource("Animation_e5qg2"),
+"play_left": SubResource("Animation_quwxf"),
+"play_right": SubResource("Animation_xirnk")
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_xpc6h")
@@ -923,6 +1007,23 @@ bus = &"Sounds"
 stream = ExtResource("19_mbpjm")
 volume_db = -3.0
 bus = &"Sounds"
+
+[node name="Trebuchet" type="AnimationPlayer" parent="Sounds"]
+libraries = {
+"": SubResource("AnimationLibrary_qqpw2")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Sounds/Trebuchet"]
+position = Vector2(91, 228)
+stream = ExtResource("25_nnpk7")
+
+[node name="RightLightningSound" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(580, 80)
+stream = ExtResource("26_f8oyd")
+
+[node name="LeftLightningSound" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(60, 240)
+stream = ExtResource("26_f8oyd")
 
 [connection signal="dragged" from="CardCanvasLayer/Hand" to="." method="on_card_dragged"]
 [connection signal="dropped" from="CardCanvasLayer/Hand" to="." method="_on_card_dropped"]

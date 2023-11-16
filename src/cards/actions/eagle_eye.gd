@@ -13,17 +13,17 @@ extends CardAction
 
 # Other Functions
 func enemy_filter_func(unit: Unit) -> bool:
-	return unit.grid_position.y <= 2 and unit.grid_position.x >= 8
+	return in_own_castle(unit.grid_position, true)
 
 
 func ally_filter_func(unit: Unit) -> bool:
-	return unit.grid_position.y > 2 and unit.grid_position.x >= 8
+	return in_own_castle(unit.grid_position)
 
 
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Only allow placing on the archer unit field.
-	if not (grid_pos.x >= 8 and (grid_pos.y <= 2 if is_enemy else grid_pos.y > 2)):
+	if not in_own_castle(grid_pos, is_enemy):
 		return false
 
 	# Don't let them use this unless they have at least one ranged unit.

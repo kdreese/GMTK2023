@@ -3,14 +3,8 @@ extends CardAction
 
 
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
-	if grid_pos.x < 2 or grid_pos.x > 7:
+	if not in_defending_area(grid_pos, is_enemy) or grid_pos.x == 1:
 		return false
-	if is_enemy:
-		if grid_pos.y > 2:
-			return false
-	else:
-		if grid_pos.y < 3:
-			return false
 	if game.get_unit(grid_pos) != null:
 		return false
 	return true

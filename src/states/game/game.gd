@@ -12,6 +12,8 @@ enum SoundEffect {
 	OIL,
 	WIN,
 	CHARGE,
+	TREBUCHET,
+	LIGHTNING,
 }
 
 
@@ -177,6 +179,16 @@ func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
 				$Sounds/LeftCharge.play()
 			else:
 				$Sounds/RightCharge.play()
+		SoundEffect.TREBUCHET:
+			if is_left:
+				$Sounds/Trebuchet.play("play_left")
+			else:
+				$Sounds/Trebuchet.play("play_right")
+		SoundEffect.LIGHTNING:
+			if is_left:
+				$Sounds/LeftLightningSound.play()
+			else:
+				$Sounds/RightLightningSound.play()
 		_:
 			# $Sounds/ExtremelyLoudIncorrectBuzzer.play()
 			push_error("Invalid sound effect.")
@@ -346,6 +358,7 @@ func _on_card_dropped(card: DualCard) -> void:
 		hand.remove_card(card)
 		end_round_button.disabled = true
 		@warning_ignore("redundant_await") # Not all need the await call
+		hand.set_all_draggable(false)
 		await script_node.perform_action(grid_pos, false)
 		if not Global.card_current_moves.has(curr_round):
 			Global.card_current_moves[curr_round] = []
@@ -356,6 +369,7 @@ func _on_card_dropped(card: DualCard) -> void:
 			else:
 				modified_grid_pos.y -= 3
 			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
+		hand.set_all_draggable(true)
 	end_round_button.disabled = false
 
 

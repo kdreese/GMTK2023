@@ -30,7 +30,7 @@ extends CardAction
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Check to make sure this is the archer grid.
-	if not (grid_pos.x > 7 and (grid_pos.y < 3 if is_enemy else grid_pos.y > 2)):
+	if not in_own_castle(grid_pos, is_enemy):
 		return false
 
 	# Get the archer unit.
