@@ -251,8 +251,6 @@ func _on_end_round_button_pressed() -> void:
 			await wait_for_timer(Global.animation_speed * 2)
 			enemy_card.hide()
 
-	clear_attacking_effects()
-
 	await instant_defensive_damage()
 	await offensive_action_sweep()
 
@@ -262,15 +260,7 @@ func _on_end_round_button_pressed() -> void:
 		await draw_cards(1)
 	curr_round += 1
 
-	clear_attacking_effects()
-
-	for point in drop_points.get_children():
-		var unit := get_unit(point.grid_position)
-		if unit and unit.card_data.name == "Battering Ram":
-			battering_ram_aura(unit.grid_position + Vector2i.UP, unit)
-			battering_ram_aura(unit.grid_position + Vector2i.DOWN, unit)
-
-	clear_speed_effects()
+	clear_unit_effects()
 
 	end_round_button.disabled = false
 	view_deck_button.disabled = false
@@ -302,16 +292,10 @@ func clear_effects() -> void:
 		drop_point.reset()
 
 
-func clear_attacking_effects() -> void:
+func clear_unit_effects() -> void:
 	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() as Array[Unit]:
 		for stat in unit.extra_stats:
-			if stat != "speed":
-				unit.extra_stats.erase(stat)
-
-
-func clear_speed_effects() -> void:
-	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() as Array[Unit]:
-		unit.extra_stats.erase("speed")
+			unit.extra_stats.erase(stat)
 
 
 func on_card_enter(drop_point: Node) -> void:
@@ -381,19 +365,28 @@ func _on_card_dropped(card: DualCard) -> void:
 				modified_grid_pos.y -= 3
 			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
 		var this_unit := get_unit(grid_pos)
-		var upper_neighbor := get_unit(grid_pos + Vector2i.UP)
-		if upper_neighbor:
-			if this_unit.card_data.name == "Battering Ram":
-				battering_ram_aura(grid_pos + Vector2i.UP, this_unit)
-			if upper_neighbor.card_data.name == "Battering Ram":
-				battering_ram_aura(grid_pos, upper_neighbor)
-		var lower_neighbor := get_unit(grid_pos + Vector2i.DOWN)
-		if lower_neighbor:
-			if this_unit.card_data.name == "Battering Ram":
-				battering_ram_aura(grid_pos + Vector2i.DOWN, this_unit)
-			if lower_neighbor.card_data.name == "Battering Ram":
-				battering_ram_aura(grid_pos, lower_neighbor)
+		if this_unit != null and this_unit.card_data.name == "Battering Ram":
+			apply_battering_ram_buff(this_unit)
 	end_round_button.disabled = false
+
+
+func apply_battering_ram_buff(unit: Unit) -> void:
+	for drop_point in drop_points.get_children():
+		if drop_point.grid_position == unit.grid_position + Vector2i.UP or drop_point.grid_position == unit.grid_position + Vector2i.DOWN:
+			if drop_point.extra_stats.has("attack_power"):
+				drop_point.extra_stats["attack_power"] += int(unit.card_data.extra_data[0])
+			else:
+				drop_point.extra_stats["attack_power"] = int(unit.card_data.extra_data[0])
+		pass
+
+
+func remove_battering_ram_buff(unit: Unit) -> void:
+	for drop_point in drop_points.get_children():
+		if drop_point.grid_position == unit.grid_position + Vector2i.UP or drop_point.grid_position == unit.grid_position + Vector2i.DOWN:
+			if drop_point.extra_stats.has("attack_power"):
+				drop_point.extra_stats["attack_power"] -= int(unit.card_data.extra_data[0])
+			else:
+				drop_point.extra_stats["attack_power"] = 0
 
 
 func remove_info(card_container: Node) -> void:
@@ -493,21 +486,11 @@ func instant_defensive_damage() -> void:
 		await wait_for_timer(Global.animation_speed)
 		# Kill the target, if necessary.
 		if target.health <= 0:
-			target.queue_free()
-			$Units/Melee.remove_child(target)
+			target.commit_die()
 			await wait_for_timer(Global.animation_speed)
 		# Move the archer back.
 		unit.update_position()
 		await wait_for_timer(Global.animation_speed)
-
-
-func battering_ram_aura(square: Vector2i, battering_ram: MeleeUnit) -> void:
-	var unit := get_unit(square)
-	if unit is MeleeUnit and unit.attack_power != 0:
-		if "attack_power" in unit.extra_stats:
-			unit.extra_stats["attack_power"] += int(battering_ram.card_data.extra_data[0])
-		else:
-			unit.extra_stats["attack_power"] = int(battering_ram.card_data.extra_data[0])
 
 
 func offensive_action_sweep() -> void:
@@ -519,6 +502,8 @@ func offensive_action_sweep() -> void:
 		if unit == null or unit.is_queued_for_deletion():
 			continue
 		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
+		if steps_left != 0 and unit.card_data.name == "Battering Ram":
+			remove_battering_ram_buff(unit)
 		for _idx in range(steps_left):
 			if is_spot_open(unit.grid_position + Vector2i.RIGHT):
 				unit.play_step_sound()
@@ -533,20 +518,19 @@ func offensive_action_sweep() -> void:
 					# This is an enemy unit! Attack!!
 					await melee_attack(unit, blocking_unit)
 				break
+		if unit.card_data.name == "Battering Ram":
+			apply_battering_ram_buff(unit)
 		if unit.attack_power > 0 and unit.grid_position.x == 7 and steps_left:
 			await melee_attack(unit)
 
 
 func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
-	# apply battering ram on attack
-	var upper_neighbor := get_unit(unit.grid_position + Vector2i.UP)
-	if upper_neighbor and upper_neighbor.card_data.name == "Battering Ram":
-		battering_ram_aura(unit.grid_position, upper_neighbor)
-	var lower_neighbor := get_unit(unit.grid_position + Vector2i.DOWN)
-	if lower_neighbor and lower_neighbor.card_data.name == "Battering Ram":
-		battering_ram_aura(unit.grid_position, lower_neighbor)
-
 	var damage = unit.attack_power + unit.extra_stats.get("attack_power", 0)
+
+	# apply battering ram on attack
+	for drop_point in drop_points.get_children():
+		if unit.grid_position == drop_point.grid_position and drop_point.extra_stats.has("attack_power"):
+			damage += drop_point.extra_stats.get("attack_power", 0)
 
 	unit.play_step_sound()
 	if attack_target == null:
@@ -576,14 +560,12 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 		attack_target.update_health_bar()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
-		$Units/Melee.remove_child(unit)
-		unit.queue_free()
+		unit.commit_die()
 	else:
 		unit.update_position()
 	if attack_target:
 		if attack_target.health <= 0:
-			$Units/Barricade.remove_child(attack_target)
-			attack_target.queue_free()
+			attack_target.commit_die()
 	await wait_for_timer(Global.animation_speed)
 
 

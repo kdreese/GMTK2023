@@ -13,6 +13,7 @@ const NEGATIVE_COLOR = Color(1.0, 0.0, 0.0, 0.5)
 var enabled := true ## False if the selected card cannot be placed here.
 var is_mouse_inside := false # Is there a native variable for this?
 var open_tooltip: Control = null
+var extra_stats: Dictionary = {} # Extra stats to be added to base.
 
 @onready var tooltip_delay: Timer = %TooltipDelay
 @onready var game: Node2D = find_parent("Game")
