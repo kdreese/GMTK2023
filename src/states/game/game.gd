@@ -305,7 +305,7 @@ func on_card_enter(drop_point: Node) -> void:
 	var hovering_tiles := script_node.hovering_tiles(drop_point.grid_position) as Array[Vector2i]
 	for other_drop_point in drop_points.get_children() as Array[LaneDropPointScene]:
 		if other_drop_point.grid_position in hovering_tiles:
-			other_drop_point.set_hovering()
+			other_drop_point.set_hovering(hovering_tiles)
 		if other_drop_point.grid_position in negative_tiles:
 			other_drop_point.set_negative()
 		elif other_drop_point.grid_position in positive_tiles:
