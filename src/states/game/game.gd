@@ -294,8 +294,7 @@ func clear_effects() -> void:
 
 func clear_unit_effects() -> void:
 	for unit in $Units/Melee.get_children() + $Units/Ranged.get_children() as Array[Unit]:
-		for stat in unit.extra_stats:
-			unit.extra_stats.erase(stat)
+		unit.extra_stats = {}
 
 
 func on_card_enter(drop_point: Node) -> void:
@@ -377,7 +376,6 @@ func apply_battering_ram_buff(unit: Unit) -> void:
 				drop_point.extra_stats["attack_power"] += int(unit.card_data.extra_data[0])
 			else:
 				drop_point.extra_stats["attack_power"] = int(unit.card_data.extra_data[0])
-		pass
 
 
 func remove_battering_ram_buff(unit: Unit) -> void:
