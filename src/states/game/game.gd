@@ -400,8 +400,6 @@ func remove_battering_ram_buff(unit: Unit) -> void:
 		if drop_point.grid_position == unit.grid_position + Vector2i.UP or drop_point.grid_position == unit.grid_position + Vector2i.DOWN:
 			if drop_point.extra_stats.has("attack_power"):
 				drop_point.extra_stats["attack_power"] -= int(unit.card_data.extra_data[0])
-			else:
-				drop_point.extra_stats["attack_power"] = 0
 
 
 func remove_info(card_container: Node) -> void:
@@ -542,7 +540,7 @@ func offensive_action_sweep() -> void:
 func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 	var damage = unit.attack_power + unit.extra_stats.get("attack_power", 0)
 
-	# apply battering ram on attack
+	# Apply battering ram on attack
 	for drop_point in drop_points.get_children():
 		if unit.grid_position == drop_point.grid_position and drop_point.extra_stats.has("attack_power"):
 			damage += drop_point.extra_stats.get("attack_power", 0)

@@ -33,7 +33,7 @@ func initialize(unit: Unit) -> void:
 
 
 func add_extra_stats_text(unit: Unit, stat_name: String) -> String:
-	if(unit.extra_stats.get(stat_name, 0)):
+	if unit.extra_stats.get(stat_name, 0):
 		return "(%+d)" % int(unit.extra_stats.get(stat_name))
 	return ""
 
