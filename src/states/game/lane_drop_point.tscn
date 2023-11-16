@@ -19,4 +19,16 @@ unique_name_in_owner = true
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-8, -17, -22, 17, 11, 17, 25, -17)
 
+[node name="HoverOutline" type="Line2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1
+points = PackedVector2Array(-8, -17, -22, 17, 11, 17, 25, -17, -8, -17)
+width = 6.0
+default_color = Color(1, 1, 0, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
 [connection signal="timeout" from="TooltipDelay" to="." method="_on_tooltip_delay_timeout"]

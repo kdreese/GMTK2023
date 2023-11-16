@@ -1,3 +1,4 @@
+class_name LaneDropPointScene
 extends Area2D
 
 
@@ -15,8 +16,9 @@ var is_mouse_inside := false # Is there a native variable for this?
 var open_tooltip: Control = null
 
 @onready var tooltip_delay: Timer = %TooltipDelay
-@onready var game: Node2D = find_parent("Game")
+@onready var game: GameScene = find_parent("Game")
 @onready var overlay: Polygon2D = %Overlay
+@onready var hover_outline: Line2D = %HoverOutline
 
 
 func _ready() -> void:
@@ -49,7 +51,12 @@ func set_negative() -> void:
 	overlay.color = NEGATIVE_COLOR
 
 
+func set_hovering() -> void:
+	hover_outline.show()
+
+
 func reset() -> void:
+	hover_outline.hide()
 	if enabled:
 		overlay.color = ENABLE_COLOR
 	else:
