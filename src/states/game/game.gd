@@ -325,7 +325,7 @@ func on_card_enter(drop_point: Node) -> void:
 
 
 func on_card_exit() -> void:
-	if not drop_points.get_children().any(func is_inside(x): return x.is_mouse_inside):
+	if not drop_points.get_children().any(func is_inside_and_enabled(x): return x.is_mouse_inside and x.enabled):
 		clear_effects()
 
 
