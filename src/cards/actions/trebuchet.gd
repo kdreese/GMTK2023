@@ -40,3 +40,14 @@ func perform_action(grid_pos: Vector2i, _is_enemy: bool) -> void:
 ## A list of squares negatively affected if the card were to be placed here.
 func negative_effects(grid_pos: Vector2i) -> Array[Vector2i]:
 	return get_squares(grid_pos)
+
+
+## A list of squares which show up as "hovering" if a card were to be placed here.
+func hovering_tiles(grid_pos: Vector2i) -> Array[Vector2i]:
+	if grid_pos.y == 3:
+		return [grid_pos]
+	elif grid_pos.y == 4:
+		return [grid_pos, grid_pos + Vector2i(0, 1)]
+	elif grid_pos.y == 5:
+		return [grid_pos, grid_pos + Vector2i(0, -1)]
+	return []

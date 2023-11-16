@@ -18,11 +18,6 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 
 ## A list of squares positively affected if the card were to be placed here.
-func positive_effects(grid_pos: Vector2i) -> Array[Vector2i]:
-	return [grid_pos]
-
-
-## A list of squares positively affected if the card were to be placed here.
 func negative_effects(grid_pos: Vector2i) -> Array[Vector2i]:
 	var out : Array[Vector2i] = []
 	for x in range(1, grid_pos.x):
