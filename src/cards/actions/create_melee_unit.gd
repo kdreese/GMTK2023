@@ -6,7 +6,7 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Don't allow placing units on top of other units.
 	if game.get_unit(grid_pos):
 		return false
-	return grid_pos.x == 0 and (grid_pos.y > 2 if is_enemy else grid_pos.y < 3)
+	return in_staging_area(grid_pos, is_enemy)
 
 
 func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:

@@ -17,7 +17,7 @@ texture = ExtResource("1_ego00")
 [node name="RankIcon" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(2.38419e-07, 16)
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_1g8he")
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="."]

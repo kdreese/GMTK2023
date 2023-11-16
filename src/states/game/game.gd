@@ -12,6 +12,8 @@ enum SoundEffect {
 	OIL,
 	WIN,
 	CHARGE,
+	TREBUCHET,
+	LIGHTNING,
 }
 
 
@@ -177,6 +179,16 @@ func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
 				$Sounds/LeftCharge.play()
 			else:
 				$Sounds/RightCharge.play()
+		SoundEffect.TREBUCHET:
+			if is_left:
+				$Sounds/Trebuchet.play("play_left")
+			else:
+				$Sounds/Trebuchet.play("play_right")
+		SoundEffect.LIGHTNING:
+			if is_left:
+				$Sounds/LeftLightningSound.play()
+			else:
+				$Sounds/RightLightningSound.play()
 		_:
 			# $Sounds/ExtremelyLoudIncorrectBuzzer.play()
 			push_error("Invalid sound effect.")
@@ -310,7 +322,10 @@ func on_card_enter(drop_point: Node) -> void:
 		script_node = defense_script_node
 	var negative_tiles := script_node.negative_effects(drop_point.grid_position) as Array[Vector2i]
 	var positive_tiles := script_node.positive_effects(drop_point.grid_position) as Array[Vector2i]
-	for other_drop_point in drop_points.get_children():
+	var hovering_tiles := script_node.hovering_tiles(drop_point.grid_position) as Array[Vector2i]
+	for other_drop_point in drop_points.get_children() as Array[LaneDropPointScene]:
+		if other_drop_point.grid_position in hovering_tiles:
+			other_drop_point.set_hovering(hovering_tiles)
 		if other_drop_point.grid_position in negative_tiles:
 			other_drop_point.set_negative()
 		elif other_drop_point.grid_position in positive_tiles:
@@ -353,6 +368,7 @@ func _on_card_dropped(card: DualCard) -> void:
 		hand.remove_card(card)
 		end_round_button.disabled = true
 		@warning_ignore("redundant_await") # Not all need the await call
+		hand.set_all_draggable(false)
 		await script_node.perform_action(grid_pos, false)
 		if not Global.card_current_moves.has(curr_round):
 			Global.card_current_moves[curr_round] = []
@@ -366,6 +382,7 @@ func _on_card_dropped(card: DualCard) -> void:
 		var this_unit := get_unit(grid_pos)
 		if this_unit != null and this_unit.card_data.name == "Battering Ram":
 			apply_battering_ram_buff(this_unit)
+		hand.set_all_draggable(true)
 	end_round_button.disabled = false
 
 

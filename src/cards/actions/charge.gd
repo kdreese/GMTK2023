@@ -22,6 +22,9 @@ func ally_filter_func(unit: Unit) -> bool:
 
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
+	# Don't allow placing inside the castle
+	if grid_pos.x > 7:
+		return false
 	# Only allow placing on the attacking unit field.
 	if not (grid_pos.y > 2 if is_enemy else grid_pos.y < 3):
 		return false
@@ -54,3 +57,11 @@ func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 	for unit in units:
 		positions.append(unit.grid_position)
 	return positions
+
+
+func hovering_tiles(_grid_pos: Vector2i) -> Array[Vector2i]:
+	var tiles: Array[Vector2i] = []
+	for y in range(3):
+		for x in range(8):
+			tiles.append(Vector2i(x, y))
+	return tiles

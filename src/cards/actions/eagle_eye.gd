@@ -13,17 +13,17 @@ extends CardAction
 
 # Other Functions
 func enemy_filter_func(unit: Unit) -> bool:
-	return unit.grid_position.y <= 2 and unit.grid_position.x >= 8
+	return in_own_castle(unit.grid_position, true)
 
 
 func ally_filter_func(unit: Unit) -> bool:
-	return unit.grid_position.y > 2 and unit.grid_position.x >= 8
+	return in_own_castle(unit.grid_position)
 
 
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	# Only allow placing on the archer unit field.
-	if not (grid_pos.x >= 8 and (grid_pos.y <= 2 if is_enemy else grid_pos.y > 2)):
+	if not in_own_castle(grid_pos, is_enemy):
 		return false
 
 	# Don't let them use this unless they have at least one ranged unit.
@@ -52,3 +52,11 @@ func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
 	for unit in units:
 		positions.append(unit.grid_position)
 	return positions
+
+
+func hovering_tiles(_grid_pos: Vector2i) -> Array[Vector2i]:
+	return [
+		Vector2i(8, 3), Vector2i(9, 3), Vector2i(10, 3),
+		Vector2i(8, 4), Vector2i(9, 4), Vector2i(10, 4),
+		Vector2i(8, 5), Vector2i(9, 5), Vector2i(10, 5),
+	]

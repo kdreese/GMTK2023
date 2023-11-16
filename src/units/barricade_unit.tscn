@@ -24,7 +24,7 @@ texture = ExtResource("2_eeknv")
 [node name="RankIcon" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(10, 15)
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_k8dfv")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
