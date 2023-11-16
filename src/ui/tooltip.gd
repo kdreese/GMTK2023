@@ -46,4 +46,3 @@ func set_pos(unit: Unit) -> void:
 		position_offset.y -= vert_offset - 5
 	position = unit.position + position_offset
 	position.x = clampf(position.x, -100 + size.x / 2, 740 - size.x / 2)
-	#position.x = clampf(position.x, -30, 670)
