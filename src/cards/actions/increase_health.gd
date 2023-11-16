@@ -1,7 +1,9 @@
 extends CardAction
 
 
-func can_perform(_grid_pos: Vector2i, is_enemy: bool) -> bool:
+func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
+	if not in_own_castle(grid_pos, is_enemy):
+		return false
 	# Make sure the side isn't already at max health
 	var health_bar
 	if is_enemy: # The enemy is using this

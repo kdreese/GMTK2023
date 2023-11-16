@@ -4,7 +4,7 @@ extends CardAction
 
 # Other Functions
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
-	return grid_pos.x > 7 and (grid_pos.y > 2 if is_enemy else grid_pos.y < 3)
+	return in_other_castle(grid_pos, is_enemy)
 
 
 func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
@@ -16,6 +16,9 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 	var castle_damage := int(data.extra_data[0])
 	var unit_damage := int(data.extra_data[1])
+
+	game.play_sound(game.SoundEffect.LIGHTNING, not is_enemy)
+	await get_tree().create_timer(0.75).timeout
 
 	if is_enemy:
 		game.blue_castle_health_bar.modify_health(-castle_damage)
