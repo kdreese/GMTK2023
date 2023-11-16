@@ -38,6 +38,7 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 	for unit in melee_units.get_children():
 		if unit.health <= 0:
+			melee_units.remove_child(unit)
 			unit.queue_free()
 
 
