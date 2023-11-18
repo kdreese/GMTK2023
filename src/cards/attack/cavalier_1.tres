@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://g3bpa81boxdw"]
+
+[ext_resource type="Texture2D" uid="uid://cxb7tipkeyik5" path="res://assets/icons/horse.png" id="1_rh160"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_xexdv"]
+
+[resource]
+script = ExtResource("2_xexdv")
+name = "Cavalier"
+description = "A novice mounted unit."
+special_effect = ""
+icon = ExtResource("1_rh160")
+rank = 1
+card_role = "Attack"
+health = 3
+movement = 3
+damage = 2
+range = 0
+special = false
+info_show_flags = 7
+stat_string_overrides = {
+"damage": "",
+"health": "",
+"movement": "",
+"range": ""
+}
+effect_script = "res://src/cards/actions/create_melee_unit.gd"
+extra_data = Array[String]([])

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://dn8ng7laqd7mk"]
+
+[ext_resource type="Texture2D" uid="uid://b1v1l3sgmb7bd" path="res://assets/icons/bow.png" id="1_67qeh"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_pylgh"]
+
+[resource]
+script = ExtResource("2_pylgh")
+attack_range = 1
+attack_damage = 0
+name = "Archer"
+description = "A skilled archer."
+special_effect = ""
+icon = ExtResource("1_67qeh")
+rank = 3
+card_role = "Defense"
+health = 0
+movement = 0
+damage = 2
+range = 2
+special = false
+info_show_flags = 12
+stat_string_overrides = {
+"damage": "",
+"health": "",
+"movement": "",
+"range": ""
+}
+effect_script = "res://src/cards/actions/create_ranged_unit.gd"
+extra_data = Array[String]([])

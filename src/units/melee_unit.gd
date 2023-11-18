@@ -17,16 +17,16 @@ var max_health: int
 var speed: int
 
 
-func init(data: MeleeUnitData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
+func init(data: CardData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
 	card_data = data
 	grid_position = grid_pos
 	grid_to_world_position = world_pos
 	special_effect = data.special_effect
-	attack_power = data.attack_power
-	recoil = data.attack_recoil
+	attack_power = data.damage
+	recoil = 1 # All units take 1 damage for now.
 	health = data.health
 	max_health = health
-	speed = data.speed
+	speed = data.movement
 	if grid_position.y < 3:
 		health_bar.add_theme_stylebox_override("fill", preload("res://src/ui/health_bar_fill_blue.tres"))
 	else:

@@ -52,28 +52,47 @@ func initialize(_data: CardData) -> void:
 func update_icons(grid: GridContainer) -> void:
 	for node in grid.get_children():
 		node.hide()
-	if data is MeleeUnitData:
-		grid.get_node("HealthLabel").show()
-		grid.get_node("HealthLabel").text = str(data.health)
+	if data.info_show_flags & CardData.SHOW_HEALTH_FLAG:
 		grid.get_node("HealthIcon").show()
-		grid.get_node("AttLabel").show()
-		grid.get_node("AttLabel").text = str(data.attack_power)
-		grid.get_node("AttIcon").show()
-		grid.get_node("MvmtLabel").show()
-		grid.get_node("MvmtLabel").text = str(data.speed)
+		var label = grid.get_node("HealthLabel") as Label
+		label.show()
+		var text := data.stat_string_overrides["health"] as String
+		if text == "":
+			text = str(data.health)
+		else:
+			label.add_theme_font_size_override("font_size", 6)
+		grid.get_node("HealthLabel").text = text
+	if data.info_show_flags & CardData.SHOW_MOVEMENT_FLAG:
 		grid.get_node("MvmtIcon").show()
-	elif data is RangedUnitData:
-		grid.get_node("AttLabel").show()
-		grid.get_node("AttLabel").text = str(data.attack_damage)
+		var label := grid.get_node("MvmtLabel") as Label
+		label.show()
+		var text := data.stat_string_overrides["movement"] as String
+		if text == "":
+			text = str(data.movement)
+		else:
+			label.add_theme_font_size_override("font_size", 6)
+		grid.get_node("MvmtLabel").text = text
+	if data.info_show_flags & CardData.SHOW_DAMAGE_FLAG:
 		grid.get_node("AttIcon").show()
-		grid.get_node("RangeLabel").show()
-		grid.get_node("RangeLabel").text = str(data.attack_range)
+		var label := grid.get_node("AttLabel") as Label
+		label.show()
+		var text := data.stat_string_overrides["damage"] as String
+		if text == "":
+			text = str(data.damage)
+		else:
+			label.add_theme_font_size_override("font_size", 6)
+		grid.get_node("AttLabel").text = text
+	if data.info_show_flags & CardData.SHOW_RANGE_FLAG:
 		grid.get_node("RangeIcon").show()
-	elif data is BarricadeUnitData:
-		grid.get_node("HealthLabel").show()
-		grid.get_node("HealthLabel").text = str(data.health)
-		grid.get_node("HealthIcon").show()
-	else:
+		var label := grid.get_node("RangeLabel") as Label
+		label.show()
+		var text := data.stat_string_overrides["range"] as String
+		if text == "":
+			text = str(data.range)
+		else:
+			label.add_theme_font_size_override("font_size", 6)
+		grid.get_node("RangeLabel").text = text
+	if data.special:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()
 
