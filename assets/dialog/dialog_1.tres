@@ -16,7 +16,7 @@ text = "Bickering neighbors, they were constantly at war with one another, in a 
 [sub_resource type="Resource" id="Resource_3hyld"]
 script = ExtResource("1_howxo")
 speaker = "Military Advisor"
-text = "Your Highness, our troops are prepared, and it seems like so are our enemies in blue."
+text = "Your Highness, our troops are prepared, and it seems like so are our enemies in red."
 
 [sub_resource type="Resource" id="Resource_wy5pd"]
 script = ExtResource("1_howxo")
@@ -26,7 +26,7 @@ text = "Let us pray this battle will be quick and painless."
 [sub_resource type="Resource" id="Resource_whkr5"]
 script = ExtResource("1_howxo")
 speaker = "Soldier"
-text = "Yeah! Let's whoop some blue butts!"
+text = "Yeah! Let's whoop some red butts!"
 
 [sub_resource type="Resource" id="Resource_rss6l"]
 script = ExtResource("1_howxo")
