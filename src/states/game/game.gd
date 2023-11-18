@@ -256,12 +256,13 @@ func _on_end_round_button_pressed() -> void:
 	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
 	if Global.card_replay_moves.has(looping_index):
 		for move in Global.card_replay_moves[looping_index]:
-			enemy_card.initialize(move[0])
-			enemy_card.show()
 			load_enemy_script(move[0])
-			await enemy_script_node.perform_action(move[1], true)
-			await wait_for_timer(Global.animation_speed * 2)
-			enemy_card.hide()
+			if enemy_script_node.can_perform(move[1], true):
+				enemy_card.initialize(move[0])
+				enemy_card.show()
+				await enemy_script_node.perform_action(move[1], true)
+				await wait_for_timer(Global.animation_speed * 2)
+				enemy_card.hide()
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
@@ -569,7 +570,11 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 		else:
 			unit.position += Vector2.RIGHT * 10
 		await wait_for_timer(Global.animation_speed)
-		attack_target.health -= damage
+		if unit.card_data.name == "Battering Ram":
+			# Battering rams destroy barricades immediately.
+			attack_target.health = 0
+		else:
+			attack_target.health -= damage
 		attack_target.update_health_bar()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
@@ -579,6 +584,8 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 	if attack_target:
 		if attack_target.health <= 0:
 			attack_target.commit_die()
+			unit.grid_position += Vector2i.RIGHT
+			unit.update_position()
 	await wait_for_timer(Global.animation_speed)
 
 
