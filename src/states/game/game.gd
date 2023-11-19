@@ -373,13 +373,13 @@ func _on_card_dropped(card: DualCard) -> void:
 		await script_node.perform_action(grid_pos, false)
 		if not Global.card_current_moves.has(curr_round):
 			Global.card_current_moves[curr_round] = []
-			# Flip the lanes around here so that enemy cards get put in the right spot.
-			var modified_grid_pos: = grid_pos
-			if modified_grid_pos.y < 3:
-				modified_grid_pos.y += 3
-			else:
-				modified_grid_pos.y -= 3
-			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
+		# Flip the lanes around here so that enemy cards get put in the right spot.
+		var modified_grid_pos: = grid_pos
+		if modified_grid_pos.y < 3:
+			modified_grid_pos.y += 3
+		else:
+			modified_grid_pos.y -= 3
+		Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
 		var this_unit := get_unit(grid_pos)
 		if this_unit != null and this_unit.card_data.name == "Battering Ram":
 			apply_battering_ram_buff(this_unit)

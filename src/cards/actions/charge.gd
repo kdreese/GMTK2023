@@ -22,11 +22,8 @@ func ally_filter_func(unit: Unit) -> bool:
 
 ## An optional function which can prevent an action from being run (and card consumed).
 func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
-	# Don't allow placing inside the castle
-	if grid_pos.x > 7:
-		return false
 	# Only allow placing on the attacking unit field.
-	if not (grid_pos.y > 2 if is_enemy else grid_pos.y < 3):
+	if not (in_attacking_area(grid_pos, is_enemy) or in_staging_area(grid_pos, is_enemy)):
 		return false
 
 	# Don't let them use this unless they have at least one unit on the field that can move.
