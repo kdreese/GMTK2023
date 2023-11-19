@@ -531,6 +531,8 @@ func offensive_action_sweep() -> void:
 				if blocking_unit is BarricadeUnit:
 					# This is an enemy unit! Attack!!
 					await melee_attack(unit, blocking_unit)
+					# Do not continue moving forward after attacking a barricade.
+					steps_left = 0
 				break
 		if unit.card_data.name == "Battering Ram":
 			apply_battering_ram_buff(unit)
