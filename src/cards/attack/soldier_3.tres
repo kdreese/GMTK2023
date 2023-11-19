@@ -18,14 +18,14 @@ card_role = "Attack"
 health = 10
 movement = 2
 damage = 8
-range = 0
+att_range = 0
 special = false
 info_show_flags = 7
 stat_string_overrides = {
 "damage": "",
 "health": "",
 "movement": "",
-"range": ""
+"att_range": ""
 }
 effect_script = "res://src/cards/actions/create_melee_unit.gd"
 extra_data = Array[String]([])

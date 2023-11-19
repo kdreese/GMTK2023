@@ -97,9 +97,9 @@ func update_icons(data: CardData, grid: GridContainer) -> void:
 	if data.info_show_flags & CardData.SHOW_RANGE_FLAG:
 		grid.get_node("RangeIcon").show()
 		grid.get_node("RangeLabel").show()
-		var text := data.stat_string_overrides["range"] as String
+		var text := data.stat_string_overrides["att_range"] as String
 		if text == "":
-			text = str(data.range)
+			text = str(data.att_range)
 		grid.get_node("RangeLabel").text = text
 	if data.special:
 		grid.get_node("SpecialLabel").show()

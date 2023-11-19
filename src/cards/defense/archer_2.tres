@@ -16,14 +16,14 @@ card_role = "Defense"
 health = 0
 movement = 0
 damage = 2
-range = 1
+att_range = 1
 special = false
 info_show_flags = 12
 stat_string_overrides = {
 "damage": "",
 "health": "",
 "movement": "",
-"range": ""
+"att_range": ""
 }
 effect_script = "res://src/cards/actions/create_ranged_unit.gd"
 extra_data = Array[String]([])

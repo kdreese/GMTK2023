@@ -14,14 +14,14 @@ card_role = "Defense"
 health = 0
 movement = 0
 damage = 3
-range = 0
+att_range = 0
 special = true
 info_show_flags = 4
 stat_string_overrides = {
 "damage": "",
 "health": "",
 "movement": "",
-"range": ""
+"att_range": ""
 }
 effect_script = "res://src/cards/actions/oil.gd"
 extra_data = Array[String](["3"])

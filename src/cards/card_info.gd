@@ -86,9 +86,9 @@ func update_icons(grid: GridContainer) -> void:
 		grid.get_node("RangeIcon").show()
 		var label := grid.get_node("RangeLabel") as Label
 		label.show()
-		var text := data.stat_string_overrides["range"] as String
+		var text := data.stat_string_overrides["att_range"] as String
 		if text == "":
-			text = str(data.range)
+			text = str(data.att_range)
 		else:
 			label.add_theme_font_size_override("font_size", 6)
 		grid.get_node("RangeLabel").text = text
@@ -98,4 +98,3 @@ func update_icons(grid: GridContainer) -> void:
 
 
 # Subclass Definitions
-

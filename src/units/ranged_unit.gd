@@ -14,7 +14,7 @@ var rank: int = 1
 
 func init(data: CardData, starting_position: Vector2i, world_pos: Dictionary) -> void:
 	card_data = data
-	attack_range = data.range
+	attack_range = data.att_range
 	attack_damage = data.damage
 	grid_position = starting_position
 	grid_to_world_position = world_pos

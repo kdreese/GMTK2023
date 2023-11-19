@@ -20,7 +20,7 @@ const SHOW_RANGE_FLAG = 8
 @export var health: int
 @export var movement: int
 @export var damage: int
-@export var range: int
+@export var att_range: int
 @export var special: bool
 ## Flags to indicate whether various stats should be shown.
 @export_flags("Health", "Movement", "Damage", "Range", "Special") var info_show_flags: int = 0
@@ -28,7 +28,7 @@ const SHOW_RANGE_FLAG = 8
 	"health": "",
 	"movement": "",
 	"damage": "",
-	"range": "",
+	"att_range": "",
 }
 @export_group("Script Data")
 @export_file() var effect_script ## A path to the script run by this card.

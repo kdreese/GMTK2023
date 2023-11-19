@@ -28,6 +28,6 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 
 func negative_effects(grid_pos: Vector2i) -> Array[Vector2i]:
 	var output : Array[Vector2i] = []
-	for x in range(8 - data.attack_range, 8):
+	for x in range(8 - data.att_range, 8):
 		output.append(Vector2i(x, grid_pos.y))
 	return output
