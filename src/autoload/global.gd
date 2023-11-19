@@ -84,61 +84,15 @@ func _ready() -> void:
 	update_music_volume()
 
 	attack_cards = {
-		1:
-		[
-			preload("res://src/cards/attack/cavalier_1.tres"),
-			preload("res://src/cards/attack/soldier_1.tres"),
-			preload("res://src/cards/attack/lightning_1.tres"),
-			preload("res://src/cards/attack/charge_1.tres"),
-		],
-		2:
-		[
-			preload("res://src/cards/attack/cavalier_2.tres"),
-			preload("res://src/cards/attack/soldier_2.tres"),
-			preload("res://src/cards/attack/battering_ram.tres"),
-			preload("res://src/cards/attack/lightning_2.tres"),
-			preload("res://src/cards/attack/charge_2.tres"),
-		],
-		3:
-		[
-			preload("res://src/cards/attack/cavalier_3.tres"),
-			preload("res://src/cards/attack/soldier_3.tres"),
-			preload("res://src/cards/attack/lightning_3.tres"),
-			preload("res://src/cards/attack/charge_3.tres"),
-		]
+		1: preload("res://src/cards/attack/attack_1_pool.tres"),
+		2: preload("res://src/cards/attack/attack_2_pool.tres"),
+		3: preload("res://src/cards/attack/attack_3_pool.tres"),
 	}
 
 	defense_cards = {
-		1:
-		[
-			preload("res://src/cards/defense/archer_1.tres"),
-			preload("res://src/cards/defense/archer_1.tres"),
-			preload("res://src/cards/defense/archer_1.tres"),
-			preload("res://src/cards/defense/oil_1.tres"),
-			preload("res://src/cards/defense/walls_1.tres"),
-			preload("res://src/cards/defense/mobilize_1.tres"),
-			preload("res://src/cards/defense/barricade_1.tres"),
-			preload("res://src/cards/defense/trebuchet_1.tres"),
-		],
-		2:
-		[
-			preload("res://src/cards/defense/archer_2.tres"),
-			preload("res://src/cards/defense/oil_2.tres"),
-			preload("res://src/cards/defense/walls_2.tres"),
-			preload("res://src/cards/defense/mobilize_2.tres"),
-			preload("res://src/cards/defense/eagle_eye_2.tres"),
-			preload("res://src/cards/defense/barricade_2.tres"),
-			preload("res://src/cards/defense/trebuchet_2.tres"),
-		],
-		3:
-		[
-			preload("res://src/cards/defense/archer_3.tres"),
-			preload("res://src/cards/defense/oil_3.tres"),
-			preload("res://src/cards/defense/walls_3.tres"),
-			preload("res://src/cards/defense/eagle_eye_3.tres"),
-			preload("res://src/cards/defense/barricade_3.tres"),
-			preload("res://src/cards/defense/trebuchet_3.tres"),
-		],
+		1: preload("res://src/cards/defense/defense_1_pool.tres"),
+		2: preload("res://src/cards/defense/defense_2_pool.tres"),
+		3: preload("res://src/cards/defense/defense_3_pool.tres"),
 	}
 
 	populate_deck()
@@ -158,9 +112,10 @@ func _ready() -> void:
 
 func populate_deck() -> void:
 	deck = []
-	# Allow up to 3 cards of the same type, can't use := due to array typing.
-	var usable_attack_cards = attack_cards[1].duplicate() + attack_cards[1].duplicate() + attack_cards[1].duplicate()
-	var usable_defense_cards = defense_cards[1].duplicate() + defense_cards[1].duplicate() + defense_cards[1].duplicate()
+	var attack_card_pool := attack_cards[1] as CardPool
+	var defense_card_pool := defense_cards[1] as CardPool
+	attack_card_pool.reset()
+	defense_card_pool.reset()
 	if not Global.endless_mode:
 		var single_soldier := DualCardData.new(preload("res://src/cards/attack/soldier_1.tres"), null)
 		single_soldier.single_use = true
@@ -169,10 +124,8 @@ func populate_deck() -> void:
 		single_archer.single_use = true
 		deck.append(single_archer)
 	for _idx in range(7):
-		var attack_card = usable_attack_cards.pick_random()
-		usable_attack_cards.erase(attack_card)
-		var defense_card = usable_defense_cards.pick_random()
-		usable_defense_cards.erase(defense_card)
+		var attack_card = attack_card_pool.draw_card()
+		var defense_card = defense_card_pool.draw_card()
 		deck.append(DualCardData.new(attack_card, defense_card))
 
 

@@ -90,6 +90,8 @@ func _ready() -> void:
 		grid_to_world_pos[point.grid_position] = point.global_position
 
 	deck = Global.deck.duplicate()
+	if Global.curr_stage != 0:
+		deck = deck.filter(func(x: DualCardData): return not x.single_use)
 
 	if Global.curr_stage == 0:
 		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES

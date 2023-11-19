@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardPool" load_steps=13 format=3 uid="uid://8ykx5wctk8s6"]
+
+[ext_resource type="Script" path="res://src/cards/card_pool.gd" id="1_2j8o6"]
+[ext_resource type="Resource" uid="uid://3ttl5cnu7mi2" path="res://src/cards/attack/soldier_2.tres" id="1_70klp"]
+[ext_resource type="Script" path="res://src/cards/card_pool_entry.gd" id="2_omj2c"]
+[ext_resource type="Resource" uid="uid://knut416ykslc" path="res://src/cards/attack/cavalier_2.tres" id="3_le5qu"]
+[ext_resource type="Resource" uid="uid://c8oyioj1dw63m" path="res://src/cards/attack/battering_ram.tres" id="4_uvn4l"]
+[ext_resource type="Resource" uid="uid://c56cimwew1306" path="res://src/cards/attack/lightning_2.tres" id="5_w16js"]
+[ext_resource type="Resource" uid="uid://cfus1pj2wt6c2" path="res://src/cards/attack/charge_2.tres" id="6_hx8v5"]
+
+[sub_resource type="Resource" id="Resource_s6jot"]
+script = ExtResource("2_omj2c")
+card = ExtResource("1_70klp")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_wkhvw"]
+script = ExtResource("2_omj2c")
+card = ExtResource("3_le5qu")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_l4aqg"]
+script = ExtResource("2_omj2c")
+card = ExtResource("4_uvn4l")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_vvtgw"]
+script = ExtResource("2_omj2c")
+card = ExtResource("5_w16js")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_fjt22"]
+script = ExtResource("2_omj2c")
+card = ExtResource("6_hx8v5")
+quantity = 1
+
+[resource]
+script = ExtResource("1_2j8o6")
+entries = Array[ExtResource("2_omj2c")]([SubResource("Resource_s6jot"), SubResource("Resource_wkhvw"), SubResource("Resource_l4aqg"), SubResource("Resource_vvtgw"), SubResource("Resource_fjt22")])

@@ -16,7 +16,7 @@ text = "Keep an eye on the Redlanders, their military tactics might start to loo
 [sub_resource type="Resource" id="Resource_mifkv"]
 script = ExtResource("1_3ydhi")
 speaker = "Chief Spy"
-text = "And by [i]familiar[/ii] I mean they'll do exactly what we did in the previous round."
+text = "And by [i]familiar[/i] I mean they'll do exactly what we did in the previous round, but from their perspective."
 
 [resource]
 script = ExtResource("1_2y4gf")

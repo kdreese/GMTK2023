@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="CardPool" load_steps=15 format=3 uid="uid://4fiu0hvp5mte"]
+
+[ext_resource type="Resource" uid="uid://87ctv3m1u2ou" path="res://src/cards/defense/archer_1.tres" id="1_ict8p"]
+[ext_resource type="Script" path="res://src/cards/card_pool_entry.gd" id="2_ujlvg"]
+[ext_resource type="Resource" uid="uid://dn3pusa5ldgik" path="res://src/cards/defense/walls_1.tres" id="3_rd60o"]
+[ext_resource type="Resource" uid="uid://c5xem0a0ekspm" path="res://src/cards/defense/oil_1.tres" id="4_jin1g"]
+[ext_resource type="Resource" uid="uid://di3kdy7iqfn46" path="res://src/cards/defense/trebuchet_1.tres" id="5_6l3cq"]
+[ext_resource type="Resource" uid="uid://b5k015tk0h26j" path="res://src/cards/defense/barricade_1.tres" id="6_exknb"]
+[ext_resource type="Resource" uid="uid://cg12j12rs4nha" path="res://src/cards/defense/mobilize_1.tres" id="7_ih802"]
+[ext_resource type="Script" path="res://src/cards/card_pool.gd" id="8_y3bu3"]
+
+[sub_resource type="Resource" id="Resource_heraf"]
+script = ExtResource("2_ujlvg")
+card = ExtResource("1_ict8p")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_di78f"]
+script = ExtResource("2_ujlvg")
+card = ExtResource("3_rd60o")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_21vm0"]
+script = ExtResource("2_ujlvg")
+card = ExtResource("4_jin1g")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_tuqnn"]
+script = ExtResource("2_ujlvg")
+card = ExtResource("5_6l3cq")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_xeavg"]
+script = ExtResource("2_ujlvg")
+card = ExtResource("6_exknb")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_2ug47"]
+script = ExtResource("2_ujlvg")
+card = ExtResource("7_ih802")
+quantity = 1
+
+[resource]
+script = ExtResource("8_y3bu3")
+entries = Array[ExtResource("2_ujlvg")]([SubResource("Resource_heraf"), SubResource("Resource_di78f"), SubResource("Resource_21vm0"), SubResource("Resource_tuqnn"), SubResource("Resource_xeavg"), SubResource("Resource_2ug47")])

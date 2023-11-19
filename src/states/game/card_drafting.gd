@@ -22,13 +22,13 @@ func set_ranks(new_ranks: Array) -> void:
 func select_card_set() -> void:
 	cards.clear()
 	var rank = ranks.pop_front()
-	var attack_cards = Global.attack_cards[rank].duplicate() + Global.attack_cards[rank].duplicate()
-	var defense_cards = Global.defense_cards[rank].duplicate() + Global.defense_cards[rank].duplicate()
+	var attack_card_pool := Global.attack_cards[rank] as CardPool
+	var defense_card_pool := Global.defense_cards[rank] as CardPool
+	attack_card_pool.reset()
+	defense_card_pool.reset()
 	for i in range(num_cards_offered):
-		var attack_card = attack_cards.pick_random()
-		attack_cards.erase(attack_card)
-		var defense_card = defense_cards.pick_random()
-		defense_cards.erase(defense_card)
+		var attack_card := attack_card_pool.draw_card()
+		var defense_card := defense_card_pool.draw_card()
 		cards.append(DualCardData.new(attack_card, defense_card))
 
 	# Display first_set cards
