@@ -35,15 +35,9 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 	var filter_func = enemy_filter_func if is_enemy else ally_filter_func
 
-	if len(data.extra_data) < 1:
-		push_error("No extra data, cannot get range increase.")
-		return
-
-	var extra_range := int(data.extra_data[0])
-
 	var units = ranged_units.get_children().filter(filter_func)
 	for unit in units as Array[RangedUnit]:
-		unit.extra_stats["attack_range"] = extra_range
+		unit.extra_stats["attack_range"] = data.att_range
 
 
 func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:

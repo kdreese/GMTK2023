@@ -18,10 +18,10 @@ att_range = 2
 special = true
 info_show_flags = 8
 stat_string_overrides = {
+"att_range": "+2",
 "damage": "",
 "health": "",
-"movement": "",
-"att_range": "+2"
+"movement": ""
 }
 effect_script = "res://src/cards/actions/eagle_eye.gd"
-extra_data = Array[String](["2"])
+extra_data = Array[String]([])

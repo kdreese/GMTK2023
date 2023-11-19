@@ -18,10 +18,10 @@ att_range = 0
 special = true
 info_show_flags = 1
 stat_string_overrides = {
+"att_range": "",
 "damage": "",
 "health": "+30",
-"movement": "",
-"att_range": ""
+"movement": ""
 }
 effect_script = "res://src/cards/actions/increase_health.gd"
-extra_data = Array[String](["30"])
+extra_data = Array[String]([])

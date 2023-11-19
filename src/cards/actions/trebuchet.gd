@@ -15,11 +15,6 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 
 ## The action which is performed when the card is dropped. Accepts the card data and position.
 func perform_action(grid_pos: Vector2i, _is_enemy: bool) -> void:
-	if len(data.extra_data) < 1:
-		push_error("No extra data found")
-
-	var damage = int(data.extra_data[0])
-
 	var squares := get_squares(grid_pos)
 	game.play_sound(game.SoundEffect.TREBUCHET)
 
@@ -28,7 +23,7 @@ func perform_action(grid_pos: Vector2i, _is_enemy: bool) -> void:
 	for square in squares:
 		var unit := game.get_unit(square)
 		if unit:
-			unit.health -= damage
+			unit.health -= data.damage
 			unit.update_health_bar()
 			if unit.health <= 0:
 				melee_units.remove_child(unit)
