@@ -90,6 +90,8 @@ func _ready() -> void:
 		grid_to_world_pos[point.grid_position] = point.global_position
 
 	deck = Global.deck.duplicate()
+	if Global.curr_stage != 0:
+		deck = deck.filter(func(x: DualCardData): return not x.single_use)
 
 	if Global.curr_stage == 0:
 		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES
@@ -256,12 +258,13 @@ func _on_end_round_button_pressed() -> void:
 	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
 	if Global.card_replay_moves.has(looping_index):
 		for move in Global.card_replay_moves[looping_index]:
-			enemy_card.initialize(move[0])
-			enemy_card.show()
 			load_enemy_script(move[0])
-			await enemy_script_node.perform_action(move[1], true)
-			await wait_for_timer(Global.animation_speed * 2)
-			enemy_card.hide()
+			if enemy_script_node.can_perform(move[1], true):
+				enemy_card.initialize(move[0])
+				enemy_card.show()
+				await enemy_script_node.perform_action(move[1], true)
+				await wait_for_timer(Global.animation_speed * 2)
+				enemy_card.hide()
 
 	await instant_defensive_damage()
 	await offensive_action_sweep()
@@ -372,13 +375,13 @@ func _on_card_dropped(card: DualCard) -> void:
 		await script_node.perform_action(grid_pos, false)
 		if not Global.card_current_moves.has(curr_round):
 			Global.card_current_moves[curr_round] = []
-			# Flip the lanes around here so that enemy cards get put in the right spot.
-			var modified_grid_pos: = grid_pos
-			if modified_grid_pos.y < 3:
-				modified_grid_pos.y += 3
-			else:
-				modified_grid_pos.y -= 3
-			Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
+		# Flip the lanes around here so that enemy cards get put in the right spot.
+		var modified_grid_pos: = grid_pos
+		if modified_grid_pos.y < 3:
+			modified_grid_pos.y += 3
+		else:
+			modified_grid_pos.y -= 3
+		Global.card_current_moves[curr_round].append([script_node.data, modified_grid_pos])
 		var this_unit := get_unit(grid_pos)
 		if this_unit != null and this_unit.card_data.name == "Battering Ram":
 			apply_battering_ram_buff(this_unit)
@@ -530,6 +533,8 @@ func offensive_action_sweep() -> void:
 				if blocking_unit is BarricadeUnit:
 					# This is an enemy unit! Attack!!
 					await melee_attack(unit, blocking_unit)
+					# Do not continue moving forward after attacking a barricade.
+					steps_left = 0
 				break
 		if unit.card_data.name == "Battering Ram":
 			apply_battering_ram_buff(unit)
@@ -569,7 +574,11 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 		else:
 			unit.position += Vector2.RIGHT * 10
 		await wait_for_timer(Global.animation_speed)
-		attack_target.health -= damage
+		if unit.card_data.name == "Battering Ram":
+			# Battering rams destroy barricades immediately.
+			attack_target.health = 0
+		else:
+			attack_target.health -= damage
 		attack_target.update_health_bar()
 	await wait_for_timer(Global.animation_speed)
 	if unit.health <= 0:
@@ -579,6 +588,8 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 	if attack_target:
 		if attack_target.health <= 0:
 			attack_target.commit_die()
+			unit.grid_position += Vector2i.RIGHT
+			unit.update_position()
 	await wait_for_timer(Global.animation_speed)
 
 

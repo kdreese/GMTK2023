@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="CardPool" load_steps=11 format=3 uid="uid://dmuy46ljiqxxf"]
+
+[ext_resource type="Script" path="res://src/cards/card_pool.gd" id="1_337uv"]
+[ext_resource type="Resource" uid="uid://dtvr70cokk3xh" path="res://src/cards/attack/soldier_1.tres" id="1_b7ltg"]
+[ext_resource type="Script" path="res://src/cards/card_pool_entry.gd" id="1_t7cjb"]
+[ext_resource type="Resource" uid="uid://g3bpa81boxdw" path="res://src/cards/attack/cavalier_1.tres" id="3_17ia7"]
+[ext_resource type="Resource" uid="uid://cffhlicytlcn1" path="res://src/cards/attack/lightning_1.tres" id="4_o3ior"]
+[ext_resource type="Resource" uid="uid://fgn7mnre5jwj" path="res://src/cards/attack/charge_1.tres" id="5_dlos4"]
+
+[sub_resource type="Resource" id="Resource_nh4k1"]
+script = ExtResource("1_t7cjb")
+card = ExtResource("1_b7ltg")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_j62qp"]
+script = ExtResource("1_t7cjb")
+card = ExtResource("3_17ia7")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_qi1dq"]
+script = ExtResource("1_t7cjb")
+card = ExtResource("4_o3ior")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_mh50c"]
+script = ExtResource("1_t7cjb")
+card = ExtResource("5_dlos4")
+quantity = 1
+
+[resource]
+script = ExtResource("1_337uv")
+entries = Array[ExtResource("1_t7cjb")]([SubResource("Resource_nh4k1"), SubResource("Resource_j62qp"), SubResource("Resource_qi1dq"), SubResource("Resource_mh50c")])

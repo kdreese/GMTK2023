@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://cg12j12rs4nha"]
+
+[ext_resource type="Texture2D" uid="uid://dg4vmndexsrcc" path="res://assets/icons/mobilize.png" id="1_xl4ug"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_va57t"]
+
+[resource]
+script = ExtResource("2_va57t")
+name = "Mobilize"
+description = "Destroy one of your archers, and draw a number of cards equal to that archer's rank + 1 (max rank 2)."
+special_effect = ""
+icon = ExtResource("1_xl4ug")
+rank = 1
+card_role = "Defense"
+health = 0
+movement = 0
+damage = 0
+att_range = 0
+special = true
+info_show_flags = 0
+stat_string_overrides = {
+"damage": "",
+"health": "",
+"movement": "",
+"att_range": ""
+}
+effect_script = "res://src/cards/actions/mobilize.gd"
+extra_data = Array[String]([])

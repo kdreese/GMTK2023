@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Dialog" load_steps=5 format=3 uid="uid://by51ffqxlx0at"]
+[gd_resource type="Resource" script_class="Dialog" load_steps=6 format=3 uid="uid://by51ffqxlx0at"]
 
 [ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_2y4gf"]
 [ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_3ydhi"]
@@ -11,8 +11,13 @@ text = "Your Highness, it seems that our [b]Military Advisor[/b] has been... lea
 [sub_resource type="Resource" id="Resource_11x7s"]
 script = ExtResource("1_3ydhi")
 speaker = "Chief Spy"
-text = "Keep an eye on the Bluetopians, their military tactics might start to look a bit [i]familiar[/i]"
+text = "Keep an eye on the Redlanders, their military tactics might start to look a bit [i]familiar[/i]."
+
+[sub_resource type="Resource" id="Resource_mifkv"]
+script = ExtResource("1_3ydhi")
+speaker = "Chief Spy"
+text = "And by [i]familiar[/i] I mean they'll do exactly what we did in the previous round, but from their perspective."
 
 [resource]
 script = ExtResource("1_2y4gf")
-lines = Array[ExtResource("1_3ydhi")]([SubResource("Resource_43j2q"), SubResource("Resource_11x7s")])
+lines = Array[ExtResource("1_3ydhi")]([SubResource("Resource_43j2q"), SubResource("Resource_11x7s"), SubResource("Resource_mifkv")])

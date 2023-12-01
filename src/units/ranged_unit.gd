@@ -12,10 +12,10 @@ var attack_damage: int = 5
 var rank: int = 1
 
 
-func init(data: RangedUnitData, starting_position: Vector2i, world_pos: Dictionary) -> void:
+func init(data: CardData, starting_position: Vector2i, world_pos: Dictionary) -> void:
 	card_data = data
-	attack_range = data.attack_range
-	attack_damage = data.attack_damage
+	attack_range = data.att_range
+	attack_damage = data.damage
 	grid_position = starting_position
 	grid_to_world_position = world_pos
 	special_effect = data.special_effect

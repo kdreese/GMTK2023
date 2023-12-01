@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://c5xem0a0ekspm"]
+
+[ext_resource type="Texture2D" uid="uid://b0c3yr7kiugwo" path="res://assets/icons/oil.png" id="1_eh4ul"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_c8sm6"]
+
+[resource]
+script = ExtResource("2_c8sm6")
+name = "Boiling Oil"
+description = "Deal 3 damage to each unit next to your castle."
+special_effect = ""
+icon = ExtResource("1_eh4ul")
+rank = 1
+card_role = "Defense"
+health = 0
+movement = 0
+damage = 3
+att_range = 0
+special = true
+info_show_flags = 4
+stat_string_overrides = {
+"att_range": "",
+"damage": "",
+"health": "",
+"movement": ""
+}
+effect_script = "res://src/cards/actions/oil.gd"
+extra_data = Array[String]([])

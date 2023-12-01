@@ -19,23 +19,23 @@ const ANIMATION_SPEEDS = [0.5, 0.33, 0.25, 0.2, 0.1]
 const MAX_VOLUME_DB = -6.0
 const FIRST_REPLAY_MOVES = {
 	0: [
-		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 4)],
+		[preload("res://src/cards/attack/soldier_1.tres"), Vector2i(0, 4)],
 	],
 	2: [
-		[preload("res://src/cards/attack/attack_cards/soldier_1.tres"), Vector2i(0, 5)],
+		[preload("res://src/cards/attack/soldier_1.tres"), Vector2i(0, 5)],
 	],
 	4: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 1)],
+		[preload("res://src/cards/defense/archer_1.tres"), Vector2i(8, 1)],
 	],
 	6: [
-		[preload("res://src/cards/defense/defense_cards/walls_1.tres"), Vector2i(8, 0)],
+		[preload("res://src/cards/defense/walls_1.tres"), Vector2i(8, 0)],
 	],
 	8: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 0)],
-		[preload("res://src/cards/attack/attack_cards/cavalier_1.tres"), Vector2i(0, 3)]
+		[preload("res://src/cards/defense/archer_1.tres"), Vector2i(8, 0)],
+		[preload("res://src/cards/attack/cavalier_1.tres"), Vector2i(0, 3)]
 	],
 	10: [
-		[preload("res://src/cards/defense/defense_cards/archer_1.tres"), Vector2i(8, 2)]
+		[preload("res://src/cards/defense/archer_1.tres"), Vector2i(8, 2)]
 	]
 }
 
@@ -76,81 +76,35 @@ func _input(event: InputEvent) -> void:
 
 
 func _ready() -> void:
-	#var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/attack_cards/")
-	#var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/defense_cards/")
+	#var attack_card_strings := DirAccess.get_files_at("res://src/cards/attack/")
+	#var defense_card_strings := DirAccess.get_files_at("res://src/cards/defense/")
 	load_config()
 	animation_speed = ANIMATION_SPEEDS[config["anim_speed_idx"]]
 	update_sound_volume()
 	update_music_volume()
 
 	attack_cards = {
-		1:
-		[
-			preload("res://src/cards/attack/attack_cards/cavalier_1.tres"),
-			preload("res://src/cards/attack/attack_cards/soldier_1.tres"),
-			preload("res://src/cards/attack/attack_cards/lightning_1.tres"),
-			preload("res://src/cards/attack/attack_cards/charge_1.tres"),
-		],
-		2:
-		[
-			preload("res://src/cards/attack/attack_cards/cavalier_2.tres"),
-			preload("res://src/cards/attack/attack_cards/soldier_2.tres"),
-			preload("res://src/cards/attack/attack_cards/battering_ram.tres"),
-			preload("res://src/cards/attack/attack_cards/lightning_2.tres"),
-			preload("res://src/cards/attack/attack_cards/charge_2.tres"),
-		],
-		3:
-		[
-			preload("res://src/cards/attack/attack_cards/cavalier_3.tres"),
-			preload("res://src/cards/attack/attack_cards/soldier_3.tres"),
-			preload("res://src/cards/attack/attack_cards/lightning_3.tres"),
-			preload("res://src/cards/attack/attack_cards/charge_3.tres"),
-		]
+		1: preload("res://src/cards/attack/attack_1_pool.tres"),
+		2: preload("res://src/cards/attack/attack_2_pool.tres"),
+		3: preload("res://src/cards/attack/attack_3_pool.tres"),
 	}
 
 	defense_cards = {
-		1:
-		[
-			preload("res://src/cards/defense/defense_cards/archer_1.tres"),
-			preload("res://src/cards/defense/defense_cards/archer_1.tres"),
-			preload("res://src/cards/defense/defense_cards/archer_1.tres"),
-			preload("res://src/cards/defense/defense_cards/oil_1.tres"),
-			preload("res://src/cards/defense/defense_cards/walls_1.tres"),
-			preload("res://src/cards/defense/defense_cards/mobilize_1.tres"),
-			preload("res://src/cards/defense/defense_cards/barricade_1.tres"),
-			preload("res://src/cards/defense/defense_cards/trebuchet_1.tres"),
-		],
-		2:
-		[
-			preload("res://src/cards/defense/defense_cards/archer_2.tres"),
-			preload("res://src/cards/defense/defense_cards/oil_2.tres"),
-			preload("res://src/cards/defense/defense_cards/walls_2.tres"),
-			preload("res://src/cards/defense/defense_cards/mobilize_2.tres"),
-			preload("res://src/cards/defense/defense_cards/eagle_eye_2.tres"),
-			preload("res://src/cards/defense/defense_cards/barricade_2.tres"),
-			preload("res://src/cards/defense/defense_cards/trebuchet_2.tres"),
-		],
-		3:
-		[
-			preload("res://src/cards/defense/defense_cards/archer_3.tres"),
-			preload("res://src/cards/defense/defense_cards/oil_3.tres"),
-			preload("res://src/cards/defense/defense_cards/walls_3.tres"),
-			preload("res://src/cards/defense/defense_cards/eagle_eye_3.tres"),
-			preload("res://src/cards/defense/defense_cards/barricade_3.tres"),
-			preload("res://src/cards/defense/defense_cards/trebuchet_3.tres"),
-		],
+		1: preload("res://src/cards/defense/defense_1_pool.tres"),
+		2: preload("res://src/cards/defense/defense_2_pool.tres"),
+		3: preload("res://src/cards/defense/defense_3_pool.tres"),
 	}
 
 	populate_deck()
 
 #	for attack_card_path in attack_card_strings:
-#		var attack_card := load("res://src/cards/attack/attack_cards/" + attack_card_path) as CardData
+#		var attack_card := load("res://src/cards/attack/" + attack_card_path) as CardData
 #		if not attack_cards.has(attack_card.rank):
 #			attack_cards[attack_card.rank] = []
 #		attack_cards[attack_card.rank].append(attack_card)
 #
 #	for defense_card_path in defense_card_strings:
-#		var defense_card := load("res://src/cards/defense/defense_cards/" + defense_card_path) as CardData
+#		var defense_card := load("res://src/cards/defense/" + defense_card_path) as CardData
 #		if not defense_cards.has(defense_card.rank):
 #			defense_cards[defense_card.rank] = []
 #		defense_cards[defense_card.rank].append(defense_card)
@@ -158,21 +112,20 @@ func _ready() -> void:
 
 func populate_deck() -> void:
 	deck = []
-	# Allow up to 3 cards of the same type, can't use := due to array typing.
-	var usable_attack_cards = attack_cards[1].duplicate() + attack_cards[1].duplicate() + attack_cards[1].duplicate()
-	var usable_defense_cards = defense_cards[1].duplicate() + defense_cards[1].duplicate() + defense_cards[1].duplicate()
+	var attack_card_pool := attack_cards[1] as CardPool
+	var defense_card_pool := defense_cards[1] as CardPool
+	attack_card_pool.reset()
+	defense_card_pool.reset()
 	if not Global.endless_mode:
-		var single_soldier := DualCardData.new(preload("res://src/cards/attack/attack_cards/soldier_1.tres"), null)
+		var single_soldier := DualCardData.new(preload("res://src/cards/attack/soldier_1.tres"), null)
 		single_soldier.single_use = true
 		deck.append(single_soldier)
-		var single_archer := DualCardData.new(null, preload("res://src/cards/defense/defense_cards/archer_1.tres"))
+		var single_archer := DualCardData.new(null, preload("res://src/cards/defense/archer_1.tres"))
 		single_archer.single_use = true
 		deck.append(single_archer)
 	for _idx in range(7):
-		var attack_card = usable_attack_cards.pick_random()
-		usable_attack_cards.erase(attack_card)
-		var defense_card = usable_defense_cards.pick_random()
-		usable_defense_cards.erase(defense_card)
+		var attack_card = attack_card_pool.take_card()
+		var defense_card = defense_card_pool.take_card()
 		deck.append(DualCardData.new(attack_card, defense_card))
 
 

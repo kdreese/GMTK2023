@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://bhd6oghspjc4j"]
+
+[ext_resource type="Texture2D" uid="uid://c5cuxk4laf6kj" path="res://assets/icons/trebuchet.png" id="1_xq518"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_wtrn0"]
+
+[resource]
+script = ExtResource("2_wtrn0")
+name = "Trebuchet"
+description = "Deals 5 damage to units in a 2x2 grid."
+special_effect = "Deals 5 damage to units in a 2x2 grid."
+icon = ExtResource("1_xq518")
+rank = 2
+card_role = "Defense"
+health = 0
+movement = 0
+damage = 5
+att_range = 0
+special = true
+info_show_flags = 4
+stat_string_overrides = {
+"att_range": "",
+"damage": "",
+"health": "",
+"movement": ""
+}
+effect_script = "res://src/cards/actions/trebuchet.gd"
+extra_data = Array[String]([])

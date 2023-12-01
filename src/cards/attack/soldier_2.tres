@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://3ttl5cnu7mi2"]
+
+[ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="1_oolq4"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_7uogh"]
+
+[resource]
+script = ExtResource("2_7uogh")
+attack_power = 6
+attack_recoil = 1
+health_unused = 0
+speed = 2
+name = "Soldier"
+description = "A skilled soldier in the king's army."
+special_effect = ""
+icon = ExtResource("1_oolq4")
+rank = 2
+card_role = "Attack"
+health = 7
+movement = 2
+damage = 6
+att_range = 0
+special = false
+info_show_flags = 7
+stat_string_overrides = {
+"damage": "",
+"health": "",
+"movement": "",
+"att_range": ""
+}
+effect_script = "res://src/cards/actions/create_melee_unit.gd"
+extra_data = Array[String]([])

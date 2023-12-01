@@ -71,28 +71,37 @@ func hide_all() -> void:
 
 
 func update_icons(data: CardData, grid: GridContainer) -> void:
-	if data is MeleeUnitData:
-		grid.get_node("HealthLabel").show()
-		grid.get_node("HealthLabel").text = str(data.health)
+	for node in grid.get_children():
+		node.hide()
+	if data.info_show_flags & CardData.SHOW_HEALTH_FLAG:
 		grid.get_node("HealthIcon").show()
-		grid.get_node("AttLabel").show()
-		grid.get_node("AttLabel").text = str(data.attack_power)
-		grid.get_node("AttIcon").show()
-		grid.get_node("MvmtLabel").show()
-		grid.get_node("MvmtLabel").text = str(data.speed)
+		grid.get_node("HealthLabel").show()
+		var text := data.stat_string_overrides["health"] as String
+		if text == "":
+			text = str(data.health)
+		grid.get_node("HealthLabel").text = text
+	if data.info_show_flags & CardData.SHOW_MOVEMENT_FLAG:
 		grid.get_node("MvmtIcon").show()
-	elif data is RangedUnitData:
-		grid.get_node("AttLabel").show()
-		grid.get_node("AttLabel").text = str(data.attack_damage)
+		grid.get_node("MvmtLabel").show()
+		var text := data.stat_string_overrides["movement"] as String
+		if text == "":
+			text = str(data.movement)
+		grid.get_node("MvmtLabel").text = text
+	if data.info_show_flags & CardData.SHOW_DAMAGE_FLAG:
 		grid.get_node("AttIcon").show()
-		grid.get_node("RangeLabel").show()
-		grid.get_node("RangeLabel").text = str(data.attack_range)
+		grid.get_node("AttLabel").show()
+		var text := data.stat_string_overrides["damage"] as String
+		if text == "":
+			text = str(data.damage)
+		grid.get_node("AttLabel").text = text
+	if data.info_show_flags & CardData.SHOW_RANGE_FLAG:
 		grid.get_node("RangeIcon").show()
-	elif data is BarricadeUnitData:
-		grid.get_node("HealthLabel").show()
-		grid.get_node("HealthLabel").text = str(data.health)
-		grid.get_node("HealthIcon").show()
-	else:
+		grid.get_node("RangeLabel").show()
+		var text := data.stat_string_overrides["att_range"] as String
+		if text == "":
+			text = str(data.att_range)
+		grid.get_node("RangeLabel").text = text
+	if data.special:
 		grid.get_node("SpecialLabel").show()
 		grid.get_node("SpecialIcon").show()
 

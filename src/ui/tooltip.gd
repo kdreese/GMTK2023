@@ -18,11 +18,16 @@ func initialize(unit: Unit) -> void:
 		health_amt.hide()
 		move_icon.hide()
 		move_amt.hide()
-
 	elif unit is MeleeUnit:
 		damage_amt.text = str(unit.attack_power) + add_extra_stats_text(unit, "attack_power")
 		health_amt.text = str(unit.health) + add_extra_stats_text(unit, "health")
 		move_amt.text = str(unit.speed) + add_extra_stats_text(unit, "speed")
+	elif unit is BarricadeUnit:
+		health_amt.text = str(unit.health)
+		move_icon.hide()
+		move_amt.hide()
+		damage_icon.hide()
+		damage_amt.hide()
 
 	if not unit.special_effect == "":
 		info_text.text = unit.special_effect

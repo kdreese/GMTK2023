@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://cfus1pj2wt6c2"]
+
+[ext_resource type="Texture2D" uid="uid://db0mofn103avt" path="res://assets/icons/charge.png" id="1_h0wu8"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_plf6l"]
+
+[resource]
+script = ExtResource("2_plf6l")
+name = "Charge"
+description = "Increase the speed of all your melee units by 2 for this turn."
+special_effect = ""
+icon = ExtResource("1_h0wu8")
+rank = 2
+card_role = "Attack"
+health = 0
+movement = 2
+damage = 0
+att_range = 0
+special = true
+info_show_flags = 2
+stat_string_overrides = {
+"att_range": "",
+"damage": "",
+"health": "",
+"movement": "+2"
+}
+effect_script = "res://src/cards/actions/charge.gd"
+extra_data = Array[String]([])

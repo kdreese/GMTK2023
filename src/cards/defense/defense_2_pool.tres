@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="CardPool" load_steps=17 format=3 uid="uid://cqlacjlqixa25"]
+
+[ext_resource type="Resource" uid="uid://i2r8e8ugpjv4" path="res://src/cards/defense/archer_2.tres" id="1_0rif1"]
+[ext_resource type="Script" path="res://src/cards/card_pool.gd" id="1_fl8jg"]
+[ext_resource type="Script" path="res://src/cards/card_pool_entry.gd" id="2_rwykt"]
+[ext_resource type="Resource" uid="uid://qnbqq8n6cs8c" path="res://src/cards/defense/walls_2.tres" id="3_st5tr"]
+[ext_resource type="Resource" uid="uid://dl2a02cd5tyko" path="res://src/cards/defense/oil_2.tres" id="4_ho4b6"]
+[ext_resource type="Resource" uid="uid://bhd6oghspjc4j" path="res://src/cards/defense/trebuchet_2.tres" id="5_cgtrs"]
+[ext_resource type="Resource" uid="uid://y5kpu5x4y5xh" path="res://src/cards/defense/barricade_2.tres" id="6_h7vtk"]
+[ext_resource type="Resource" uid="uid://dpc8h2sjvcjj7" path="res://src/cards/defense/eagle_eye_2.tres" id="7_yoody"]
+[ext_resource type="Resource" uid="uid://btowts2mf5r73" path="res://src/cards/defense/mobilize_2.tres" id="8_rxbs0"]
+
+[sub_resource type="Resource" id="Resource_yjuh3"]
+script = ExtResource("2_rwykt")
+card = ExtResource("1_0rif1")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_wfmug"]
+script = ExtResource("2_rwykt")
+card = ExtResource("3_st5tr")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_3l4gt"]
+script = ExtResource("2_rwykt")
+card = ExtResource("4_ho4b6")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_f6qmk"]
+script = ExtResource("2_rwykt")
+card = ExtResource("5_cgtrs")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_nspcg"]
+script = ExtResource("2_rwykt")
+card = ExtResource("6_h7vtk")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_fnsrh"]
+script = ExtResource("2_rwykt")
+card = ExtResource("7_yoody")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_hinfk"]
+script = ExtResource("2_rwykt")
+card = ExtResource("8_rxbs0")
+quantity = 1
+
+[resource]
+script = ExtResource("1_fl8jg")
+entries = Array[ExtResource("2_rwykt")]([SubResource("Resource_yjuh3"), SubResource("Resource_wfmug"), SubResource("Resource_3l4gt"), SubResource("Resource_f6qmk"), SubResource("Resource_nspcg"), SubResource("Resource_fnsrh"), SubResource("Resource_hinfk")])

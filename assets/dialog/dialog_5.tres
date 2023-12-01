@@ -11,7 +11,7 @@ text = "I see your tactics are sharp as ever. I'll leave you to it."
 [sub_resource type="Resource" id="Resource_4200w"]
 script = ExtResource("1_brli2")
 speaker = "Military Advisor"
-text = "Try to destroy the blue castle as fast as possible."
+text = "Try to destroy the red castle as fast as possible."
 
 [resource]
 script = ExtResource("1_sjsbf")

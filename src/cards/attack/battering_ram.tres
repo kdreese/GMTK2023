@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://c8oyioj1dw63m"]
+
+[ext_resource type="Texture2D" uid="uid://dj2tdpcwyo51b" path="res://assets/icons/battering_ram.png" id="1_f6lt3"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_fh6ks"]
+
+[resource]
+script = ExtResource("2_fh6ks")
+name = "Battering Ram"
+description = "A battering ram. Does not attack. Gives +2 attack power to adjacent attacking units."
+special_effect = "+2 attack to adjacent attacking units"
+icon = ExtResource("1_f6lt3")
+rank = 2
+card_role = "Attack"
+health = 6
+movement = 1
+damage = 0
+att_range = 0
+special = true
+info_show_flags = 7
+stat_string_overrides = {
+"att_range": "",
+"damage": "",
+"health": "",
+"movement": ""
+}
+effect_script = "res://src/cards/actions/create_melee_unit.gd"
+extra_data = Array[String](["2"])
