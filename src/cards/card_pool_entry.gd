@@ -1,5 +1,5 @@
-extends Resource
 class_name CardPoolEntry
+extends Resource
 ## An entry in a card pool. Contains the card and its associated quantity.
 
 
