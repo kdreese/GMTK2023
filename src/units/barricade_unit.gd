@@ -31,7 +31,7 @@ func init(data: CardData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
 
 
 func update_health_bar() -> void:
-	var value = float(health) / max_health
+	var value := float(health) / max_health
 	health_bar.value = value
 
 

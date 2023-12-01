@@ -91,7 +91,7 @@ func _ready() -> void:
 
 	deck = Global.deck.duplicate()
 	if Global.curr_stage != 0:
-		deck = deck.filter(func(x: DualCardData): return not x.single_use)
+		deck = deck.filter(func(x: DualCardData) -> bool: return not x.single_use)
 
 	if Global.curr_stage == 0:
 		Global.card_replay_moves = Global.FIRST_REPLAY_MOVES
@@ -196,7 +196,7 @@ func play_sound(sound: SoundEffect, is_left: bool = true) -> void:
 			push_error("Invalid sound effect.")
 
 
-func is_spot_open(grid_position: Vector2i):
+func is_spot_open(grid_position: Vector2i) -> bool:
 	if grid_position.x > 7:
 		return false
 	for unit in $Units/Melee.get_children() + $Units/Barricade.get_children():
@@ -257,7 +257,7 @@ func _on_end_round_button_pressed() -> void:
 	# Make enemy moves
 	var looping_index := curr_round % (Global.card_replay_moves.size() + COPY_ROUND_DOWNTIME)
 	if Global.card_replay_moves.has(looping_index):
-		for move in Global.card_replay_moves[looping_index]:
+		for move: Array in Global.card_replay_moves[looping_index]:
 			load_enemy_script(move[0])
 			if enemy_script_node.can_perform(move[1], true):
 				enemy_card.initialize(move[0])
@@ -315,7 +315,7 @@ func clear_unit_effects() -> void:
 func on_card_enter(drop_point: Node) -> void:
 	if not drop_point.enabled or drop_point.grid_position.y == 6:
 		return
-	if not hand.cards.any(func(x): return x.dragging):
+	if not hand.cards.any(func(x: DualCard) -> bool: return x.dragging):
 		return
 	clear_effects()
 	var script_node: Node
@@ -336,7 +336,7 @@ func on_card_enter(drop_point: Node) -> void:
 
 
 func on_card_exit() -> void:
-	if not drop_points.get_children().any(func(x): return x.is_mouse_inside and x.enabled):
+	if not drop_points.get_children().any(func(x: LaneDropPointScene) -> bool: return x.is_mouse_inside and x.enabled):
 		clear_effects()
 
 
@@ -427,7 +427,7 @@ func draw_card_single() -> void:
 		if deck.size() == 0:
 			return
 
-	var dual_card_data = deck.pop_front()
+	var dual_card_data: DualCardData = deck.pop_front()
 	hand.add_card(dual_card_data)
 
 	play_sound(SoundEffect.DRAW)
@@ -517,7 +517,7 @@ func offensive_action_sweep() -> void:
 			break
 		if unit == null or unit.is_queued_for_deletion():
 			continue
-		var steps_left = unit.speed + unit.extra_stats.get("speed", 0)
+		var steps_left := unit.speed + unit.extra_stats.get("speed", 0) as int
 		if steps_left != 0 and unit.card_data.name == "Battering Ram":
 			remove_battering_ram_buff(unit)
 		for _idx in range(steps_left):
@@ -543,7 +543,7 @@ func offensive_action_sweep() -> void:
 
 
 func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
-	var damage = unit.attack_power + unit.extra_stats.get("attack_power", 0)
+	var damage := unit.attack_power + unit.extra_stats.get("attack_power", 0) as int
 
 	# Apply battering ram on attack
 	for drop_point in drop_points.get_children():
@@ -593,7 +593,7 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 	await wait_for_timer(Global.animation_speed)
 
 
-func melee_attack_order(a, b) -> bool:
+func melee_attack_order(a: MeleeUnit, b: MeleeUnit) -> bool:
 	if b.grid_position.y > a.grid_position.y:
 		return true
 	elif b.grid_position.y < a.grid_position.y:
@@ -605,7 +605,7 @@ func melee_attack_order(a, b) -> bool:
 			return false
 
 
-func ranged_attack_order(a, b) -> bool:
+func ranged_attack_order(a: RangedUnit, b: RangedUnit) -> bool:
 	if b.grid_position.y > a.grid_position.y:
 		return false
 	else:

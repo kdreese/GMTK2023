@@ -32,5 +32,5 @@ const SHOW_RANGE_FLAG = 8
 	"att_range": "",
 }
 @export_group("Script Data")
-@export_file() var effect_script ## A path to the script run by this card.
+@export_file() var effect_script: String ## A path to the script run by this card.
 @export var extra_data: Array[String] ## Extra data to be accessed by the script.

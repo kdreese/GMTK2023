@@ -16,7 +16,7 @@ func update_cards(cards: Array[DualCardData]) -> void:
 	for num in ceili(displayed_cards.size() / float(CARDS_PER_ROW)):
 		var hbox := HBoxContainer.new()
 		card_container.add_child(hbox)
-	for card in displayed_cards:
+	for card: DualCardData in displayed_cards:
 		var card_node := preload("res://src/cards/dual_card.tscn").instantiate()
 		@warning_ignore("integer_division")
 		card_container.get_child(displayed_cards.find(card) / CARDS_PER_ROW).add_child(card_node)

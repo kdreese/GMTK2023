@@ -17,7 +17,7 @@ func _ready() -> void:
 	if get_window().mode == Window.MODE_FULLSCREEN:
 		fullscreen_button.set_pressed_no_signal(true)
 	Global.fullscreen_changed.connect(on_fullscreen_changed)
-	var anim_speed_idx = Global.config["anim_speed_idx"]
+	var anim_speed_idx: int = Global.config["anim_speed_idx"]
 	anim_speed_slider.set_value_no_signal(anim_speed_idx)
 	anim_speed_value.text = ANIMATION_SPEED_STRINGS[int(anim_speed_idx)]
 	var sound_volume := Global.get_sound_volume()
@@ -42,7 +42,7 @@ func on_music_volume_slider_change(value: float) -> void:
 	music_volume_value.text = "%d" % (value * 100)
 
 
-func on_anim_speed_slider_change(value: float):
+func on_anim_speed_slider_change(value: float) -> void:
 	var int_value := int(value)
 	Global.config["anim_speed_idx"] = int_value
 	Global.animation_speed = Global.ANIMATION_SPEEDS[int_value]
