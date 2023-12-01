@@ -17,7 +17,7 @@ func _ready() -> void:
 func generate_license_bbcode_text() -> String:
 	var text := "[center][font_size=36][b]Licenses[/b][/font_size][/center]"
 
-	for license in main_licenses:
+	for license: Array in main_licenses:
 		text += "\n\n[center][font_size=20][b]" + license[0] + "[/b][/font_size][/center]\n\n"
 		text += "[font_size=13]" + license[1].strip_edges() + "[/font_size]"
 
@@ -27,13 +27,13 @@ func generate_license_bbcode_text() -> String:
 	# This is similar to how it's done in the "About Godot" -> "Third-party Licenses" -> "All Components" screen
 	for info in Engine.get_copyright_info():
 		text += "\n\n[center][font_size=18][b]" + info.name + "[/b][/font_size][/center]\n"
-		for part in info.parts:
-			for copyright in part.copyright:
+		for part: Dictionary in info.parts:
+			for copyright: String in part.copyright:
 				text += "\n(c) " + copyright
 			text += "\nLicense: " + part.license
 
 	var engine_licenses := Engine.get_license_info()
-	for license in engine_licenses:
+	for license: String in engine_licenses:
 		text += "\n\n[center][font_size=18][b]" + license + "[/b][/font_size][/center]\n\n"
 		text += engine_licenses[license]
 

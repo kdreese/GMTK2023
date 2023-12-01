@@ -5,7 +5,7 @@ extends ColorRect
 
 
 var cards: Array[DualCardData]
-var ranks: Array
+var ranks: Array[int]
 
 var num_cards_offered := 3
 var draft_round := 1
@@ -16,12 +16,12 @@ func _ready() -> void:
 
 
 func set_ranks(new_ranks: Array) -> void:
-	ranks = new_ranks.duplicate()
+	ranks.assign(new_ranks.duplicate())
 
 
 func select_card_set() -> void:
 	cards.clear()
-	var rank = ranks.pop_front()
+	var rank: int = ranks.pop_front()
 	var attack_card_pool := Global.attack_cards[rank] as CardPool
 	var defense_card_pool := Global.defense_cards[rank] as CardPool
 	attack_card_pool.reset()

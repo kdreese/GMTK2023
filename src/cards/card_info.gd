@@ -54,7 +54,7 @@ func update_icons(grid: GridContainer) -> void:
 		node.hide()
 	if data.info_show_flags & CardData.SHOW_HEALTH_FLAG:
 		grid.get_node("HealthIcon").show()
-		var label = grid.get_node("HealthLabel") as Label
+		var label := grid.get_node("HealthLabel") as Label
 		label.show()
 		var text := data.stat_string_overrides["health"] as String
 		if text == "":

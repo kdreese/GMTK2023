@@ -17,13 +17,13 @@ func _ready() -> void:
 	buttons.modulate = Color.TRANSPARENT
 	fanfare.play()
 
-	get_tree().create_tween().tween_property(background_texture, "position", Vector2(0, -480), 10.0)
+	create_tween().tween_property(background_texture, "position", Vector2(0, -480), 10.0)
 	get_tree().create_timer(7.5).timeout.connect(fade_in_title)
 	get_tree().create_timer(17.0).timeout.connect(go_to_menu)
 
 
 func fade_in_title() -> void:
-	get_tree().create_tween().tween_property(title, "modulate", Color.WHITE, 1.0)
+	create_tween().tween_property(title, "modulate", Color.WHITE, 1.0)
 
 
 func go_to_menu() -> void:

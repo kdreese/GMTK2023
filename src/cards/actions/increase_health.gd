@@ -5,7 +5,7 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	if not in_own_castle(grid_pos, is_enemy):
 		return false
 	# Make sure the side isn't already at max health
-	var health_bar
+	var health_bar: CastleHealthBar
 	if is_enemy: # The enemy is using this
 		health_bar = game.red_castle_health_bar
 	else: # We're using this
@@ -15,7 +15,7 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 
 
 func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
-	var health_bar
+	var health_bar: CastleHealthBar
 	if is_enemy: # The enemy is using this
 		health_bar = game.red_castle_health_bar
 		game.play_sound(game.SoundEffect.HEAL, false)

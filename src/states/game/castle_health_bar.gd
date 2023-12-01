@@ -22,6 +22,6 @@ func modify_health(amount: int) -> void:
 
 
 func update() -> void:
-	var value = float(current_health) / max_health
+	var value := float(current_health) / max_health
 	health_bar.value = value
 	health_label.text = "%d/%d HP" % [current_health, max_health]

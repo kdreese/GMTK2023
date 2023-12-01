@@ -124,8 +124,8 @@ func populate_deck() -> void:
 		single_archer.single_use = true
 		deck.append(single_archer)
 	for _idx in range(7):
-		var attack_card = attack_card_pool.take_card()
-		var defense_card = defense_card_pool.take_card()
+		var attack_card := attack_card_pool.take_card()
+		var defense_card := defense_card_pool.take_card()
 		deck.append(DualCardData.new(attack_card, defense_card))
 
 
@@ -138,7 +138,7 @@ func save_config() -> void:
 		config["fullscreen"] = false
 		config["window_size"] = get_window().size
 
-	for key in config:
+	for key: String in config:
 		config_file.set_value(CONFIG_SECTION, key, config[key])
 
 	var err := config_file.save(CONFIG_PATH)
@@ -160,9 +160,9 @@ func load_config() -> void:
 		push_warning("Config missing section %s, using default settings" % CONFIG_SECTION)
 		return
 
-	for key in config:
+	for key: String in config:
 		if config_file.has_section_key(CONFIG_SECTION, key):
-			var value_variant = config_file.get_value(CONFIG_SECTION, key)
+			var value_variant: Variant = config_file.get_value(CONFIG_SECTION, key)
 			if typeof(value_variant) == typeof(DEFAULT_CONFIG[key]):
 				config[key] = value_variant
 
@@ -219,21 +219,21 @@ func get_music_volume() -> float:
 	return config["music_volume"]
 
 
-func set_sound_volume(value: float):
+func set_sound_volume(value: float) -> void:
 	config["sound_volume"] = value
 	update_sound_volume()
 
 
-func set_music_volume(value: float):
+func set_music_volume(value: float) -> void:
 	config["music_volume"] = value
 	update_music_volume()
 
 
-func update_sound_volume():
+func update_sound_volume() -> void:
 	var sound_bus_index := AudioServer.get_bus_index("Sounds")
 	AudioServer.set_bus_volume_db(sound_bus_index, MAX_VOLUME_DB + (20 * log(config["sound_volume"]) / log(10)))
 
 
-func update_music_volume():
+func update_music_volume() -> void:
 	var music_bus_index := AudioServer.get_bus_index("Music")
 	AudioServer.set_bus_volume_db(music_bus_index, MAX_VOLUME_DB + (20 * log(config["music_volume"]) / log(10)))

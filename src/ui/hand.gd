@@ -6,10 +6,10 @@ extends Control
 
 # Signals
 ## A signal for when a card drag is started.
-signal dragged(DualCard)
+signal dragged(card: DualCard)
 
 ## A signal for when a card is dropped.
-signal dropped(DualCard)
+signal dropped(card: DualCard)
 
 # Enums
 
@@ -125,7 +125,7 @@ func arrange_cards() -> void:
 	var center_of_hand := bounds.position + Vector2(bounds.size.x / 2.0, 0.0)
 	var first_card_position := center_of_hand - total_width / 2.0 * Vector2.RIGHT
 
-	var i = 0
+	var i := 0
 	for card in cards:
 		card.position = first_card_position + i * card_spacing
 		card.hand_position = card.position

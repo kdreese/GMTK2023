@@ -34,7 +34,7 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 		return false
 
 	# Get the archer unit.
-	var archer = game.get_unit(grid_pos)
+	var archer := game.get_unit(grid_pos)
 	if archer == null or not (archer is RangedUnit):
 		return false
 
@@ -47,7 +47,7 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 ## The action which is performed when the card is dropped. Accepts the card data and position
 func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 	# Get the archer unit.
-	var archer = game.get_unit(grid_pos)
+	var archer := game.get_unit(grid_pos)
 	if archer == null or not (archer is RangedUnit):
 		return
 
