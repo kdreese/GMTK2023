@@ -114,14 +114,14 @@ func raise_instant() -> void:
 func _on_mouse_enter() -> void:
 	if draggable and not dragging:
 		hover_sound.play()
-		get_tree().create_tween().tween_property(self, "position", self.hand_position + MOUSEOVER_OFFSET, 0.1)
-		get_tree().create_tween().tween_property(self, "size", self.original_size - MOUSEOVER_OFFSET, 0.1)
+		create_tween().tween_property(self, "position", self.hand_position + MOUSEOVER_OFFSET, 0.1)
+		create_tween().tween_property(self, "size", self.original_size - MOUSEOVER_OFFSET, 0.1)
 
 
 func _on_mouse_exit() -> void:
 	if draggable and not dragging:
-		get_tree().create_tween().tween_property(self, "position", self.hand_position, 0.1)
-		get_tree().create_tween().tween_property(self, "size", self.original_size, 0.1)
+		create_tween().tween_property(self, "position", self.hand_position, 0.1)
+		create_tween().tween_property(self, "size", self.original_size, 0.1)
 
 
 func _on_gui_input(event: InputEvent) -> void:

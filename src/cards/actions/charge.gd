@@ -37,14 +37,16 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 
 	game.play_sound(game.SoundEffect.CHARGE, not is_enemy)
 
-	var units: Array[MeleeUnit] = melee_units.get_children().filter(filter_func)
+	var units: Array[MeleeUnit] = []
+	units.assign(melee_units.get_children().filter(filter_func))
 	for unit in units:
 		# Stack buffs.
 		unit.extra_stats["speed"] = unit.extra_stats.get("speed", 0) + data.movement
 
 
 func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
-	var units: Array[MeleeUnit] = melee_units.get_children().filter(ally_filter_func)
+	var units: Array[MeleeUnit] = []
+	units.assign(melee_units.get_children().filter(ally_filter_func))
 	var positions: Array[Vector2i] = []
 	for unit in units:
 		positions.append(unit.grid_position)

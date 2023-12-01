@@ -37,6 +37,7 @@ offset_right = 97.0
 offset_bottom = 150.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 1
 script = ExtResource("1_1xj2b")
 
 [node name="Background" type="TextureRect" parent="."]

@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func set_ranks(new_ranks: Array) -> void:
-	ranks = new_ranks.duplicate()
+	ranks.assign(new_ranks.duplicate())
 
 
 func select_card_set() -> void:
