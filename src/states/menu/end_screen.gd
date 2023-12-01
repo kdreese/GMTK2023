@@ -1,4 +1,5 @@
 extends Control
+## Script handling both win and lose end game screens
 
 
 @onready var endless_count_text: Label = %EndlessCountText
