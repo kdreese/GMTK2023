@@ -27,8 +27,8 @@ func select_card_set() -> void:
 	attack_card_pool.reset()
 	defense_card_pool.reset()
 	for i in range(num_cards_offered):
-		var attack_card := attack_card_pool.draw_card()
-		var defense_card := defense_card_pool.draw_card()
+		var attack_card := attack_card_pool.take_card()
+		var defense_card := defense_card_pool.take_card()
 		cards.append(DualCardData.new(attack_card, defense_card))
 
 	# Display first_set cards

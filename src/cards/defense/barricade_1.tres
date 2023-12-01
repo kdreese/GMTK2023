@@ -5,7 +5,6 @@
 
 [resource]
 script = ExtResource("1_5w8r7")
-health_unused = 0
 name = "Barricade"
 description = "A flimsy wall that must be knocked down to progress past."
 special_effect = ""
@@ -19,10 +18,10 @@ att_range = 0
 special = true
 info_show_flags = 1
 stat_string_overrides = {
+"att_range": "",
 "damage": "",
 "health": "",
-"movement": "",
-"att_range": ""
+"movement": ""
 }
 effect_script = "res://src/cards/actions/create_barricade_unit.gd"
 extra_data = Array[String]([])

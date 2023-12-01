@@ -18,10 +18,10 @@ att_range = 0
 special = false
 info_show_flags = 7
 stat_string_overrides = {
+"att_range": "",
 "damage": "",
 "health": "",
-"movement": "",
-"att_range": ""
+"movement": ""
 }
 effect_script = "res://src/cards/actions/create_melee_unit.gd"
 extra_data = Array[String]([])

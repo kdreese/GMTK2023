@@ -124,8 +124,8 @@ func populate_deck() -> void:
 		single_archer.single_use = true
 		deck.append(single_archer)
 	for _idx in range(7):
-		var attack_card = attack_card_pool.draw_card()
-		var defense_card = defense_card_pool.draw_card()
+		var attack_card = attack_card_pool.take_card()
+		var defense_card = defense_card_pool.take_card()
 		deck.append(DualCardData.new(attack_card, defense_card))
 
 

@@ -3,6 +3,7 @@ class_name CardData
 extends Resource
 
 
+# TODO: is there a better way? These aren't synced automatically with the export.
 const SHOW_HEALTH_FLAG = 1
 const SHOW_MOVEMENT_FLAG = 2
 const SHOW_DAMAGE_FLAG = 4
@@ -23,7 +24,7 @@ const SHOW_RANGE_FLAG = 8
 @export var att_range: int
 @export var special: bool
 ## Flags to indicate whether various stats should be shown.
-@export_flags("Health", "Movement", "Damage", "Range", "Special") var info_show_flags: int = 0
+@export_flags("Health", "Movement", "Damage", "Range") var info_show_flags: int = 0
 @export var stat_string_overrides: Dictionary = {
 	"health": "",
 	"movement": "",

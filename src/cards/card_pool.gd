@@ -1,5 +1,5 @@
-extends Resource
 class_name CardPool
+extends Resource
 ## A pool of cards from which to draw.
 
 
@@ -19,7 +19,7 @@ func reset() -> void:
 
 
 ## Draw a new card and remove it from the pool.
-func draw_card() -> CardData:
+func take_card() -> CardData:
 	cards.shuffle()
 	var card := cards.pop_front() as CardData
 	return card

@@ -5,8 +5,6 @@
 
 [resource]
 script = ExtResource("2_5c4a7")
-attack_range = 1
-attack_damage = 0
 name = "Archer"
 description = "A competent archer."
 special_effect = ""
@@ -20,10 +18,10 @@ att_range = 1
 special = false
 info_show_flags = 12
 stat_string_overrides = {
+"att_range": "",
 "damage": "",
 "health": "",
-"movement": "",
-"att_range": ""
+"movement": ""
 }
 effect_script = "res://src/cards/actions/create_ranged_unit.gd"
 extra_data = Array[String]([])
