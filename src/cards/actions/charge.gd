@@ -39,8 +39,8 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 
 	var units = melee_units.get_children().filter(filter_func)
 	for unit in units as Array[MeleeUnit]:
-		# Do we want to be able to stack buffs?
-		unit.extra_stats["speed"] = data.movement
+		# Stack buffs.
+		unit.extra_stats["speed"] = unit.extra_stats.get("speed", 0) + data.movement
 
 
 func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
