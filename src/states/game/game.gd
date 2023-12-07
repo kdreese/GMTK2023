@@ -428,10 +428,12 @@ func draw_card_single() -> void:
 			return
 
 	var dual_card_data: DualCardData = deck.pop_front()
-	hand.add_card(dual_card_data)
+	await draw_specific_card(dual_card_data)
 
+
+func draw_specific_card(card: DualCardData) -> void:
+	hand.add_card(card)
 	play_sound(SoundEffect.DRAW)
-
 	await wait_for_timer(Global.animation_speed)
 
 

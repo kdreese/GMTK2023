@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://b8j4n44kaefgx"]
+
+[ext_resource type="Texture2D" uid="uid://dg4vmndexsrcc" path="res://assets/icons/mobilize.png" id="1_nrebk"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_t2tcc"]
+
+[resource]
+script = ExtResource("2_t2tcc")
+name = "Mobilize"
+description = "Destroy one of your archers, and draw two single-use attack cards of the same rank (max rank 3)."
+special_effect = ""
+icon = ExtResource("1_nrebk")
+rank = 3
+card_role = "Defense"
+health = 0
+movement = 0
+damage = 0
+att_range = 0
+special = true
+info_show_flags = 0
+stat_string_overrides = {
+"att_range": "",
+"damage": "",
+"health": "",
+"movement": ""
+}
+effect_script = "res://src/cards/actions/mobilize.gd"
+extra_data = Array[String]([])

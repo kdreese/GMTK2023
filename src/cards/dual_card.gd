@@ -112,6 +112,8 @@ func raise_instant() -> void:
 
 
 func _on_mouse_enter() -> void:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return
 	if draggable and not dragging:
 		hover_sound.play()
 		create_tween().tween_property(self, "position", self.hand_position + MOUSEOVER_OFFSET, 0.1)
@@ -119,6 +121,8 @@ func _on_mouse_enter() -> void:
 
 
 func _on_mouse_exit() -> void:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return
 	if draggable and not dragging:
 		create_tween().tween_property(self, "position", self.hand_position, 0.1)
 		create_tween().tween_property(self, "size", self.original_size, 0.1)
@@ -127,7 +131,7 @@ func _on_mouse_exit() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb_event := event as InputEventMouseButton
-		if draggable and mb_event.button_index == 1:
+		if draggable and mb_event.button_index == MOUSE_BUTTON_LEFT:
 			if mb_event.pressed and not dragging:
 				dragging = true
 				rotation = -0.5 # radians

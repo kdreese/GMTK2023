@@ -10,7 +10,9 @@ func close() -> void:
 
 
 func update(attack_data: CardData, defense_data: CardData) -> void:
-	assert(attack_data.card_role == "Attack")
-	assert(defense_data.card_role == "Defense")
+	if attack_data != null:
+		assert(attack_data.card_role == "Attack")
+	if defense_data != null:
+		assert(defense_data.card_role == "Defense")
 	attack_card.initialize(attack_data)
 	defense_card.initialize(defense_data)

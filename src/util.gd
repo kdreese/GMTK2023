@@ -18,4 +18,14 @@ static func fit_text(label: Label, max_font_size: int = 16) -> void:
 	var label_font := label.get_theme_font("font_size")
 	while label_font.get_string_size(label.text, label.horizontal_alignment, -1, font_size).x > label.size.x:
 		font_size -= 1
+	while label_font.get_string_size(label.text, label.horizontal_alignment, label.size.x, font_size).y > label.size.y:
+		font_size -= 1
+	label.add_theme_font_size_override("font_size", font_size)
+
+
+static func fit_text_wrap(label: Label, max_font_size: int = 16) -> void:
+	var font_size := max_font_size
+	var label_font := label.get_theme_font("font_size")
+	while label_font.get_string_size(label.text, label.horizontal_alignment, label.size.x, font_size).y > label.size.y:
+		font_size -= 1
 	label.add_theme_font_size_override("font_size", font_size)
