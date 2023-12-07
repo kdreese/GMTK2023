@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://dfg337lxjiubf" path="res://src/cards/defense/trebuchet_3.tres" id="5_c6alt"]
 [ext_resource type="Resource" uid="uid://4jigsl24yqat" path="res://src/cards/defense/barricade_3.tres" id="6_0jnob"]
 [ext_resource type="Resource" uid="uid://bwajg4tma882t" path="res://src/cards/defense/eagle_eye_3.tres" id="7_e6uiq"]
-[ext_resource type="Resource" path="res://src/cards/defense/mobilize_3.tres" id="8_ccdmt"]
+[ext_resource type="Resource" uid="uid://b8j4n44kaefgx" path="res://src/cards/defense/mobilize_3.tres" id="8_ccdmt"]
 
 [sub_resource type="Resource" id="Resource_csjey"]
 script = ExtResource("2_h2m58")

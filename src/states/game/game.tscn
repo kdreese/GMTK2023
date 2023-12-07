@@ -938,6 +938,7 @@ bus = &"Music"
 
 [node name="EnemyCard" parent="." instance=ExtResource("18_pm8yn")]
 visible = false
+z_index = 2
 offset_left = 500.0
 offset_top = 97.0
 offset_right = 578.0
