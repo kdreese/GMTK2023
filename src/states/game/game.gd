@@ -60,6 +60,7 @@ var curr_round: int = 0
 var red_max_health: int = 30
 var blue_max_health: int = 50
 var can_display_tooltip := true
+var has_dialog := false
 
 var game_over := false
 
@@ -103,6 +104,7 @@ func _ready() -> void:
 		endless_round_panel.hide()
 
 	if not Global.endless_mode and Global.curr_stage == 0:
+		has_dialog = true
 		end_round_button.disabled = true
 		await draw_cards(1)
 		text_box.play(preload("res://assets/dialog/dialog_1.tres"))
@@ -134,13 +136,17 @@ func _ready() -> void:
 		text_box.play(preload("res://assets/dialog/dialog_5.tres"))
 		await text_box.text_finished
 		end_round_button.disabled = false
+		has_dialog = false
+	elif not Global.endless_mode and Global.curr_stage == 1:
+		has_dialog = true
+		deck.shuffle()
+		await draw_cards(3)
+		text_box.play(preload("res://assets/dialog/dialog_7.tres"))
+		await text_box.text_finished
+		has_dialog = false
 	else:
 		deck.shuffle()
 		await draw_cards(3)
-
-	if not Global.endless_mode and Global.curr_stage == 1:
-		text_box.play(preload("res://assets/dialog/dialog_7.tres"))
-		await text_box.text_finished
 
 	Global.curr_stage += 1
 
@@ -280,7 +286,7 @@ func _on_end_round_button_pressed() -> void:
 	end_round_button.disabled = false
 	view_deck_button.disabled = false
 	view_discard_button.disabled = false
-	hand.set_all_draggable(true)
+	hand.set_all_draggable(true, not has_dialog)
 	can_display_tooltip = true
 	for point in drop_points.get_children():
 		point.check_for_start_tooltip()
@@ -415,7 +421,7 @@ func draw_cards(num_cards: int) -> void:
 	for _idx in range(num_cards):
 		await draw_card_single()
 
-	hand.set_all_draggable(true)
+	hand.set_all_draggable(true, not has_dialog)
 
 
 func draw_card_single() -> void:
