@@ -7,7 +7,7 @@
 script = ExtResource("2_lv2et")
 name = "Trebuchet"
 description = "Deals 7 damage to units in a 2x2 grid."
-special_effect = "Deals damage to units in a 2x2 grid."
+special_effect = ""
 icon = ExtResource("1_6k2r7")
 rank = 3
 card_role = "Defense"
