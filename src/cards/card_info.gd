@@ -27,9 +27,7 @@ var data: CardData
 @onready var card_name: Label = %Name
 @onready var icon: TextureRect = %Icon
 @onready var description: Label = %Description
-@onready var rank_label: Label = %RankLabel
 @onready var rank_icon: TextureRect = %RankIcon
-@onready var stats: GridContainer = %Stats
 
 # Built-in Functions
 
