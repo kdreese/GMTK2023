@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardPool" load_steps=15 format=3 uid="uid://cnmua1f2c54ty"]
+[gd_resource type="Resource" script_class="CardPool" load_steps=17 format=3 uid="uid://cnmua1f2c54ty"]
 
 [ext_resource type="Resource" uid="uid://dn8ng7laqd7mk" path="res://src/cards/defense/archer_3.tres" id="1_vhvvq"]
 [ext_resource type="Script" path="res://src/cards/card_pool.gd" id="1_yetjj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://dfg337lxjiubf" path="res://src/cards/defense/trebuchet_3.tres" id="5_c6alt"]
 [ext_resource type="Resource" uid="uid://4jigsl24yqat" path="res://src/cards/defense/barricade_3.tres" id="6_0jnob"]
 [ext_resource type="Resource" uid="uid://bwajg4tma882t" path="res://src/cards/defense/eagle_eye_3.tres" id="7_e6uiq"]
+[ext_resource type="Resource" uid="uid://b8j4n44kaefgx" path="res://src/cards/defense/mobilize_3.tres" id="8_ccdmt"]
 
 [sub_resource type="Resource" id="Resource_csjey"]
 script = ExtResource("2_h2m58")
@@ -39,6 +40,11 @@ script = ExtResource("2_h2m58")
 card = ExtResource("7_e6uiq")
 quantity = 1
 
+[sub_resource type="Resource" id="Resource_r018b"]
+script = ExtResource("2_h2m58")
+card = ExtResource("8_ccdmt")
+quantity = 1
+
 [resource]
 script = ExtResource("1_yetjj")
-entries = Array[ExtResource("2_h2m58")]([SubResource("Resource_csjey"), SubResource("Resource_y8rho"), SubResource("Resource_iiv5h"), SubResource("Resource_lflcc"), SubResource("Resource_lsrs8"), SubResource("Resource_w1vxq")])
+entries = Array[ExtResource("2_h2m58")]([SubResource("Resource_csjey"), SubResource("Resource_y8rho"), SubResource("Resource_iiv5h"), SubResource("Resource_lflcc"), SubResource("Resource_lsrs8"), SubResource("Resource_w1vxq"), SubResource("Resource_r018b")])

@@ -12,7 +12,13 @@ extends CardAction
 
 
 # Constants
+const POOLS: Array[CardPool] = [
+	preload("res://src/cards/attack/attack_1_pool.tres"),
+	preload("res://src/cards/attack/attack_2_pool.tres"),
+	preload("res://src/cards/attack/attack_3_pool.tres"),
+]
 
+const NUM_CARDS = 2
 
 # Exported Variables
 
@@ -38,7 +44,7 @@ func can_perform(grid_pos: Vector2i, is_enemy: bool) -> bool:
 	if archer == null or not (archer is RangedUnit):
 		return false
 
-	if data.rank + 1 < archer.rank:
+	if data.rank < archer.rank:
 		return false
 
 	return true
@@ -59,7 +65,13 @@ func perform_action(grid_pos: Vector2i, is_enemy: bool) -> void:
 		drop_point.close_tooltip()
 
 	if not is_enemy:
-		game.draw_cards(rank + 1)
+		# Rank is 1-indexed, arrays are 0-indexed.
+		var pool := POOLS[rank - 1]
+		pool.reset()
+		for _idx in range(NUM_CARDS):
+			var card := DualCardData.new(pool.take_card(), null)
+			card.single_use = true
+			await game.draw_specific_card(card)
 
 
 func negative_effects(grid_pos: Vector2i) -> Array[Vector2i]:

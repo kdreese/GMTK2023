@@ -1,6 +1,6 @@
 # @tool
 class_name CardInfo
-extends Node
+extends Control
 
 ## Docstring
 
@@ -27,7 +27,9 @@ var data: CardData
 @onready var card_name: Label = %Name
 @onready var icon: TextureRect = %Icon
 @onready var description: Label = %Description
+@onready var rank_label: Label = %RankLabel
 @onready var rank_icon: TextureRect = %RankIcon
+@onready var stats: GridContainer = %Stats
 
 # Built-in Functions
 
@@ -35,11 +37,17 @@ var data: CardData
 # Other Functions
 func initialize(_data: CardData) -> void:
 	self.data = _data
+	if self.data == null:
+		hide()
+		return
+	else:
+		show()
 	card_name.text = data.name
 	Util.fit_text(card_name, MAX_FONT_SIZE)
 
 	icon.texture = data.icon
 	description.text = data.description
+	Util.fit_text_wrap(description, MAX_FONT_SIZE)
 	rank_icon.texture = Util.rank_to_texture(data.rank)
 	if data.card_role == "Attack":
 		background.texture = preload("res://assets/attack_card.png")
