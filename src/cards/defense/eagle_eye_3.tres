@@ -6,20 +6,20 @@
 [resource]
 script = ExtResource("2_i36n8")
 name = "Eagle Eye"
-description = "Increase the range of your archer units by 2 for this turn."
+description = "Give your archers +2 range and +3 damage for this turn."
 special_effect = ""
 icon = ExtResource("1_fr0wk")
 rank = 3
 card_role = "Defense"
 health = 0
 movement = 0
-damage = 0
+damage = 3
 att_range = 2
 special = true
-info_show_flags = 8
+info_show_flags = 12
 stat_string_overrides = {
 "att_range": "+2",
-"damage": "",
+"damage": "+3",
 "health": "",
 "movement": ""
 }
