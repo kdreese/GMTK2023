@@ -78,12 +78,12 @@ func remove_card(card: DualCard) -> void:
 
 
 ## Set all cards to be either draggable or not, depending on the parameter passed in.
-func set_all_draggable(draggable: bool) -> void:
+func set_all_draggable(draggable: bool, should_raise := true) -> void:
 	for card in cards:
 		card.draggable = draggable
 
 	# If we are enabling dragging, check to see if the mouse is on a card, if so activate it.
-	if draggable:
+	if draggable and should_raise:
 		raise_if_mouse_inside(false)
 
 

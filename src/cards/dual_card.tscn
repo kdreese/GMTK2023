@@ -59,6 +59,7 @@ texture = ExtResource("2_ehnn1")
 expand_mode = 1
 
 [node name="AttackLabel" type="Label" parent="."]
+texture_filter = 2
 layout_mode = 0
 offset_left = 21.0
 offset_top = 1.0
@@ -90,6 +91,7 @@ texture = SubResource("AtlasTexture_culc3")
 stretch_mode = 2
 
 [node name="HealthLabel" type="Label" parent="AttackStats"]
+texture_filter = 2
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -106,6 +108,7 @@ texture = SubResource("AtlasTexture_sm6t0")
 stretch_mode = 2
 
 [node name="MvmtLabel" type="Label" parent="AttackStats"]
+texture_filter = 2
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -122,6 +125,7 @@ texture = SubResource("AtlasTexture_xabr1")
 stretch_mode = 2
 
 [node name="AttLabel" type="Label" parent="AttackStats"]
+texture_filter = 2
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -138,6 +142,7 @@ texture = SubResource("AtlasTexture_5wh2e")
 stretch_mode = 2
 
 [node name="RangeLabel" type="Label" parent="AttackStats"]
+texture_filter = 2
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -154,6 +159,7 @@ texture = SubResource("AtlasTexture_052hy")
 stretch_mode = 2
 
 [node name="SpecialLabel" type="Label" parent="AttackStats"]
+texture_filter = 2
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -182,6 +188,7 @@ mouse_filter = 2
 texture = ExtResource("5_t14rv")
 
 [node name="DefenseLabel" type="Label" parent="."]
+texture_filter = 2
 layout_mode = 0
 offset_left = 21.0
 offset_top = 20.0
@@ -213,6 +220,7 @@ texture = SubResource("AtlasTexture_culc3")
 stretch_mode = 2
 
 [node name="HealthLabel" type="Label" parent="DefenseStats"]
+texture_filter = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
@@ -228,6 +236,7 @@ texture = SubResource("AtlasTexture_sm6t0")
 stretch_mode = 2
 
 [node name="MvmtLabel" type="Label" parent="DefenseStats"]
+texture_filter = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
@@ -243,6 +252,7 @@ texture = SubResource("AtlasTexture_xabr1")
 stretch_mode = 2
 
 [node name="AttLabel" type="Label" parent="DefenseStats"]
+texture_filter = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
@@ -258,6 +268,7 @@ texture = SubResource("AtlasTexture_5wh2e")
 stretch_mode = 2
 
 [node name="RangeLabel" type="Label" parent="DefenseStats"]
+texture_filter = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
@@ -273,6 +284,7 @@ texture = SubResource("AtlasTexture_052hy")
 stretch_mode = 2
 
 [node name="SpecialLabel" type="Label" parent="DefenseStats"]
+texture_filter = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
