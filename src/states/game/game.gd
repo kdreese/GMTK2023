@@ -618,7 +618,7 @@ func check_for_end_condition() -> void:
 	if red_castle_health_bar.current_health <= 0:
 		play_sound(SoundEffect.WIN)
 		if Global.curr_stage >= 5 and not Global.endless_mode:
-			get_tree().change_scene_to_file("res://src/states/menu/win_screen.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://src/states/menu/win_screen.tscn")
 		game_over = true
 		end_round_button.hide()
 		view_deck_button.hide()
@@ -632,7 +632,7 @@ func check_for_end_condition() -> void:
 		card_drafting.show()
 	elif blue_castle_health_bar.current_health <= 0:
 		game_over = true
-		get_tree().change_scene_to_file("res://src/states/menu/lose_screen.tscn")	# Game over screen
+		get_tree().change_scene_to_file.call_deferred("res://src/states/menu/lose_screen.tscn")	# Game over screen
 
 
 func _on_view_deck_button_pressed() -> void:

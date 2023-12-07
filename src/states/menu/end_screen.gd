@@ -14,4 +14,4 @@ func _ready() -> void:
 
 
 func to_menu() -> void:
-	get_tree().change_scene_to_file("res://src/states/menu/menu.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://src/states/menu/menu.tscn")
