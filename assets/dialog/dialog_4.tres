@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Dialog" load_steps=6 format=3 uid="uid://hsmwnl4md25t"]
+[gd_resource type="Resource" script_class="Dialog" load_steps=8 format=3 uid="uid://hsmwnl4md25t"]
 
 [ext_resource type="Script" path="res://src/ui/dialog_line.gd" id="1_3ans1"]
 [ext_resource type="Script" path="res://src/ui/dialog.gd" id="1_oe5u1"]
@@ -13,11 +13,21 @@ script = ExtResource("1_3ans1")
 speaker = "Military Advisor"
 text = "This card can be used for either [b]attack[/b] or [b]defense[/b], but not both. Choose wisely!"
 
+[sub_resource type="Resource" id="Resource_h1bdr"]
+script = ExtResource("1_3ans1")
+speaker = "Military Advisor"
+text = "You can also choose not to use this card and save it for later."
+
 [sub_resource type="Resource" id="Resource_t3w0u"]
 script = ExtResource("1_3ans1")
 speaker = "Military Advisor"
-text = "If you're unsure about what a card does, drag it onto the help icon in the bottom left corner. Godspeed."
+text = "If you're unsure about what a card does, drag it onto the help icon in the bottom left corner."
+
+[sub_resource type="Resource" id="Resource_6ps5f"]
+script = ExtResource("1_3ans1")
+speaker = "Military Advisor"
+text = "Once you've made your decision, don't forget to press the [b]end turn[/b] button. Godspeed."
 
 [resource]
 script = ExtResource("1_oe5u1")
-lines = Array[ExtResource("1_3ans1")]([SubResource("Resource_p1ga0"), SubResource("Resource_y6vqv"), SubResource("Resource_t3w0u")])
+lines = Array[ExtResource("1_3ans1")]([SubResource("Resource_p1ga0"), SubResource("Resource_y6vqv"), SubResource("Resource_h1bdr"), SubResource("Resource_t3w0u"), SubResource("Resource_6ps5f")])
