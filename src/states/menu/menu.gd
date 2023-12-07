@@ -27,7 +27,7 @@ func endless() -> void:
 func play_game() -> void:
 	Global.curr_stage = 0
 	Global.populate_deck()
-	get_tree().change_scene_to_file("res://src/states/game/game.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://src/states/game/game.tscn")
 
 
 func show_options() -> void:

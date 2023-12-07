@@ -27,7 +27,7 @@ func fade_in_title() -> void:
 
 
 func go_to_menu() -> void:
-	get_tree().change_scene_to_packed(MENU)
+	get_tree().change_scene_to_packed.call_deferred(MENU)
 
 
 func skip_cutscene() -> void:

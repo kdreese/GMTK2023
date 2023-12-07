@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_hk54f")
 name = "Lightning"
-description = "Deal 10 damage to the opposing castle but 5 damage to each unit next to the castle"
+description = "Deal 10 damage to the opposing castle but 3 damage to each unit next to the castle"
 special_effect = ""
 icon = ExtResource("1_fjyvm")
 rank = 2
@@ -19,9 +19,9 @@ special = true
 info_show_flags = 4
 stat_string_overrides = {
 "att_range": "",
-"damage": "10(5)",
+"damage": "10(3)",
 "health": "",
 "movement": ""
 }
 effect_script = "res://src/cards/actions/lightning.gd"
-extra_data = Array[String](["10", "5"])
+extra_data = Array[String](["10", "3"])

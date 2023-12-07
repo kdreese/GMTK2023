@@ -6,13 +6,13 @@
 [resource]
 script = ExtResource("1_wrmt6")
 name = "Charge"
-description = "Increase the speed of all your melee units by 1 for this turn."
+description = "Increase the speed of all your melee units by 2 for this turn."
 special_effect = ""
 icon = ExtResource("1_5hlph")
 rank = 1
 card_role = "Attack"
 health = 0
-movement = 1
+movement = 2
 damage = 0
 att_range = 0
 special = true
