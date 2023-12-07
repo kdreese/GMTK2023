@@ -41,7 +41,8 @@ func perform_action(_grid_pos: Vector2i, is_enemy: bool) -> void:
 
 
 func positive_effects(_grid_pos: Vector2i) -> Array[Vector2i]:
-	var units: Array[RangedUnit] = ranged_units.get_children().filter(ally_filter_func)
+	var units: Array[RangedUnit] = []
+	units.assign(ranged_units.get_children().filter(ally_filter_func))
 	var positions: Array[Vector2i] = []
 	for unit in units:
 		positions.append(unit.grid_position)
