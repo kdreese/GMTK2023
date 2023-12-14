@@ -20,7 +20,7 @@ File | Author | License
 --- | --- | ---
 `assets/music/*` | Andrew Moore | [CC BY-NC 4.0]
 `assets/fonts/bailleul_roman/fonts/*` | Jorge de Buen, Igino Marini, Omnibus-Type | [OFL](assets/fonts/bailleul_roman/LICENSE.txt)
-`assets/fonts/engravers/*.ttf` | Peter Wiegel | [OFL](assets/fonts/engravers/Open Font License.txt)
+`assets/fonts/engravers/*.ttf` | Peter Wiegel | [OFL](assets/fonts/engravers/Open%20Font%20License.txt)
 `assets/*` (excluding music and fonts) | Terry Hearst, Andrew Moore, and Kyle Reese | [CC0] (Public domain)
 
 [CC0]: https://creativecommons.org/share-your-work/public-domain/cc0/
