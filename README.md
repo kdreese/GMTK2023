@@ -8,7 +8,7 @@ This game was made with [Godot Engine](https://godotengine.org/) 4.2.1. To open 
 
 ## Attribution
 
-As a Godot game, this game uses open source code that requires attribution, as well as a font file requires attribution. For details, go to the credits menu in game.
+As a Godot game, this game uses open source code that requires attribution, as well as font files which require attribution. For details, go to the credits menu in game.
 
 ## Asset Licenses
 
@@ -19,7 +19,9 @@ For the assets, we've created them ourselves (with the exception of the fonts) a
 File | Author | License
 --- | --- | ---
 `assets/music/*` | Andrew Moore | [CC BY-NC 4.0]
-`assets/*` (excluding music) | All | [CC0] (Public domain)
+`assets/fonts/bailleul_roman/fonts/*` | Jorge de Buen, Igino Marini, Omnibus-Type | [OFL](assets/fonts/bailleul_roman/LICENSE.txt)
+`assets/fonts/engravers/*.ttf` | Peter Wiegel | [OFL](assets/fonts/engravers/Open Font License.txt)
+`assets/*` (excluding music and fonts) | All | [CC0] (Public domain)
 
 [CC0]: https://creativecommons.org/share-your-work/public-domain/cc0/
 [CC BY-NC 4.0]: https://creativecommons.org/licenses/by-nc/4.0/
