@@ -73,12 +73,12 @@ vertical_alignment = 1
 [node name="AttackStats" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 41.0
+offset_top = 43.0
 offset_right = 28.0
-offset_bottom = 105.0
+offset_bottom = 107.0
 mouse_filter = 2
 theme_override_constants/h_separation = 2
-theme_override_constants/v_separation = -4
+theme_override_constants/v_separation = -2
 columns = 2
 metadata/_edit_group_ = true
 
@@ -202,12 +202,12 @@ vertical_alignment = 1
 [node name="DefenseStats" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 94.0
+offset_top = 95.0
 offset_right = 22.0
-offset_bottom = 158.0
+offset_bottom = 159.0
 mouse_filter = 2
 theme_override_constants/h_separation = 2
-theme_override_constants/v_separation = -4
+theme_override_constants/v_separation = -2
 columns = 2
 metadata/_edit_group_ = true
 
