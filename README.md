@@ -19,7 +19,7 @@ For the assets, we've created them ourselves (with the exception of the fonts) a
 File | Author | License
 --- | --- | ---
 `assets/music/*` | Andrew Moore | [CC BY-NC 4.0]
-`assets/*` (excluding previous entries) | All | [CC0] (Public domain)
+`assets/*` (excluding music) | All | [CC0] (Public domain)
 
 [CC0]: https://creativecommons.org/share-your-work/public-domain/cc0/
 [CC BY-NC 4.0]: https://creativecommons.org/licenses/by-nc/4.0/
