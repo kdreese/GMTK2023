@@ -487,7 +487,7 @@ func instant_defensive_damage() -> void:
 		var target: Node = null
 		for x_pos in range(7, 7 - attack_range, -1):
 			target = get_unit(Vector2i(x_pos, unit.grid_position.y))
-			if target != null:
+			if target != null and not (target is BarricadeUnit):
 				break
 
 		if target == null:
