@@ -846,7 +846,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
-color = Color(0, 0, 0, 0.392157)
+color = Color(0, 0, 0, 0.627451)
 script = ExtResource("4_ss1ks")
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/CardDrafting"]
