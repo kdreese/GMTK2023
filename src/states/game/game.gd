@@ -41,7 +41,7 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var text_box: TextBox = %TextBox
 @onready var card_info_viewer: Panel = %CardInfoViewer
 @onready var enemy_card: Control = $EnemyCard
-@onready var card_viewer: Control = %CardViewer
+@onready var deck_viewer: Control = %DeckViewer
 @onready var hand: Hand = %Hand
 @onready var attack_script_node: Node = %AttackScriptNode
 @onready var defense_script_node: Node = %DefenseScriptNode
@@ -70,7 +70,7 @@ func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
-	card_viewer.close_requested.connect(close_card_viewer)
+	deck_viewer.close_requested.connect(close_card_viewer)
 	var blue_health: int
 	var red_health: int
 	var rh_size := ROUND_HEALTHS.size()
@@ -642,17 +642,17 @@ func check_for_end_condition() -> void:
 
 
 func _on_view_deck_button_pressed() -> void:
-	card_viewer.update_cards(deck)
-	card_viewer.show()
-	pause(card_viewer)
+	deck_viewer.update_cards(deck)
+	deck_viewer.show()
+	pause(deck_viewer)
 
 
 func _on_view_discard_button_pressed() -> void:
-	card_viewer.update_cards(discard)
-	card_viewer.show()
-	pause(card_viewer)
+	deck_viewer.update_cards(discard)
+	deck_viewer.show()
+	pause(deck_viewer)
 
 
 func close_card_viewer() -> void:
-	card_viewer.hide()
+	deck_viewer.hide()
 	resume()
