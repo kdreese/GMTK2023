@@ -91,7 +91,7 @@ func check_for_start_tooltip() -> void:
 func close_tooltip() -> void:
 	if open_tooltip:
 		open_tooltip.queue_free()
-		game.find_child("CanvasLayer").remove_child(open_tooltip)
+		game.remove_child(open_tooltip)
 		open_tooltip = null
 	tooltip_delay.stop()
 
@@ -100,5 +100,5 @@ func _on_tooltip_delay_timeout() -> void:
 	if not is_mouse_inside or not game.get_unit(grid_position):
 		return
 	open_tooltip = Tooltip.instantiate()
-	game.find_child("CanvasLayer").add_child(open_tooltip)
+	game.add_child(open_tooltip)
 	open_tooltip.initialize(game.get_unit(grid_position))

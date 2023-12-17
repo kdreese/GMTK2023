@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3g1a5d2yvvv1"]
+[gd_scene load_steps=8 format=3 uid="uid://c3g1a5d2yvvv1"]
 
 [ext_resource type="Script" path="res://src/ui/tooltip.gd" id="1_kdm6u"]
 [ext_resource type="Texture2D" uid="uid://pofb034lf2kp" path="res://assets/icons/tiny_icons.png" id="2_gyvbg"]
@@ -26,6 +26,10 @@ region = Rect2(0, 0, 10, 10)
 [sub_resource type="AtlasTexture" id="AtlasTexture_hjuo1"]
 atlas = ExtResource("2_gyvbg")
 region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smdte"]
+atlas = ExtResource("2_gyvbg")
+region = Rect2(30, 2.08165e-12, 10, 10)
 
 [node name="Tooltip" type="CenterContainer"]
 offset_left = -100.0
@@ -87,6 +91,17 @@ texture = SubResource("AtlasTexture_hjuo1")
 expand_mode = 3
 
 [node name="MoveAmt" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RangeIcon" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+texture = SubResource("AtlasTexture_smdte")
+expand_mode = 3
+
+[node name="RangeAmt" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
