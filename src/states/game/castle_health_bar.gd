@@ -4,6 +4,7 @@ extends Control
 
 @onready var health_bar: ProgressBar = $V/HealthBar
 @onready var health_label: Label = $V/P/M/HealthText
+@onready var damage_text: Control = $DamageText
 
 
 var max_health: int
@@ -18,6 +19,7 @@ func initialize(init_health: int) -> void:
 
 func modify_health(amount: int) -> void:
 	current_health = clampi(current_health + amount, 0, max_health)
+	damage_text.play(amount)
 	update()
 
 

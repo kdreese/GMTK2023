@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ng2ml31k6uhf"]
+[gd_scene load_steps=11 format=3 uid="uid://ng2ml31k6uhf"]
 
 [ext_resource type="Script" path="res://src/units/melee_unit.gd" id="1_vl7n3"]
 [ext_resource type="Texture2D" uid="uid://ce786en8ql3ui" path="res://assets/icons/sword.png" id="2_np7h3"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://drg2lkedfr7cw" path="res://assets/sounds/step2.wav" id="6_xodv2"]
 [ext_resource type="AudioStream" uid="uid://4mluohnh8qy7" path="res://assets/sounds/step3.wav" id="7_wgfxq"]
 [ext_resource type="AudioStream" uid="uid://dujxbwkn67wog" path="res://assets/sounds/damage.wav" id="8_plx1h"]
+[ext_resource type="PackedScene" uid="uid://cg44ic3g3k7pu" path="res://src/ui/damage_text.tscn" id="9_8i325"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17boe"]
 bg_color = Color(0, 0, 0, 1)
@@ -65,3 +66,7 @@ bus = &"Sounds"
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_plx1h")
 bus = &"Sounds"
+
+[node name="DamageText" parent="." instance=ExtResource("9_8i325")]
+unique_name_in_owner = true
+visible = false

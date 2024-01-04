@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=34 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="StyleBox" uid="uid://mvv732gy1ops" path="res://src/ui/health_bar_fill_red_big.tres" id="5_vb25m"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
+[ext_resource type="PackedScene" uid="uid://cg44ic3g3k7pu" path="res://src/ui/damage_text.tscn" id="6_thed1"]
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
 [ext_resource type="Texture2D" uid="uid://dlbhstwqe15et" path="res://assets/masks/unit_deploy.png" id="9_is28s"]
 [ext_resource type="PackedScene" uid="uid://dpufvlfgtfiqx" path="res://src/ui/card_info_viewer.tscn" id="10_mwn7i"]
@@ -181,6 +182,14 @@ value = 0.5
 fill_mode = 1
 show_percentage = false
 
+[node name="DamageText" parent="RedCastleHealthBar" instance=ExtResource("6_thed1")]
+visible = false
+offset_left = 187.0
+offset_top = -55.0
+offset_right = 187.0
+offset_bottom = -55.0
+scale = Vector2(2, 2)
+
 [node name="BlueCastleHealthBar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -231,6 +240,14 @@ theme_override_styles/fill = ExtResource("4_ce63q")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="DamageText" parent="BlueCastleHealthBar" instance=ExtResource("6_thed1")]
+visible = false
+offset_left = 89.0
+offset_top = -54.0
+offset_right = 89.0
+offset_bottom = -54.0
+scale = Vector2(2, 2)
 
 [node name="EndlessRoundPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -765,6 +782,7 @@ metadata/_edit_lock_ = true
 polygon = PackedVector2Array(-10, -17, -24, 18, 11, 18, 25, -17)
 
 [node name="InfoDropPoint" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="InfoIcon" type="Sprite2D" parent="InfoDropPoint"]
 position = Vector2(60, 400)
@@ -781,9 +799,15 @@ polygon = PackedVector2Array(-17, -17, -17, 17, 17, 17, 17, -17)
 
 [node name="AttackBridgePoint" type="Marker2D" parent="."]
 position = Vector2(423, 117)
+metadata/_edit_lock_ = true
 
 [node name="DefenseBridgePoint" type="Marker2D" parent="."]
 position = Vector2(211, 293)
+metadata/_edit_lock_ = true
+
+[node name="Hand" parent="." instance=ExtResource("19_xix3b")]
+unique_name_in_owner = true
+metadata/_edit_lock_ = true
 
 [node name="MaskCanvasLayer" type="CanvasLayer" parent="."]
 
@@ -805,39 +829,11 @@ texture = ExtResource("10_o06tk")
 
 [node name="CardCanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Hand" parent="CardCanvasLayer" instance=ExtResource("19_xix3b")]
-unique_name_in_owner = true
-metadata/_edit_lock_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 513.0
-offset_top = 338.0
-offset_right = 628.0
-offset_bottom = 456.0
-
-[node name="EndRoundButton" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-text = "End Turn"
-
-[node name="ViewDeckButton" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "View Deck"
-
-[node name="ViewDiscardButton" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "View Discard"
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="CardInfoViewer" parent="CanvasLayer" instance=ExtResource("10_mwn7i")]
+[node name="CardInfoViewer" parent="CardCanvasLayer" instance=ExtResource("10_mwn7i")]
 unique_name_in_owner = true
 visible = false
 
-[node name="CardDrafting" type="ColorRect" parent="CanvasLayer"]
+[node name="CardDrafting" type="ColorRect" parent="CardCanvasLayer"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 15
@@ -849,7 +845,7 @@ size_flags_vertical = 4
 color = Color(0, 0, 0, 0.627451)
 script = ExtResource("4_ss1ks")
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/CardDrafting"]
+[node name="CenterContainer" type="CenterContainer" parent="CardCanvasLayer/CardDrafting"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -857,27 +853,57 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CardCanvasLayer/CardDrafting/CenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="DraftText" type="Label" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+[node name="DraftText" type="Label" parent="CardCanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Choose a card to add to your deck!"
 horizontal_alignment = 1
 
-[node name="CardChoices" type="HBoxContainer" parent="CanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
+[node name="CardChoices" type="HBoxContainer" parent="CardCanvasLayer/CardDrafting/CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="TextBox" parent="CanvasLayer" instance=ExtResource("7_ju0gj")]
+[node name="DeckViewer" parent="CardCanvasLayer" instance=ExtResource("12_tdele")]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+offset_left = 513.0
+offset_top = 338.0
+offset_right = 628.0
+offset_bottom = 456.0
+metadata/_edit_lock_ = true
+
+[node name="EndRoundButton" type="Button" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "End Turn"
+
+[node name="ViewDeckButton" type="Button" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "View Deck"
+
+[node name="ViewDiscardButton" type="Button" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "View Discard"
+
+[node name="TextBox" parent="." instance=ExtResource("7_ju0gj")]
 unique_name_in_owner = true
 visible = false
 
-[node name="PauseMenu" type="ColorRect" parent="CanvasLayer"]
+[node name="Menus" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" type="ColorRect" parent="Menus"]
 unique_name_in_owner = true
 process_mode = 3
 visible = false
@@ -889,7 +915,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
 script = ExtResource("3_3a4py")
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PauseMenu"]
+[node name="CenterContainer" type="CenterContainer" parent="Menus/PauseMenu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -897,35 +923,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menus/PauseMenu/CenterContainer"]
 layout_mode = 2
 
-[node name="PauseTitle" type="Label" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+[node name="PauseTitle" type="Label" parent="Menus/PauseMenu/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Paused"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menus/PauseMenu/CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="Menus/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Resume"
 
-[node name="OptionsButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="Menus/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Options"
 
-[node name="ToMenuButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="ToMenuButton" type="Button" parent="Menus/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit to Menu"
 
-[node name="OptionsMenu" parent="CanvasLayer" instance=ExtResource("5_xdl8y")]
-unique_name_in_owner = true
-process_mode = 3
-visible = false
-
-[node name="CardViewer" parent="CanvasLayer" instance=ExtResource("12_tdele")]
+[node name="OptionsMenu" parent="Menus" instance=ExtResource("5_xdl8y")]
 unique_name_in_owner = true
 process_mode = 3
 visible = false
@@ -1026,15 +1047,15 @@ stream = ExtResource("26_f8oyd")
 position = Vector2(60, 240)
 stream = ExtResource("26_f8oyd")
 
-[connection signal="dragged" from="CardCanvasLayer/Hand" to="." method="on_card_dragged"]
-[connection signal="dropped" from="CardCanvasLayer/Hand" to="." method="_on_card_dropped"]
-[connection signal="pressed" from="VBoxContainer/EndRoundButton" to="." method="_on_end_round_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/ViewDiscardButton" to="." method="_on_view_discard_button_pressed"]
-[connection signal="resumed" from="CanvasLayer/PauseMenu" to="." method="resume"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="show_options"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="CanvasLayer/PauseMenu" method="_on_to_menu_button_pressed"]
+[connection signal="dragged" from="Hand" to="." method="on_card_dragged"]
+[connection signal="dropped" from="Hand" to="." method="_on_card_dropped"]
+[connection signal="pressed" from="Buttons/EndRoundButton" to="." method="_on_end_round_button_pressed"]
+[connection signal="pressed" from="Buttons/ViewDeckButton" to="." method="_on_view_deck_button_pressed"]
+[connection signal="pressed" from="Buttons/ViewDiscardButton" to="." method="_on_view_discard_button_pressed"]
+[connection signal="resumed" from="Menus/PauseMenu" to="." method="resume"]
+[connection signal="pressed" from="Menus/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="Menus/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Menus/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="show_options"]
+[connection signal="pressed" from="Menus/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ToMenuButton" to="Menus/PauseMenu" method="_on_to_menu_button_pressed"]
 
 [editable path="DropPoints/0-0"]
 [editable path="DropPoints/0-1"]

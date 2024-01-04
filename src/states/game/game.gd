@@ -41,7 +41,7 @@ const COPY_ROUND_DOWNTIME = 3
 @onready var text_box: TextBox = %TextBox
 @onready var card_info_viewer: Panel = %CardInfoViewer
 @onready var enemy_card: Control = $EnemyCard
-@onready var card_viewer: Control = %CardViewer
+@onready var deck_viewer: Control = %DeckViewer
 @onready var hand: Hand = %Hand
 @onready var attack_script_node: Node = %AttackScriptNode
 @onready var defense_script_node: Node = %DefenseScriptNode
@@ -70,15 +70,15 @@ func _ready() -> void:
 	options_menu.get_node("%BackButton").pressed.connect(hide_options)
 	text_box.text_finished.connect(on_text_finish)
 	text_box.text_started.connect(on_text_start)
-	card_viewer.close_requested.connect(close_card_viewer)
+	deck_viewer.close_requested.connect(close_card_viewer)
 	var blue_health: int
 	var red_health: int
 	var rh_size := ROUND_HEALTHS.size()
 	if Global.curr_stage >= rh_size:
-		var blue_diff: int = ROUND_HEALTHS[rh_size - 1][0] - ROUND_HEALTHS[rh_size - 2][0]
-		var red_diff: int = ROUND_HEALTHS[rh_size - 1][1] - ROUND_HEALTHS[rh_size - 2][1]
-		blue_health = ROUND_HEALTHS[rh_size - 1][0] + (Global.curr_stage + 1 - rh_size) * blue_diff
-		red_health = ROUND_HEALTHS[rh_size - 1][1] + (Global.curr_stage + 1 - rh_size) * red_diff
+		var blue_diff: int = ROUND_HEALTHS[-1][0] - ROUND_HEALTHS[-2][0]
+		var red_diff: int = ROUND_HEALTHS[-1][1] - ROUND_HEALTHS[-2][1]
+		blue_health = ROUND_HEALTHS[-1][0] + (Global.curr_stage + 1 - rh_size) * blue_diff
+		red_health = ROUND_HEALTHS[-1][1] + (Global.curr_stage + 1 - rh_size) * red_diff
 	else:
 		blue_health = ROUND_HEALTHS[Global.curr_stage][0]
 		red_health = ROUND_HEALTHS[Global.curr_stage][1]
@@ -376,8 +376,8 @@ func _on_card_dropped(card: DualCard) -> void:
 			discard.append(card.card_data)
 		hand.remove_card(card)
 		end_round_button.disabled = true
-		@warning_ignore("redundant_await") # Not all need the await call
 		hand.set_all_draggable(false)
+		@warning_ignore("redundant_await") # Not all need the await call
 		await script_node.perform_action(grid_pos, false)
 		if not Global.card_current_moves.has(curr_round):
 			Global.card_current_moves[curr_round] = []
@@ -504,9 +504,7 @@ func instant_defensive_damage() -> void:
 		unit.play_shoot_sound()
 		await wait_for_timer(Global.animation_speed)
 		# Do the attack.
-		target.health -= unit.attack_damage
-		target.update_health_bar()
-		target.play_damage_sound()
+		target.modify_health(-unit.attack_damage)
 		await wait_for_timer(Global.animation_speed)
 		# Kill the target, if necessary.
 		if target.health <= 0:
@@ -573,8 +571,7 @@ func melee_attack(unit: Unit, attack_target: BarricadeUnit = null) -> void:
 		check_for_end_condition()
 		if game_over:
 			return
-		unit.health -= unit.recoil
-		unit.update_health_bar()
+		unit.modify_health(-unit.recoil)
 	else:
 		attack_target.play_hit_barricade_sound()
 		if unit.grid_position.y > 2:
@@ -642,17 +639,17 @@ func check_for_end_condition() -> void:
 
 
 func _on_view_deck_button_pressed() -> void:
-	card_viewer.update_cards(deck)
-	card_viewer.show()
-	pause(card_viewer)
+	deck_viewer.update_cards(deck)
+	deck_viewer.show()
+	pause(deck_viewer)
 
 
 func _on_view_discard_button_pressed() -> void:
-	card_viewer.update_cards(discard)
-	card_viewer.show()
-	pause(card_viewer)
+	deck_viewer.update_cards(discard)
+	deck_viewer.show()
+	pause(deck_viewer)
 
 
 func close_card_viewer() -> void:
-	card_viewer.hide()
+	deck_viewer.hide()
 	resume()

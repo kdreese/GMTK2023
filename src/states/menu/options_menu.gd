@@ -8,8 +8,7 @@ const ANIMATION_SPEED_STRINGS = ["Very Slow", "Slow", "Normal", "Fast", "Hypersp
 @onready var sound_volume_value: Label = %SoundVolumeValue
 @onready var music_volume_slider: HSlider = %MusicVolumeSlider
 @onready var music_volume_value: Label = %MusicVolumeValue
-@onready var anim_speed_slider: HSlider = %AnimSpeedSlider
-@onready var anim_speed_value: Label = %AnimSpeedValue
+@onready var anim_speed_select: OptionButton = %AnimSpeedSelect
 @onready var fullscreen_button: CheckButton = %FullscreenButton
 
 
@@ -18,8 +17,8 @@ func _ready() -> void:
 		fullscreen_button.set_pressed_no_signal(true)
 	Global.fullscreen_changed.connect(on_fullscreen_changed)
 	var anim_speed_idx: int = Global.config["anim_speed_idx"]
-	anim_speed_slider.set_value_no_signal(anim_speed_idx)
-	anim_speed_value.text = ANIMATION_SPEED_STRINGS[int(anim_speed_idx)]
+	anim_speed_select.select(anim_speed_idx)
+	anim_speed_select.get_popup().add_theme_font_size_override("font_size", 12)
 	var sound_volume := Global.get_sound_volume()
 	sound_volume_slider.set_value_no_signal(sound_volume)
 	sound_volume_value.text = "%d" % (sound_volume * 100)
@@ -42,12 +41,9 @@ func on_music_volume_slider_change(value: float) -> void:
 	music_volume_value.text = "%d" % (value * 100)
 
 
-func on_anim_speed_slider_change(value: float) -> void:
-	var int_value := int(value)
-	Global.config["anim_speed_idx"] = int_value
-	Global.animation_speed = Global.ANIMATION_SPEEDS[int_value]
-	anim_speed_value.text = ANIMATION_SPEED_STRINGS[int_value]
-
+func on_anim_speed_select(index: int) -> void:
+	Global.config["anim_speed_idx"] = index
+	Global.animation_speed = Global.ANIMATION_SPEEDS[index]
 
 func on_fullscreen_button_toggle(pressed: bool) -> void:
 	Global.set_fullscreen(pressed)

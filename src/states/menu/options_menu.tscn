@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvm32wjy7xf4r"]
+[gd_scene load_steps=5 format=3 uid="uid://cvm32wjy7xf4r"]
 
 [ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="1_8gs41"]
 [ext_resource type="Script" path="res://src/states/menu/options_menu.gd" id="1_gx872"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jcwp3"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_1yjrh"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -43,35 +57,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jcwp3")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Fullscreen"
 
-[node name="FullscreenButton" type="CheckButton" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="FullscreenButton" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="SoundVolumeLabel" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="SoundVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Sound Volume"
 horizontal_alignment = 2
 
-[node name="SoundVolumeSlider" type="HSlider" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="SoundVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 2.08165e-12)
 layout_mode = 2
@@ -80,19 +105,19 @@ max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="SoundVolumeValue" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="SoundVolumeValue" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 2.08165e-12)
 layout_mode = 2
 text = "50"
 
-[node name="MusicVolumeLabel" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="MusicVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Music Volume"
 horizontal_alignment = 2
 
-[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 2.08165e-12)
 layout_mode = 2
@@ -101,40 +126,49 @@ max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="MusicVolumeValue" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="MusicVolumeValue" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 2.08165e-12)
 layout_mode = 2
 text = "50"
 
-[node name="AnimSpeedLabel" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="AnimSpeedLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
 text = "Animation Speed"
-horizontal_alignment = 2
 
-[node name="AnimSpeedSlider" type="HSlider" parent="CenterContainer/VBoxContainer/GridContainer"]
+[node name="AnimSpeedSelect" type="OptionButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 2.08165e-12)
+texture_filter = 2
 layout_mode = 2
-size_flags_vertical = 4
-max_value = 4.0
-value = 2.0
-tick_count = 5
+theme = SubResource("Theme_1yjrh")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+alignment = 1
+item_count = 5
+selected = 1
+popup/item_0/text = "Very Slow"
+popup/item_0/id = 0
+popup/item_1/text = "Slow"
+popup/item_1/id = 1
+popup/item_2/text = "Medium"
+popup/item_2/id = 2
+popup/item_3/text = "Fast"
+popup/item_3/id = 3
+popup/item_4/text = "Hyperspeed"
+popup/item_4/id = 4
 
-[node name="AnimSpeedValue" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 2.08165e-12)
-layout_mode = 2
-text = "Medium"
-
-[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Back"
 
-[connection signal="toggled" from="CenterContainer/VBoxContainer/HBoxContainer/FullscreenButton" to="." method="on_fullscreen_button_toggle"]
-[connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/SoundVolumeSlider" to="." method="on_sound_volume_slider_change"]
-[connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/MusicVolumeSlider" to="." method="on_music_volume_slider_change"]
-[connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/AnimSpeedSlider" to="." method="on_anim_speed_slider_change"]
+[connection signal="toggled" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton" to="." method="on_fullscreen_button_toggle"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer/SoundVolumeSlider" to="." method="on_sound_volume_slider_change"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer/MusicVolumeSlider" to="." method="on_music_volume_slider_change"]
+[connection signal="item_selected" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/AnimSpeedSelect" to="." method="on_anim_speed_select"]
