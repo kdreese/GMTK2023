@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cwwgwkkoj7obq"]
+[gd_scene load_steps=34 format=3 uid="uid://cwwgwkkoj7obq"]
 
 [ext_resource type="Script" path="res://src/states/game/game.gd" id="1_xpc6h"]
 [ext_resource type="Texture2D" uid="uid://b3yvu1tyeua6t" path="res://assets/playfield.png" id="2_bwdb4"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://ci8f4063iraeh" path="res://assets/music/battle_1.ogg" id="5_r6md7"]
 [ext_resource type="StyleBox" uid="uid://mvv732gy1ops" path="res://src/ui/health_bar_fill_red_big.tres" id="5_vb25m"]
 [ext_resource type="PackedScene" uid="uid://cvm32wjy7xf4r" path="res://src/states/menu/options_menu.tscn" id="5_xdl8y"]
+[ext_resource type="PackedScene" uid="uid://cg44ic3g3k7pu" path="res://src/ui/damage_text.tscn" id="6_thed1"]
 [ext_resource type="PackedScene" uid="uid://bsvd5f6vvydfg" path="res://src/ui/text_box.tscn" id="7_ju0gj"]
 [ext_resource type="Texture2D" uid="uid://dlbhstwqe15et" path="res://assets/masks/unit_deploy.png" id="9_is28s"]
 [ext_resource type="PackedScene" uid="uid://dpufvlfgtfiqx" path="res://src/ui/card_info_viewer.tscn" id="10_mwn7i"]
@@ -181,6 +182,14 @@ value = 0.5
 fill_mode = 1
 show_percentage = false
 
+[node name="DamageText" parent="RedCastleHealthBar" instance=ExtResource("6_thed1")]
+visible = false
+offset_left = 187.0
+offset_top = -55.0
+offset_right = 187.0
+offset_bottom = -55.0
+scale = Vector2(2, 2)
+
 [node name="BlueCastleHealthBar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -231,6 +240,14 @@ theme_override_styles/fill = ExtResource("4_ce63q")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="DamageText" parent="BlueCastleHealthBar" instance=ExtResource("6_thed1")]
+visible = false
+offset_left = 89.0
+offset_top = -54.0
+offset_right = 89.0
+offset_bottom = -54.0
+scale = Vector2(2, 2)
 
 [node name="EndlessRoundPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -765,6 +782,7 @@ metadata/_edit_lock_ = true
 polygon = PackedVector2Array(-10, -17, -24, 18, 11, 18, 25, -17)
 
 [node name="InfoDropPoint" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="InfoIcon" type="Sprite2D" parent="InfoDropPoint"]
 position = Vector2(60, 400)
@@ -781,9 +799,11 @@ polygon = PackedVector2Array(-17, -17, -17, 17, 17, 17, 17, -17)
 
 [node name="AttackBridgePoint" type="Marker2D" parent="."]
 position = Vector2(423, 117)
+metadata/_edit_lock_ = true
 
 [node name="DefenseBridgePoint" type="Marker2D" parent="."]
 position = Vector2(211, 293)
+metadata/_edit_lock_ = true
 
 [node name="Hand" parent="." instance=ExtResource("19_xix3b")]
 unique_name_in_owner = true
@@ -859,6 +879,7 @@ offset_left = 513.0
 offset_top = 338.0
 offset_right = 628.0
 offset_bottom = 456.0
+metadata/_edit_lock_ = true
 
 [node name="EndRoundButton" type="Button" parent="Buttons"]
 unique_name_in_owner = true

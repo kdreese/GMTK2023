@@ -18,7 +18,7 @@ func _ready() -> void:
 	Global.fullscreen_changed.connect(on_fullscreen_changed)
 	var anim_speed_idx: int = Global.config["anim_speed_idx"]
 	anim_speed_select.select(anim_speed_idx)
-	anim_speed_select.get_popup().canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR
+	anim_speed_select.get_popup().add_theme_font_size_override("font_size", 12)
 	var sound_volume := Global.get_sound_volume()
 	sound_volume_slider.set_value_no_signal(sound_volume)
 	sound_volume_value.text = "%d" % (sound_volume * 100)

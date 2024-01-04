@@ -8,6 +8,7 @@ extends Unit
 
 @onready var step_sounds: Node2D = $StepSounds
 @onready var damage_sound: AudioStreamPlayer2D = $DamageSound
+@onready var damage_text: Control = %DamageText
 
 
 var attack_power: int
@@ -35,6 +36,13 @@ func init(data: CardData, grid_pos: Vector2i, world_pos: Dictionary) -> void:
 	sprite.texture = data.icon
 	rank_icon.texture = Util.rank_to_texture(data.rank)
 	update_position()
+
+func modify_health(health_change: int) -> void:
+	health += health_change
+	if health_change < 0:
+		play_damage_sound()
+	damage_text.play(health_change)
+	update_health_bar()
 
 
 func update_health_bar() -> void:

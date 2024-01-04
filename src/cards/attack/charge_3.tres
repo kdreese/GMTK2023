@@ -21,7 +21,7 @@ stat_string_overrides = {
 "att_range": "",
 "damage": "",
 "health": "",
-"movement": "+3"
+"movement": "+4"
 }
 effect_script = "res://src/cards/actions/charge.gd"
 extra_data = Array[String]([])

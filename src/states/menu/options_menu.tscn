@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvm32wjy7xf4r"]
+[gd_scene load_steps=5 format=3 uid="uid://cvm32wjy7xf4r"]
 
 [ext_resource type="FontFile" uid="uid://cjm3nfgjtp0ex" path="res://assets/fonts/engravers/CAT Engravers.ttf" id="1_8gs41"]
 [ext_resource type="Script" path="res://src/states/menu/options_menu.gd" id="1_gx872"]
@@ -14,6 +14,8 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_1yjrh"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -143,6 +145,7 @@ text = "Animation Speed"
 unique_name_in_owner = true
 texture_filter = 2
 layout_mode = 2
+theme = SubResource("Theme_1yjrh")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
 alignment = 1
